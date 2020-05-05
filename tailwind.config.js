@@ -1,16 +1,16 @@
-const ROOT_FONT_SIZE = 32;
+const ROOT_FONT_SIZE = 24
 
-const pxToRem = px => `${px / ROOT_FONT_SIZE}rem`;
+const pxToRem = px => `${px / ROOT_FONT_SIZE}rem`
 
-const sequence = length => Array.from(Array(length).keys());
+const sequence = length => Array.from(Array(length).keys())
 
 const spacing = sequence(21).reduce(
   (s, i) => ({
     ...s,
-    [i]: pxToRem(i * 5)
+    [i]: pxToRem(i * 5),
   }),
   {}
-);
+)
 
 module.exports = {
   theme: {
@@ -18,7 +18,7 @@ module.exports = {
       sm: "640px",
       md: "768px",
       lg: "1024px",
-      xl: "1280px"
+      xl: "1280px",
     },
     colors: {
       black: "#111111",
@@ -31,8 +31,8 @@ module.exports = {
       lightgreyBG: "#FFFDFD",
       acidgreen: "#bbff29",
       acidpurple: "#a954ff",
-      acidpine: "#00FF66"
+      acidpine: "#00FF66",
     },
-    spacing
-  }
-};
+    spacing,
+  },
+}

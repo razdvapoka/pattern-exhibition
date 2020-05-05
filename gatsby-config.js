@@ -32,7 +32,13 @@ module.exports = {
     {
       resolve: `gatsby-plugin-stylus-resources`,
       options: {
-        resources: ["./src/styles/index.styl"],
+        resources: [
+          "./src/styles/consts.styl",
+          "./src/styles/fonts.styl",
+          "./src/styles/utils.styl",
+          "./src/styles/text-styles.styl",
+          "./src/styles/index.styl",
+        ],
         postCssPlugins: [require("tailwindcss"), require(`autoprefixer`), require(`cssnano`)],
       },
     },
