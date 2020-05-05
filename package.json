@@ -27,6 +27,7 @@
   "devDependencies": {
     "autoprefixer": "^9.7.6",
     "cssnano": "^4.1.10",
+    "dotenv": "^8.2.0",
     "gatsby-plugin-purgecss": "^5.0.0",
     "gatsby-plugin-stylus-resources": "^1.0.26",
     "prettier": "2.0.5",
