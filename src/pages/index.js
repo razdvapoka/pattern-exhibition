@@ -2,30 +2,50 @@ import React from "react"
 import { graphql } from "gatsby"
 
 import Layout from "@/components/layout"
-import Image from "@/components/image"
 import SEO from "@/components/seo"
+import Section from "@/components/section"
+import { SECTION_ABOUT } from "@/consts"
 
-import { useIntl, Link, FormattedMessage } from "gatsby-plugin-intl"
+const Sections = ({ sections }) => {
+  return (
+    <>
+      {sections.map((section, sectionIndex) => {
+        switch (section.type) {
+          case SECTION_ABOUT:
+            return <Section key={sectionIndex} {...section} />
+          default:
+            return <div key={sectionIndex} />
+        }
+      })}
+    </>
+  )
+}
 
-const IndexPage = ({ data }) => {
-  const intl = useIntl()
+const IndexPage = ({
+  data: {
+    contentfulPage: { sections },
+  },
+}) => {
   return (
     <Layout>
       <SEO title="Home" />
-      <h1>{intl.formatMessage({ id: "test" })}</h1>
-      <pre>{JSON.stringify(data, null, 4)}</pre>
+      <Sections sections={sections} />
     </Layout>
   )
 }
 
 export const query = graphql`
-  query ContentfulTextBlocks($locale: String) {
-    allContentfulTextBlock(filter: { node_locale: { eq: $locale } }) {
-      nodes {
+  query MainPage($locale: String) {
+    contentfulPage(title: { eq: "main" }, node_locale: { eq: $locale }) {
+      title
+      sections {
         title
-        content {
-          content
+        text {
+          text
         }
+        url
+        urlText
+        type
       }
     }
   }
