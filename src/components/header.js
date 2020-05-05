@@ -1,6 +1,7 @@
 import { Link } from "gatsby"
 import PropTypes from "prop-types"
 import React from "react"
+import { IntlContextConsumer, changeLocale } from "gatsby-plugin-intl"
 
 const Header = ({ siteTitle }) => (
   <header
@@ -27,6 +28,26 @@ const Header = ({ siteTitle }) => (
           {siteTitle}
         </Link>
       </h1>
+      <div>
+        <IntlContextConsumer>
+          {({ languages, language: currentLocale }) =>
+            languages.map(language => (
+              <a
+                key={language}
+                onClick={() => changeLocale(language)}
+                style={{
+                  color: currentLocale === language ? `yellow` : `white`,
+                  margin: 10,
+                  textDecoration: `underline`,
+                  cursor: `pointer`,
+                }}
+              >
+                {language}
+              </a>
+            ))
+          }
+        </IntlContextConsumer>
+      </div>
     </div>
   </header>
 )

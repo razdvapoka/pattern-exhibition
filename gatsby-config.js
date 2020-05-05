@@ -27,6 +27,46 @@ module.exports = {
         icon: `src/images/gatsby-icon.png`, // This path is relative to the root of the site.
       },
     },
+    {
+      resolve: `gatsby-plugin-stylus-resources`,
+      options: {
+        resources: ["./src/styles/index.styl"],
+        postCssPlugins: [require("tailwindcss"), require(`autoprefixer`), require(`cssnano`)],
+      },
+    },
+    {
+      resolve: `gatsby-plugin-purgecss`,
+      options: {
+        printRejected: true, // Print removed selectors and processed file names
+        // develop: true, // Enable while using `gatsby develop`
+        tailwind: true, // Enable tailwindcss support
+        // whitelist: ['whitelist'], // Don't remove this selector
+        // ignore: ['/ignored.css', 'prismjs/', 'docsearch.js/'], // Ignore files/folders
+        // purgeOnly : ['components/', '/main.css', 'bootstrap/'], // Purge only these files/folders
+      },
+    },
+    {
+      resolve: `gatsby-source-contentful`,
+      options: {
+        spaceId: `sbv03ibem1ne`,
+        // Learn about environment variables: https://gatsby.dev/env-vars
+        accessToken: "DWpP5LztGLGG7zjZ96-88ODpuFpU0SMdH1BKoPnfy7s", //process.env.CONTENTFUL_ACCESS_TOKEN,
+      },
+    },
+    {
+      resolve: `gatsby-plugin-intl`,
+      options: {
+        // language JSON resource path
+        path: `${__dirname}/src/intl`,
+        // supported language
+        languages: [`en`, `ru`],
+        // language file path
+        defaultLanguage: `ru`,
+        // option to redirect to `/en` when connecting `/`
+        redirect: true,
+      },
+    },
+
     // this (optional) plugin enables Progressive Web App + Offline functionality
     // To learn more, visit: https://gatsby.dev/offline
     // `gatsby-plugin-offline`,
