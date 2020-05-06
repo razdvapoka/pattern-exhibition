@@ -1,7 +1,8 @@
-import React, { useCallback } from "react"
+import React, { useState, useCallback, useEffect } from "react"
 import cn from "classnames"
 import styles from "./index.module.styl"
 import Eye from "@/icons/eye.inline.svg"
+import io from "socket.io-client"
 
 const MarqueeItem = ({ navHash, text, navText }) => {
   const handleNavClick = useCallback(() => {
@@ -31,7 +32,17 @@ const MarqueeItems = ({ items, className }) => (
 )
 
 const Marquee = ({ items }) => {
-  const views = 100
+  const [userCount, setUserCount] = useState(null)
+  useEffect(() => {
+    const socket = io("https://live-counter.counter.ornamika.com/")
+    socket.on("user joined", msg => {
+      setUserCount(msg.userCount)
+    })
+    socket.on("user left", msg => {
+      setUserCount(msg.userCount)
+    })
+    socket.emit("add user")
+  }, [setUserCount])
   return (
     <div
       className={cn(
@@ -47,8 +58,9 @@ const Marquee = ({ items }) => {
         styles.marquee
       )}
     >
-      <div
-        className={`
+      {userCount && (
+        <div
+          className={`
         flex items-center justify-center
         absolute left-0 top-0
         h-full
@@ -57,10 +69,11 @@ const Marquee = ({ items }) => {
         z-10
         px-5
         `}
-      >
-        <Eye className={styles.eye} />
-        {views}
-      </div>
+        >
+          <Eye className={styles.eye} />
+          {userCount}
+        </div>
+      )}
       <MarqueeItems key="first" items={items} className="marquee-box-1" />
       <MarqueeItems key="second" items={items} className="marquee-box-2" />
     </div>
