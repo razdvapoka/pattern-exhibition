@@ -1,12 +1,13 @@
 import "@/styles/tailwind.styl"
 import "defaults.css"
-
+import smoothscroll from "smoothscroll-polyfill"
 import React from "react"
 import PropTypes from "prop-types"
 import { useStaticQuery, graphql } from "gatsby"
-
 import Header from "@/components/header"
 import "./index.styl"
+
+smoothscroll.polyfill()
 
 const Layout = ({ children }) => {
   const data = useStaticQuery(graphql`

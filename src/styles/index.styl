@@ -8,3 +8,35 @@ body
   font-family: Favorit, Helvetica, sans-serif
   font-weight: normal
   color: #3a3a3a
+
+:link, :visited
+  text-decoration: underline
+
+*:focus
+  outline: none
+
+
+@keyframes marquee {
+  from {
+    transform: translateX(0%) translateY(-50%);
+  }
+  to {
+    transform: translateX(-100%) translateY(-50%);
+  }
+}
+
+@keyframes marquee2 {
+  from {
+    transform: translateX(100%) translateY(-50%);
+  }
+  to {
+    transform: translateX(0%) translateY(-50%);
+  }
+}
+
+.marquee-box-1
+  animation: marquee 20s linear infinite
+
+.marquee-box-2
+  animation: marquee2 20s linear infinite
+

@@ -2,6 +2,7 @@ import React from "react"
 import Markdown from "@/components/markdown"
 import cn from "classnames"
 import styles from "./index.module.styl"
+import { blank } from "@/utils"
 
 const Section = ({ children, title, text: { text }, url, urlText }) => (
   <section className="px-4">
@@ -9,12 +10,7 @@ const Section = ({ children, title, text: { text }, url, urlText }) => (
       <div className="flex-1 pl-10">
         <h2 className="text-xl uppercase">{title}</h2>
         {url && (
-          <a
-            href={url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="block mt-14 underline text-m-alt"
-          >
+          <a href={url} className="block mt-14 text-m-alt" {...blank()}>
             {urlText || url}
           </a>
         )}

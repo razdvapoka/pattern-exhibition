@@ -4,6 +4,7 @@ import { graphql } from "gatsby"
 import Layout from "@/components/layout"
 import SEO from "@/components/seo"
 import Section from "@/components/section"
+import Marquee from "@/components/marquee"
 import { SECTION_ABOUT } from "@/consts"
 
 const Sections = ({ sections }) => {
@@ -29,7 +30,18 @@ const IndexPage = ({
   return (
     <Layout>
       <SEO title="Home" />
+      <Marquee
+        items={[
+          { text: "Режим работы робота: 24/7", navText: "узнать больше", navHash: "robot" },
+          { text: "Режим работы робота: 24/7", navText: "узнать больше", navHash: "robot" },
+          { text: "Режим работы робота: 24/7", navText: "узнать больше", navHash: "robot" },
+        ]}
+      />
       <Sections sections={sections} />
+      <div style={{ height: "200vh" }} />
+      <div id="robot" style={{ height: "100vh" }}>
+        robot
+      </div>
     </Layout>
   )
 }

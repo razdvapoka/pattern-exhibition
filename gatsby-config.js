@@ -66,19 +66,30 @@ module.exports = {
     {
       resolve: `gatsby-plugin-intl`,
       options: {
-        // language JSON resource path
         path: `${__dirname}/src/intl`,
-        // supported language
         languages: [`en`, `ru`],
-        // language file path
         defaultLanguage: `ru`,
-        // option to redirect to `/en` when connecting `/`
         redirect: true,
       },
     },
-
-    // this (optional) plugin enables Progressive Web App + Offline functionality
-    // To learn more, visit: https://gatsby.dev/offline
+    {
+      resolve: `gatsby-plugin-svgr-svgo`,
+      options: {
+        inlineSvgOptions: [
+          {
+            test: /\.inline.svg$/,
+            svgoConfig: {
+              plugins: [
+                {
+                  removeViewBox: false,
+                  removeDimensions: true,
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
     `gatsby-plugin-offline`,
   ],
 }

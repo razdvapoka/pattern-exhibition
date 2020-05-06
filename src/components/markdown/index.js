@@ -7,7 +7,11 @@ const isExternal = url => !url.startsWith("#")
 const renderers = {
   link: ({ children, title, href }) => {
     return (
-      <a href={title || href} target={!title && "_blank"} rel={!title && "noopener, noreferrer"}>
+      <a
+        href={title || href}
+        target={title ? "" : "_blank"}
+        rel={title ? "" : "noopener, noreferrer"}
+      >
         {children}
       </a>
     )
@@ -19,8 +23,8 @@ const renderers = {
         {url ? (
           <a
             href={url}
-            target={isExternal(url) && "_blank"}
-            rel={isExternal(url) && "noopener noreferrer"}
+            target={isExternal(url) ? "_blank" : ""}
+            rel={isExternal(url) ? "noopener noreferrer" : ""}
           >
             {text}
           </a>
