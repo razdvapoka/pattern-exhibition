@@ -1,1 +1,8 @@
 export const SECTION_ABOUT = "about"
+export const SECTION_VIDEO_1 = "video-1"
+export const SECTION_SCHEDULE = "schedule"
+export const SECTION_SUBSCRIBE = "subscription"
+export const SECTION_VIDEO_2 = "video-2"
+export const SECTION_CURATORS = "curators"
+export const SECTION_ROBOT = "robot"
+export const SECTION_GALLERY = "gallery"
