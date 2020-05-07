@@ -14,12 +14,13 @@ const MarqueeItem = ({ navHash, text, navText }) => {
     }
   }, [navHash])
   return (
-    <span className={cn("uppercase text-s mr-20 inline-block", styles.marqueeItem)}>
+    <button
+      className={cn("uppercase text-s mr-20 inline-block", styles.marqueeItem)}
+      onClick={handleNavClick}
+    >
       {text}
-      <sup className="normal-case text-xs">
-        <button onClick={handleNavClick}>{navText}</button>
-      </sup>
-    </span>
+      <sup className="normal-case text-xs">{navText}</sup>
+    </button>
   )
 }
 
@@ -42,6 +43,9 @@ const Marquee = ({ items }) => {
       setUserCount(msg.userCount)
     })
     socket.emit("add user")
+    return () => {
+      socket.disconnect()
+    }
   }, [setUserCount])
   return (
     <div
