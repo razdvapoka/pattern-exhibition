@@ -29,7 +29,7 @@ const VideoNav = ({ isVisible, setIsVideoNavVisible }) => {
         behavior: "smooth",
       })
     }
-  }, [])
+  }, [setIsVideoNavVisible])
   return (
     <button
       className={cn("w-1/6 fixed cursor-pointer", styles.videoNav, {
