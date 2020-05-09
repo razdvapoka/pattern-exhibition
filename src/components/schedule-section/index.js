@@ -75,6 +75,7 @@ const ScheduleItem = ({ pattern, curator, start, end }) => {
   const ref = useRef(null)
   const [isOpen, setIsOpen] = useState(false)
   const [realHeight, setRealHeight] = useState(0)
+  const [isHovered, setIsHovered] = useState(false)
 
   const toggle = useCallback(() => {
     setIsOpen(!isOpen)
@@ -117,7 +118,11 @@ const ScheduleItem = ({ pattern, curator, start, end }) => {
         "bg-grey": curator,
         "bg-pale": !curator,
       })}
+      role="button"
+      tabIndex={0}
       onClick={toggle}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
       style={
         isOpen
           ? {
@@ -147,7 +152,7 @@ const ScheduleItem = ({ pattern, curator, start, end }) => {
       </div>
       <div className={cn("col-start-3 col-span-3 text-xs-alt px-2 pattern-title-column")}>
         <div className={cn(styles.patternTitle, "pb-7")}>
-          <PatternTitle title={pattern.title} />
+          <PatternTitle isHovered={isHovered} title={pattern.title} />
           <a
             href={curator ? curator.url : `https://ornamika.com/pattern/${pattern.externalId}`}
             {...blank()}

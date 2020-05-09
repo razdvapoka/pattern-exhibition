@@ -2,10 +2,9 @@ import React, { useState, useRef, useEffect } from "react"
 import cn from "classnames"
 import styles from "./index.module.styl"
 
-const PatternTitle = ({ title }) => {
+const PatternTitle = ({ title, isHovered }) => {
   const ref = useRef(null)
   const [isMarqueRequired, setIsMarqueeRequired] = useState(null)
-  const [isHovered, setIsHovered] = useState(null)
   useEffect(() => {
     if (ref.current) {
       const textRect = ref.current.getBoundingClientRect()
@@ -22,10 +21,6 @@ const PatternTitle = ({ title }) => {
       className={cn(styles.patternTitle, "relative overflow-hidden uppercase", {
         "opacity-0": isMarqueRequired === null,
       })}
-      role="textbox"
-      tabIndex={0}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
     >
       {isMarqueRequired === null ? (
         <span ref={ref} className="whitespace-no-wrap">
