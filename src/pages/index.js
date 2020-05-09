@@ -117,6 +117,7 @@ export const query = graphql`
       schedule {
         start
         title
+        updatedAt
         items {
           buyUrl
           updatedAt

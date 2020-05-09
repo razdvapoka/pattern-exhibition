@@ -210,9 +210,17 @@ const ScheduleSection = ({ title, text, url, urlText, schedule, type, ...rest })
   )
   return todaySchedule ? (
     <section id={type} className="" {...rest}>
-      {items.map((item, itemIndex) => (
-        <ScheduleItem key={itemIndex} {...item} />
-      ))}
+      <div>
+        {items.map((item, itemIndex) => (
+          <ScheduleItem key={itemIndex} {...item} />
+        ))}
+      </div>
+      <div className="bg-grey flex justify-center text-xs-alt">
+        <div className="mt-8 mb-18">
+          <FormattedMessage id="lastUpdate" />
+          {` ${format(new Date(todaySchedule.updatedAt), "dd.MM.yy HH:mm")}`}
+        </div>
+      </div>
     </section>
   ) : null
 }
