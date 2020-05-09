@@ -24,46 +24,65 @@ import VideoSection from "@/components/video-section"
 
 import VideoNav from "../components/video-nav"
 
-const getSectionComponent = type => {
+const getSection = (type, data, setIsVideoNavVisible) => {
   switch (type) {
     case SECTION_ABOUT:
-      return Section
+      return {
+        component: Section,
+      }
     case SECTION_VIDEO_1:
-      return VideoSection
+      return {
+        component: VideoSection,
+        props: {
+          setIsVideoNavVisible,
+        },
+      }
     case SECTION_SCHEDULE:
-      return ScheduleSection
+      return {
+        component: ScheduleSection,
+        props: {
+          schedule: data.schedule,
+        },
+      }
     case SECTION_SUBSCRIBE:
-      return SubscribeSection
+      return {
+        component: SubscribeSection,
+      }
     case SECTION_VIDEO_2:
-      return VideoSection
+      return {
+        component: VideoSection,
+        props: {
+          setIsVideoNavVisible,
+        },
+      }
     case SECTION_CURATORS:
-      return CuratorsSection
+      return {
+        component: CuratorsSection,
+      }
     case SECTION_ROBOT:
-      return RobotSection
+      return {
+        component: RobotSection,
+      }
     case SECTION_GALLERY:
-      return GallerySection
+      return {
+        component: GallerySection,
+      }
     default:
       return "section"
   }
 }
 
-const Sections = ({ sections, setIsVideoNavVisible }) =>
-  sections.map((section, sectionIndex) => {
-    const SectionComponent = getSectionComponent(section.type)
-    return (
-      <SectionComponent
-        key={sectionIndex}
-        setIsVideoNavVisible={setIsVideoNavVisible}
-        {...section}
-      />
+const Sections = ({ data, setIsVideoNavVisible }) =>
+  data.sections.map((section, sectionIndex) => {
+    const { component: SectionComponent, props } = getSection(
+      section.type,
+      data,
+      setIsVideoNavVisible
     )
+    return <SectionComponent key={sectionIndex} {...section} {...props} />
   })
 
-const IndexPage = ({
-  data: {
-    contentfulPage: { sections },
-  },
-}) => {
+const IndexPage = ({ data: { contentfulPage } }) => {
   const [isVideoNavVisible, setIsVideoNavVisible] = useState(true)
   return (
     <Layout>
@@ -77,7 +96,7 @@ const IndexPage = ({
           { text: "Режим работы робота: 24/7", navText: "узнать больше", navHash: "robot" },
         ]}
       />
-      <Sections sections={sections} setIsVideoNavVisible={setIsVideoNavVisible} />
+      <Sections data={contentfulPage} setIsVideoNavVisible={setIsVideoNavVisible} />
     </Layout>
   )
 }
@@ -94,6 +113,51 @@ export const query = graphql`
         url
         urlText
         type
+      }
+      schedule {
+        start
+        title
+        items {
+          buyUrl
+          updatedAt
+          title
+          duration
+          id
+          pattern {
+            id
+            externalId
+            title
+            tags
+            isMosaic
+            image {
+              fluid(maxWidth: 700) {
+                ...GatsbyContentfulFluid_withWebp
+              }
+            }
+            thumbnail {
+              fixed(width: 200) {
+                src
+              }
+            }
+          }
+          curator {
+            name
+            nameInstrumental
+            url
+            description {
+              description
+            }
+            longDescription {
+              longDescription
+            }
+            audio {
+              file {
+                url
+                fileName
+              }
+            }
+          }
+        }
       }
     }
   }

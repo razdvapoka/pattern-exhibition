@@ -32,7 +32,7 @@ const VideoNav = ({ isVisible, setIsVideoNavVisible }) => {
   }, [setIsVideoNavVisible])
   return (
     <button
-      className={cn("w-1/6 fixed cursor-pointer", styles.videoNav, {
+      className={cn("w-1/6 fixed cursor-pointer z-20", styles.videoNav, {
         "opacity-0 pointer-events-none": !isVisible,
       })}
       onClick={handleNavClick}

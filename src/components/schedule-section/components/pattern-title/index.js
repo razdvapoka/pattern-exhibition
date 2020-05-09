@@ -1,0 +1,46 @@
+import React, { useState, useRef, useEffect } from "react"
+import cn from "classnames"
+import styles from "./index.module.styl"
+
+const PatternTitle = ({ title }) => {
+  const ref = useRef(null)
+  const [isMarqueRequired, setIsMarqueeRequired] = useState(null)
+  const [isHovered, setIsHovered] = useState(null)
+  useEffect(() => {
+    if (ref.current) {
+      const textRect = ref.current.getBoundingClientRect()
+      const boxRect = ref.current.parentElement.getBoundingClientRect()
+      setIsMarqueeRequired(textRect.width > boxRect.width)
+    }
+  }, [ref])
+  const textClassName = cn(
+    "inline-block whitespace-no-wrap absolute left-0 pr-4",
+    styles.patternTitleText
+  )
+  return (
+    <div
+      className={cn(styles.patternTitle, "relative overflow-hidden uppercase", {
+        "opacity-0": isMarqueRequired === null,
+      })}
+      role="textbox"
+      tabIndex={0}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      {isMarqueRequired === null ? (
+        <span ref={ref} className="whitespace-no-wrap">
+          {title}
+        </span>
+      ) : isHovered && isMarqueRequired ? (
+        <>
+          <span className={cn(textClassName, "marquee-box-1")}>{title}</span>
+          <span className={cn(textClassName, "marquee-box-2")}>{title}</span>
+        </>
+      ) : (
+        <span className={cn("block truncate", styles.patternTitleTruncated)}>{title}</span>
+      )}
+    </div>
+  )
+}
+
+export default PatternTitle

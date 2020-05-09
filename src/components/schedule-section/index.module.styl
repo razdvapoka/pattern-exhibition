@@ -1,0 +1,53 @@
+.scheduleItem
+  column-gap: pxToRem(20)
+  height: pxToRem(100)
+  transition: height 0.3s ease;
+
+.pattern
+  &Thumbnail
+    width: pxToRem(60)
+    height: pxToRem(60)
+    object-fit: cover
+  &Title
+    padding-top: pxToRem(41)
+  &ExternalId
+    padding-top: pxToRem(44)
+  &InProgress
+    padding-left: pxToRem(10)
+  &InProgress::before
+    position: absolute
+    left: 0
+    top: 50%
+    transform: translateY(-50%)
+    content: ''
+    display: block
+    width: pxToRem(3)
+    height: pxToRem(3)
+    background-color: #DC533C
+    border-radius: 9999px
+  &Tag
+    transition: 0.1s ease
+    border-radius: pxToRem(3)
+    padding: pxToRem(4) pxToRem(10)
+    white-space: nowrap
+    margin-right: pxToRem(4)
+    margin-bottom: pxToRem(4)
+  &Tags
+    padding-top: pxToRem(39)
+
+.icon
+  &Plus
+    width: pxToRem(19)
+    height: pxToRem(19)
+  &X
+    width: pxToRem(14)
+    height: pxToRem(14)
+    margin-right: pxToRem(2.5)
+    margin-top: pxToRem(2.5)
+
+.learnMore
+  text-decoration: none !important
+
+.playButton
+  width: pxToRem(16)
+  height: pxToRem(16)
