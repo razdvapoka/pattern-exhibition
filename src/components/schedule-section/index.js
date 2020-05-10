@@ -1,15 +1,16 @@
 import { FormattedMessage } from "gatsby-plugin-intl"
-import { format, isSameDay, addMinutes, isWithinInterval } from "date-fns"
-import React, { useEffect, useRef, useMemo, useState, useCallback } from "react"
+import { format } from "date-fns"
+import React, { useEffect, useRef, useState, useCallback } from "react"
 import cn from "classnames"
 
 import { blank } from "@/utils"
-import PatternTitle from "./components/pattern-title"
+import Markdown from "@/components/markdown"
 import Play from "@/icons/play.inline.svg"
 import Plus from "@/icons/plus.inline.svg"
 import X from "@/icons/x.inline.svg"
 
-import Markdown from "@/components/markdown"
+import PatternTitle from "./components/pattern-title"
+import Section from "../section"
 import styles from "./index.module.styl"
 
 const PatternTags = ({ tags, isOpen }) => {
@@ -17,7 +18,7 @@ const PatternTags = ({ tags, isOpen }) => {
     <div className="flex flex-wrap">
       {tags.map((tag, tagIndex) => (
         <span
-          className={cn(styles.patternTag, "inline-block bg-lightGrey", {
+          className={cn(styles.patternTag, "inline-block bg-greyTagBg text-xs-F", {
             "opacity-0": !isOpen && tagIndex >= 2,
           })}
           key={tagIndex}
@@ -47,31 +48,31 @@ const PatternCurator = ({ curator }) => {
   )
   return (
     <div>
-      <div className="text-xs-alt uppercase">
+      <div className="text-xs-F uppercase">
         <FormattedMessage id="curatedBy" />
         {` ${curator.nameInstrumental}`}
       </div>
-      <div className="mt-9">
+      <div className="mt-10">
         {curator.audio ? (
           <div className="flex items-center">
             <audio ref={audioRef} src={curator.audio.file.url} />
             <button className={cn(styles.playButton, "mr-1")} onClick={handlePlayClick}>
               <Play />
             </button>
-            <span>
+            <span className="text-xs-L">
               {`${curator.name} `}
               <FormattedMessage id="curatorIdea" />
             </span>
           </div>
         ) : (
-          <Markdown>{curator.description.description}</Markdown>
+          <Markdown className="text-xs-L">{curator.description.description}</Markdown>
         )}
       </div>
     </div>
   )
 }
 
-const ScheduleItem = ({ pattern, curator, start, end }) => {
+const ScheduleItem = ({ pattern, curator, start, end, isInProgress }) => {
   const ref = useRef(null)
   const [isOpen, setIsOpen] = useState(false)
   const [realHeight, setRealHeight] = useState(0)
@@ -110,14 +111,14 @@ const ScheduleItem = ({ pattern, curator, start, end }) => {
     }
   }, [ref, handleResize])
 
-  const isInProgress = isWithinInterval(new Date(), { start, end })
   return (
     <div
       ref={ref}
-      className={cn(styles.scheduleItem, "overflow-hidden px-4 grid grid-cols-12 cursor-pointer", {
-        "bg-grey": curator,
-        "bg-pale": !curator,
-      })}
+      className={cn(
+        styles.scheduleItem,
+        "overflow-hidden px-4 my-grid cursor-pointer text-greyText hover:text-white",
+        curator ? "bg-greyBg" : "bg-blackBg"
+      )}
       role="button"
       tabIndex={0}
       onClick={toggle}
@@ -138,7 +139,7 @@ const ScheduleItem = ({ pattern, curator, start, end }) => {
           alt="pattern thumbnail"
         />
       </div>
-      <div className={cn("col-start-2 col-span-1 text-xs uppercase", styles.patternExternalId)}>
+      <div className={cn("col-start-2 col-span-1 text-xs-L uppercase", styles.patternExternalId)}>
         {curator ? (
           <FormattedMessage id="curatedPattern" />
         ) : pattern.isMosaic ? (
@@ -150,13 +151,13 @@ const ScheduleItem = ({ pattern, curator, start, end }) => {
           </span>
         )}
       </div>
-      <div className={cn("col-start-3 col-span-3 text-xs-alt px-2 pattern-title-column")}>
+      <div className={cn("col-start-3 col-span-3 text-xs-F px-2 pattern-title-column")}>
         <div className={cn(styles.patternTitle, "pb-7")}>
           <PatternTitle isHovered={isHovered} title={pattern.title} />
           <a
             href={curator ? curator.url : `https://ornamika.com/pattern/${pattern.externalId}`}
             {...blank()}
-            className={cn("inline-block mt-10 text-xs uppercase", styles.learnMore)}
+            className={cn("inline-block mt-10 text-xs-L uppercase", styles.learnMore)}
             onClick={e => {
               e.stopPropagation()
             }}
@@ -165,7 +166,7 @@ const ScheduleItem = ({ pattern, curator, start, end }) => {
           </a>
         </div>
       </div>
-      <div className={cn("col-start-7 col-span-1 text-xs uppercase", styles.patternExternalId)}>
+      <div className={cn("col-start-7 col-span-1 text-xs-F uppercase", styles.patternExternalId)}>
         {isInProgress ? (
           <span className={cn("text-red relative", styles.patternInProgress)}>
             <FormattedMessage id="inProgress" />
@@ -174,7 +175,7 @@ const ScheduleItem = ({ pattern, curator, start, end }) => {
           `${format(start, "HH:mm")} – ${format(end, "HH:mm")}`
         )}
       </div>
-      <div className={cn("col-start-9 col-span-3 text-xs pattern-tags-column")}>
+      <div className={cn("col-start-9 col-span-3 pattern-tags-column")}>
         <div className={cn("pb-7", styles.patternTags)}>
           {curator ? (
             <PatternCurator curator={curator} isOpen={isOpen} />
@@ -190,43 +191,21 @@ const ScheduleItem = ({ pattern, curator, start, end }) => {
   )
 }
 
-const ScheduleSection = ({ title, text, url, urlText, schedule, type, ...rest }) => {
-  const todayDate = new Date()
-  const todaySchedule = schedule.find(day => isSameDay(new Date(day.start), todayDate))
-  const { items } = useMemo(
-    () =>
-      todaySchedule.items.reduce(
-        ({ passed, items }, item) => {
-          return {
-            passed: passed + item.duration,
-            items: [
-              ...items,
-              {
-                ...item,
-                start: addMinutes(new Date(todaySchedule.start), passed * 60),
-                end: addMinutes(new Date(todaySchedule.start), (passed + item.duration) * 60),
-              },
-            ],
-          }
-        },
-        { passed: 0, items: [] }
-      ),
-    [todaySchedule]
-  )
-  return todaySchedule ? (
-    <section id={type} className="" {...rest}>
-      <div>
-        {items.map((item, itemIndex) => (
+const ScheduleSection = ({ schedule, updatedAt = new Date(), type, ...rest }) => {
+  return schedule ? (
+    <Section className="bg-blackBg text-white mt-26 pt-10" {...rest}>
+      <div className={cn("mt-27", styles.scheduleGrid)}>
+        {schedule.items.map((item, itemIndex) => (
           <ScheduleItem key={itemIndex} {...item} />
         ))}
       </div>
-      <div className="bg-grey flex justify-center text-xs-alt">
-        <div className="mt-8 mb-18">
+      <div className="flex justify-center text-xs-alt text-xs-F text-white opacity-50">
+        <div className="mt-8 mb-10">
           <FormattedMessage id="lastUpdate" />
-          {` ${format(new Date(todaySchedule.updatedAt), "dd.MM.yy HH:mm")}`}
+          {` ${format(new Date(schedule.lastUpdate), "dd.MM.yy HH:mm")}`}
         </div>
       </div>
-    </section>
+    </Section>
   ) : null
 }
 

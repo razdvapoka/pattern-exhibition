@@ -7,7 +7,7 @@ import cn from "classnames"
 import { FormattedMessage } from "gatsby-plugin-intl"
 
 const Header = ({ siteTitle }) => (
-  <header className="px-4 fixed top-0 left-0 w-screen my-grid bg-white">
+  <header className="px-4 fixed top-0 left-0 w-screen my-grid bg-white z-50">
     <div className="col-start-1 col-span-6 flex">
       <div className={cn("mr-2 uppercase", styles.logo)}>
         <span className="text-s-L">Орнамика</span>&nbsp;&nbsp;

@@ -16,7 +16,7 @@ const VideoSection = ({ setIsVideoNavVisible, title, text, url, urlText, type, .
   }, [intersection, setIsVideoNavVisible])
 
   return (
-    <section className="px-14">
+    <section className="px-4 mt-24">
       <div className={cn(styles.videoSection, "relative")} id={type} {...rest}>
         <div
           ref={intersectionRef}

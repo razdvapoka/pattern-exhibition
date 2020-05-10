@@ -4,15 +4,15 @@ import cn from "classnames"
 import styles from "./index.module.styl"
 import { blank } from "@/utils"
 
-const Section = ({ children, title, text: { text }, url, urlText, hasSeparator }) => (
-  <section className="px-4">
-    <div className={cn("grid grid-cols-12", styles.about)}>
+const Section = ({ children, title, text: { text }, subText, hasSeparator, className, type }) => (
+  <section className={cn("px-4", className)} id={type}>
+    <div className="my-grid">
       <div className="col-start-2 col-span-5 relative">
-        <h2 className="text-xl uppercase">{title}</h2>
-        {url && (
-          <a href={url} className="block mt-14 text-m-alt" {...blank()}>
-            {urlText || url}
-          </a>
+        <h2 className="text-xl-L uppercase">{title}</h2>
+        {subText && (
+          <div className={cn("mt-8 uppercase text-xs-L", styles.subText)}>
+            <Markdown>{subText.subText}</Markdown>
+          </div>
         )}
         {hasSeparator && (
           <div className={cn(styles.separator, "absolute h-full top-0 right-0")}>
@@ -21,7 +21,7 @@ const Section = ({ children, title, text: { text }, url, urlText, hasSeparator }
           </div>
         )}
       </div>
-      <div className="col-start-7 col-span-5">
+      <div className="col-start-7 col-span-5 text-m-F">
         <div className={styles.sectionText}>
           <Markdown>{text}</Markdown>
         </div>
