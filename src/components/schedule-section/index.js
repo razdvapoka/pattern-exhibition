@@ -65,7 +65,7 @@ const PatternCurator = ({ curator }) => {
             </span>
           </div>
         ) : (
-          <Markdown className="text-xs-L">{curator.description.description}</Markdown>
+          <Markdown className="text-xs-F-h">{curator.idea.idea}</Markdown>
         )}
       </div>
     </div>

@@ -197,6 +197,9 @@ export const query = graphql`
             name
             nameInstrumental
             url
+            idea {
+              idea
+            }
             description {
               description
             }
