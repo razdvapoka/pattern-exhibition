@@ -2,7 +2,6 @@ import React from "react"
 import Markdown from "@/components/markdown"
 import cn from "classnames"
 import styles from "./index.module.styl"
-import { blank } from "@/utils"
 
 const Section = ({ children, title, text: { text }, subText, hasSeparator, className, type }) => (
   <section className={cn("px-4", className)} id={type}>

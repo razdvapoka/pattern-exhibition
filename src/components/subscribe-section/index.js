@@ -1,4 +1,4 @@
-import { FormattedMessage } from "react-intl"
+import { FormattedMessage } from "gatsby-plugin-intl"
 import React from "react"
 import cn from "classnames"
 
