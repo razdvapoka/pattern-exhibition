@@ -1,6 +1,5 @@
 import React, { useCallback } from "react"
 import cn from "classnames"
-import UserCount from "@/components/user-count"
 import styles from "./index.module.styl"
 
 const MarqueeItem = ({ navHash, text, navText }) => {
@@ -36,18 +35,20 @@ const Marquee = ({ items }) => {
     <div
       className={cn(
         `
-      overflow-hidden
+      fixed
+      bottom-0
+      left-0
       w-screen
+      overflow-hidden
       whitespace-no-wrap
       bg-yellow
       text-black
       py-1
-      relative
+      z-50
     `,
         styles.marquee
       )}
     >
-      <UserCount />
       <MarqueeItems key="first" items={items} className="marquee-box-1" />
       <MarqueeItems key="second" items={items} className="marquee-box-2" />
     </div>

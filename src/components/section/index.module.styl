@@ -1,5 +1,12 @@
-.sectionText {
-  p:not(:first-child) {
+.sectionText
+  p:not(:first-child)
     text-indent: pxToRem(50)
-  }
-}
+
+.separator
+  width: pxToRem(12)
+  transform: translateX(50%)
+  > div
+    height: 50%
+
+.about
+  column-gap: pxToRem(20)

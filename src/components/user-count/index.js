@@ -25,12 +25,10 @@ const UserCount = () => {
         styles.userCount,
         `
         flex items-center justify-center
-        absolute left-0 top-0
-        h-full
         bg-white text-pureBlack
-        text-s-alt
         z-10
-        px-5
+        px-2
+        text-xs-F
         `,
         { "opacity-0": !userCount }
       )}

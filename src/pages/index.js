@@ -29,6 +29,9 @@ const getSection = (type, data, setIsVideoNavVisible) => {
     case SECTION_ABOUT:
       return {
         component: Section,
+        props: {
+          hasSeparator: true,
+        },
       }
     case SECTION_VIDEO_1:
       return {
@@ -87,7 +90,7 @@ const IndexPage = ({ data: { contentfulPage } }) => {
   return (
     <Layout>
       <SEO title="Home" />
-      <div className="h-screen">Intro </div>
+      <div className="h-screen pt-10">Intro</div>
       <VideoNav isVisible={isVideoNavVisible} setIsVideoNavVisible={setIsVideoNavVisible} />
       <Marquee
         items={[
