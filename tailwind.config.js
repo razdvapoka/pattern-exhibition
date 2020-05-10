@@ -34,6 +34,8 @@ module.exports = {
       red: "#DC533C",
       pale: "#EDF1F3",
       green: "#91E595",
+      blue: "#547BE1",
+      purple: "#C658E3",
     },
     spacing,
   },
