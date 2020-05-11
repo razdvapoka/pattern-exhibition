@@ -68,6 +68,9 @@ const getSection = (type, { data, setIsVideoNavVisible, schedule }) => {
     case SECTION_ROBOT:
       return {
         component: RobotSection,
+        props: {
+          images: data.robotImages,
+        },
       }
     case SECTION_GALLERY:
       return {
@@ -168,6 +171,11 @@ export const query = graphql`
           subText
         }
         type
+      }
+      robotImages {
+        fluid(maxWidth: 700) {
+          ...GatsbyContentfulFluid_withWebp
+        }
       }
       schedule {
         start
