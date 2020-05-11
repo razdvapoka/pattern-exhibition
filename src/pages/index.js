@@ -1,6 +1,6 @@
 import { graphql } from "gatsby"
-import React, { useMemo, useState } from "react"
 import { isSameDay, addMinutes, isWithinInterval } from "date-fns"
+import React, { useMemo, useState } from "react"
 
 import {
   SECTION_ABOUT,
@@ -11,19 +11,22 @@ import {
   SECTION_CURATORS,
   SECTION_ROBOT,
   SECTION_GALLERY,
+  SECTION_ROUND_TABLE,
+  SECTION_ASSOCIATIONS,
 } from "@/consts"
 import CuratorsSection from "@/components/curators-section"
 import GallerySection from "@/components/gallery-section"
+import Intro from "@/components/intro"
 import Layout from "@/components/layout"
 import Marquee from "@/components/marquee"
 import RobotSection from "@/components/robot-section"
 import SEO from "@/components/seo"
 import ScheduleSection from "@/components/schedule-section"
 import Section from "@/components/section"
-import Intro from "@/components/intro"
 import SubscribeSection from "@/components/subscribe-section"
 import VideoSection from "@/components/video-section"
 
+import AssociationsSection from "../components/associations-section"
 import VideoNav from "../components/video-nav"
 
 const getSection = (type, { data, setIsVideoNavVisible, schedule, curatorDays }) => {
@@ -78,6 +81,21 @@ const getSection = (type, { data, setIsVideoNavVisible, schedule, curatorDays })
     case SECTION_GALLERY:
       return {
         component: GallerySection,
+      }
+    case SECTION_ROUND_TABLE:
+      return {
+        component: Section,
+        props: {
+          className: "mt-40",
+        },
+      }
+    case SECTION_ASSOCIATIONS:
+      return {
+        component: AssociationsSection,
+        props: {
+          className: "mt-24",
+          associations: data.associations,
+        },
       }
     default:
       return "section"
@@ -173,6 +191,7 @@ export const query = graphql`
   query MainPage($locale: String) {
     contentfulPage(title: { eq: "main" }, node_locale: { eq: $locale }) {
       title
+      associations
       intro {
         liveText
         title
