@@ -92,7 +92,10 @@ const IndexPage = ({ data: { contentfulPage } }) => {
   const [isVideoNavVisible, setIsVideoNavVisible] = useState(true)
   const todayDate = new Date()
   const todaySchedule = useMemo(
-    () => contentfulPage.schedule.find(day => isSameDay(new Date(day.start), todayDate)),
+    () =>
+      contentfulPage.schedule.find(day => {
+        return isSameDay(new Date(day.start), todayDate)
+      }),
     [contentfulPage.schedule, todayDate]
   )
   const { items: scheduleItems } = useMemo(
