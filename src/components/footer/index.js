@@ -62,8 +62,8 @@ const Credits = ({ credits }) => (
 
 const Footer = ({ credits, sections }) => (
   <footer>
-    <Authors />
     <FooterMenu sections={sections} />
+    <Authors />
     <Credits credits={credits} />
     <div className="py-7 text-center text-s-F-c uppercase bg-grey">
       <FormattedMessage id="infoPartners" />
