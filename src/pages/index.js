@@ -26,7 +26,7 @@ import VideoSection from "@/components/video-section"
 
 import VideoNav from "../components/video-nav"
 
-const getSection = (type, { data, setIsVideoNavVisible, schedule }) => {
+const getSection = (type, { data, setIsVideoNavVisible, schedule, curatorDays }) => {
   switch (type) {
     case SECTION_ABOUT:
       return {
@@ -64,6 +64,9 @@ const getSection = (type, { data, setIsVideoNavVisible, schedule }) => {
     case SECTION_CURATORS:
       return {
         component: CuratorsSection,
+        props: {
+          curatorDays,
+        },
       }
     case SECTION_ROBOT:
       return {
@@ -81,54 +84,68 @@ const getSection = (type, { data, setIsVideoNavVisible, schedule }) => {
   }
 }
 
-const Sections = ({ data, setIsVideoNavVisible, schedule }) =>
+const Sections = ({ data, setIsVideoNavVisible, schedule, curatorDays }) =>
   data.sections.map((section, sectionIndex) => {
     const { component: SectionComponent, props } = getSection(section.type, {
       data,
       setIsVideoNavVisible,
       schedule,
+      curatorDays,
     })
     return <SectionComponent key={sectionIndex} {...section} {...props} />
   })
 
-const IndexPage = ({ data: { contentfulPage } }) => {
+const IndexPage = ({ data: { contentfulPage, allContentfulCurator } }) => {
   const [isVideoNavVisible, setIsVideoNavVisible] = useState(true)
-  const todayDate = new Date()
+
+  const fullSchedule = useMemo(
+    () =>
+      contentfulPage.schedule.map(day => ({
+        ...day,
+        items: day.items.reduce(
+          ({ passed, items }, item) => {
+            const start = addMinutes(new Date(day.start), passed * 60)
+            const end = addMinutes(new Date(day.start), (passed + item.duration) * 60)
+            const isInProgress = isWithinInterval(new Date(), { start, end })
+
+            return {
+              passed: passed + item.duration,
+              items: [
+                ...items,
+                {
+                  ...item,
+                  start,
+                  end,
+                  isInProgress,
+                },
+              ],
+            }
+          },
+          { passed: 0, items: [] }
+        ).items,
+      })),
+    [contentfulPage]
+  )
+
   const todaySchedule = useMemo(
     () =>
-      contentfulPage.schedule.find(day => {
-        return isSameDay(new Date(day.start), todayDate)
+      fullSchedule.find(day => {
+        return isSameDay(new Date(day.start), new Date())
       }),
-    [contentfulPage.schedule, todayDate]
+    [fullSchedule]
   )
-  const { items: scheduleItems } = useMemo(
-    () =>
-      todaySchedule.items.reduce(
-        ({ passed, items }, item) => {
-          const start = addMinutes(new Date(todaySchedule.start), passed * 60)
-          const end = addMinutes(new Date(todaySchedule.start), (passed + item.duration) * 60)
-          const isInProgress = isWithinInterval(new Date(), { start, end })
 
-          return {
-            passed: passed + item.duration,
-            items: [
-              ...items,
-              {
-                ...item,
-                start,
-                end,
-                isInProgress,
-              },
-            ],
-          }
-        },
-        { passed: 0, items: [] }
-      ),
-    [todaySchedule]
-  )
-  const currentPattern = useMemo(() => scheduleItems.find(item => item.isInProgress), [
-    scheduleItems,
+  const currentPattern = useMemo(() => todaySchedule.items.find(item => item.isInProgress), [
+    todaySchedule,
   ])
+
+  const curatorDays = useMemo(
+    () =>
+      fullSchedule.reduce((agg, day) => {
+        return [...agg, ...day.items.filter(item => item.curator)]
+      }, []),
+    [fullSchedule]
+  )
 
   return (
     <Layout>
@@ -144,7 +161,8 @@ const IndexPage = ({ data: { contentfulPage } }) => {
       />
       <Sections
         data={contentfulPage}
-        schedule={{ items: scheduleItems, lastUpdate: todaySchedule.updatedAt }}
+        schedule={{ items: todaySchedule.items, lastUpdate: todaySchedule.updatedAt }}
+        curatorDays={curatorDays}
         setIsVideoNavVisible={setIsVideoNavVisible}
       />
     </Layout>
@@ -177,6 +195,7 @@ export const query = graphql`
           ...GatsbyContentfulFluid_withWebp
         }
       }
+
       schedule {
         start
         title

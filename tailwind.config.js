@@ -4,7 +4,7 @@ const pxToRem = px => `${px / ROOT_FONT_SIZE}rem`
 
 const sequence = length => Array.from(Array(length).keys())
 
-const spacing = sequence(31).reduce(
+const spacing = sequence(41).reduce(
   (s, i) => ({
     ...s,
     [i]: pxToRem(i * 5),
