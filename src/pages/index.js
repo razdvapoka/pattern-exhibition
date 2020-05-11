@@ -27,6 +27,7 @@ import SubscribeSection from "@/components/subscribe-section"
 import VideoSection from "@/components/video-section"
 
 import AssociationsSection from "../components/associations-section"
+import Footer from "../components/footer"
 import VideoNav from "../components/video-nav"
 
 const getSection = (type, { data, setIsVideoNavVisible, schedule, curatorDays }) => {
@@ -183,6 +184,7 @@ const IndexPage = ({ data: { contentfulPage, allContentfulCurator } }) => {
         curatorDays={curatorDays}
         setIsVideoNavVisible={setIsVideoNavVisible}
       />
+      <Footer sections={contentfulPage.sections} credits={contentfulPage.credits} />
     </Layout>
   )
 }
@@ -192,6 +194,14 @@ export const query = graphql`
     contentfulPage(title: { eq: "main" }, node_locale: { eq: $locale }) {
       title
       associations
+      credits {
+        url
+        urlText
+        role
+        name {
+          name
+        }
+      }
       intro {
         liveText
         title
@@ -201,6 +211,7 @@ export const query = graphql`
       }
       sections {
         title
+        isInFooter
         text {
           text
         }
