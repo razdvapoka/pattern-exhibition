@@ -3,7 +3,15 @@ import { useIntersection } from "react-use"
 import styles from "./index.module.styl"
 import cn from "classnames"
 
-const VideoSection = ({ setIsVideoNavVisible, title, text, url, urlText, type, ...rest }) => {
+const VideoSection = ({
+  setIsVideoNavVisible,
+  title,
+  text,
+  subText,
+  type,
+  isInFooter,
+  ...rest
+}) => {
   const intersectionRef = useRef(null)
   const intersection = useIntersection(intersectionRef, {
     root: null,

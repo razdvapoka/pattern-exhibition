@@ -13,7 +13,7 @@ const MAILCHIMP_URL =
 const MAILCHIMP_SECRET = "b_cbce4c710a25008dbbcaf1c90_3e0afba3c2"
 const EMAIL_REGEX = /.+@.+\..+/
 
-const SubscribeSection = ({ text: { text }, ...rest }) => {
+const SubscribeSection = ({ text: { text }, subText, isInFooter, ...rest }) => {
   const [email, setEmail] = useState("")
   const [isEmailValid, setIsEmailValid] = useState(false)
   const [status, setStatus] = useState(null)

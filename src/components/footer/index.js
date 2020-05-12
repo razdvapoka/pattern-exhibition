@@ -12,7 +12,7 @@ const FooterMenu = ({ sections }) => (
         {sections
           .filter(section => section.isInFooter)
           .map((section, sectionIndex) => (
-            <li className="mb-2">
+            <li key={sectionIndex} className="mb-2">
               <a className="" href={`#${section.type}`}>
                 {section.title}
               </a>
