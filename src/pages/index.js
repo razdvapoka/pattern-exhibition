@@ -1,6 +1,7 @@
 import { graphql } from "gatsby"
 import { isSameDay, addMinutes, isWithinInterval } from "date-fns"
 import React, { useMemo, useState } from "react"
+import { useIntl } from "gatsby-plugin-intl"
 
 import {
   SECTION_ABOUT,
@@ -115,6 +116,7 @@ const Sections = ({ data, setIsVideoNavVisible, schedule, curatorDays }) =>
   })
 
 const IndexPage = ({ data: { contentfulPage, allContentfulCurator } }) => {
+  const intl = useIntl()
   const [isVideoNavVisible, setIsVideoNavVisible] = useState(true)
 
   const fullSchedule = useMemo(
@@ -173,10 +175,37 @@ const IndexPage = ({ data: { contentfulPage, allContentfulCurator } }) => {
       <VideoNav isVisible={isVideoNavVisible} setIsVideoNavVisible={setIsVideoNavVisible} />
       <Marquee
         items={[
-          { text: "Режим работы робота: 24/7", navText: "узнать больше", navHash: "schedule" },
-          { text: "Режим работы робота: 24/7", navText: "узнать больше", navHash: "schedule" },
-          { text: "Режим работы робота: 24/7", navText: "узнать больше", navHash: "schedule" },
-        ]}
+          {
+            text: intl.formatMessage({ id: "aboutRobot" }),
+            navText: intl.formatMessage({ id: "moreHintMarquee" }),
+            navHash: "robot",
+          },
+          currentPattern
+            ? {
+                text: intl.formatMessage(
+                  { id: "robotDrawing" },
+                  { pattern: currentPattern.externalId }
+                ),
+                navText: intl.formatMessage({ id: "patternHintMarquee" }),
+                navHash: "schedule",
+              }
+            : null,
+          curatorDays.length > 0
+            ? {
+                text: intl.formatMessage(
+                  {
+                    id: "curatorMarquee",
+                  },
+                  {
+                    curator: curatorDays[0].curator.name,
+                    pattern: curatorDays[0].pattern.externalId,
+                  }
+                ),
+                navText: intl.formatMessage({ id: "moreHintMarquee" }),
+                navHash: "schedule",
+              }
+            : null,
+        ].filter(Boolean)}
       />
       <Sections
         data={contentfulPage}

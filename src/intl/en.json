@@ -18,5 +18,10 @@
   "curatorMore": "Learn more",
   "mailUs": "Mail us",
   "signUp": "Sign up for the round table",
-  "infoPartners": "Infopartners"
+  "infoPartners": "Infopartners",
+  "aboutRobot": "robot paints 24/7",
+  "robotDrawing": "robot draws pattern №{pattern}",
+  "curatorMarquee": "{curator} - curates the pattern №{pattern}",
+  "moreHintMarquee": "learn more",
+  "patternHintMarquee": "see the pattern"
 }

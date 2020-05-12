@@ -4,7 +4,7 @@ import cn from "classnames"
 import styles from "./index.module.styl"
 
 const Section = ({ children, title, text: { text }, subText, hasSeparator, className, type }) => (
-  <section className={cn("px-4", className)} id={type}>
+  <section className={cn("px-4", styles.section, className)} id={type}>
     <div className="my-grid">
       <div className="col-start-2 col-span-5 relative">
         <h2 className="text-xl-L uppercase">{title}</h2>

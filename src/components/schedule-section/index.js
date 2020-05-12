@@ -191,7 +191,7 @@ const ScheduleItem = ({ pattern, curator, start, end, isInProgress }) => {
   )
 }
 
-const ScheduleSection = ({ schedule, updatedAt = new Date(), type, ...rest }) => {
+const ScheduleSection = ({ schedule, updatedAt = new Date(), ...rest }) => {
   return schedule ? (
     <Section className="bg-blackBg text-white mt-26 pt-10" {...rest}>
       <div className={cn("mt-27", styles.scheduleGrid)}>
