@@ -1,6 +1,9 @@
+import { IntlContextConsumer } from "gatsby-plugin-intl"
 import React from "react"
-import Markdown from "@/components/markdown"
 import cn from "classnames"
+
+import Markdown from "@/components/markdown"
+
 import styles from "./index.module.styl"
 
 const Section = ({
@@ -29,10 +32,14 @@ const Section = ({
           </div>
         )}
       </div>
-      <div className="col-start-7 col-span-5 text-m-F">
-        <div className={styles.sectionText}>
-          <Markdown>{text}</Markdown>
-        </div>
+      <div className="col-start-7 col-span-5 text-m-F" style={{ hyphens: "auto" }}>
+        <IntlContextConsumer>
+          {({ language }) => (
+            <div className={styles.sectionText} lang={language}>
+              <Markdown>{text}</Markdown>
+            </div>
+          )}
+        </IntlContextConsumer>
       </div>
     </div>
     {children}
