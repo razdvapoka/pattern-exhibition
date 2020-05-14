@@ -83,6 +83,9 @@ const getSection = (type, { data, setIsVideoNavVisible, schedule, curatorDays })
     case SECTION_GALLERY:
       return {
         component: GallerySection,
+        props: {
+          items: data.gallery,
+        },
       }
     case SECTION_ROUND_TABLE:
       return {
@@ -252,6 +255,20 @@ export const query = graphql`
       robotImages {
         fluid(maxWidth: 700) {
           ...GatsbyContentfulFluid_withWebp
+        }
+      }
+      gallery {
+        title
+        externalId
+        image {
+          fluid(maxWidth: 450) {
+            ...GatsbyContentfulFluid_withWebp
+          }
+        }
+        thumbnail {
+          fluid(maxWidth: 450) {
+            ...GatsbyContentfulFluid_withWebp
+          }
         }
       }
 
