@@ -28,7 +28,7 @@ const Menu = ({ sections, toggleMenu, scrollLock = true, isMenuOpen }) => {
         enableBodyScroll(ref.current)
       }
     }
-  }, [isMenuOpen, ref])
+  }, [isMenuOpen, ref, scrollLock])
 
   return (
     <div

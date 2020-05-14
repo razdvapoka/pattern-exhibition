@@ -121,7 +121,7 @@ const Sections = ({ data, setIsVideoNavVisible, schedule, curatorDays }) =>
 
 const IndexPage = ({ data: { contentfulPage, allContentfulCurator } }) => {
   const intl = useIntl()
-  const [isMenuOpen, setIsMenuOpen] = useState(true)
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isVideoNavVisible, setIsVideoNavVisible] = useState(true)
 
   const toggleMenu = useCallback(() => {

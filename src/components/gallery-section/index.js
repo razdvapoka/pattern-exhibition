@@ -24,7 +24,7 @@ const GallerySection = ({ items, ...rest }) => {
   const rows = useMemo(() => chunk(items, 3), [items])
   return (
     <Section className="mt-40" {...rest}>
-      <div className="mt-24" {...rest}>
+      <div className="mt-24">
         {rows.map((row, rowIndex) => (
           <div key={rowIndex} className="my-grid mb-24">
             {row.map((item, itemIndex) => (

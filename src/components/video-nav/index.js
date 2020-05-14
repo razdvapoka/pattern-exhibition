@@ -56,7 +56,7 @@ const VideoNav = ({ isVisible, setIsVideoNavVisible }) => {
   )
 
   return (
-    <div
+    <button
       className={cn("fixed cursor-pointer z-20 overflow-hidden", styles.videoNav, {
         "opacity-0 pointer-events-none": !isVisible,
       })}
@@ -65,7 +65,7 @@ const VideoNav = ({ isVisible, setIsVideoNavVisible }) => {
       <div className={cn(styles.videoBox, "absolute pointer-events-none")}>
         <div id="navVideo" />
       </div>
-    </div>
+    </button>
   )
 }
 

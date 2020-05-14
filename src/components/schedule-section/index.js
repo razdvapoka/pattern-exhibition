@@ -124,6 +124,7 @@ const ScheduleItem = ({ pattern, curator, start, end, isInProgress }) => {
       onClick={toggle}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
+      onKeyDown={e => e.which === 32 && setIsHovered(!isHovered)}
       style={
         isOpen
           ? {

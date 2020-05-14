@@ -3,7 +3,16 @@ import Markdown from "@/components/markdown"
 import cn from "classnames"
 import styles from "./index.module.styl"
 
-const Section = ({ children, title, text: { text }, subText, hasSeparator, className, type }) => (
+const Section = ({
+  children,
+  title,
+  text: { text },
+  subText,
+  hasSeparator,
+  className,
+  type,
+  isInFooter,
+}) => (
   <section className={cn("px-4", styles.section, className)} id={type}>
     <div className="my-grid">
       <div className="col-start-2 col-span-5 relative">
