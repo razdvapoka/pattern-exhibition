@@ -43,7 +43,7 @@ const Marquee = ({ items }) => {
       bg-yellow
       text-black
       py-1
-      z-50
+      z-40
     `,
         styles.marquee
       )}

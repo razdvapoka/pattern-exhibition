@@ -23,5 +23,9 @@
   "robotDrawing": "Робот рисует узор №{pattern}",
   "curatorMarquee": "{curator} — Куратор узора №{pattern}",
   "moreHintMarquee": "узнать больше",
-  "patternHintMarquee": "посмотреть узор"
+  "patternHintMarquee": "посмотреть узор",
+  "close": "закрыть",
+  "buyPattern": "Купить постер с узором",
+  "roundTableSignUp": "записаться на круглый стол",
+  "survey": "пройти опрос"
 }

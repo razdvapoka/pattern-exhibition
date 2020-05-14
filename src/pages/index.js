@@ -1,6 +1,6 @@
 import { graphql } from "gatsby"
 import { isSameDay, addMinutes, isWithinInterval } from "date-fns"
-import React, { useMemo, useState } from "react"
+import React, { useCallback, useMemo, useState } from "react"
 import { useIntl } from "gatsby-plugin-intl"
 
 import {
@@ -15,6 +15,7 @@ import {
   SECTION_ROUND_TABLE,
   SECTION_ASSOCIATIONS,
 } from "@/consts"
+import Menu from "@/components/menu"
 import CuratorsSection from "@/components/curators-section"
 import GallerySection from "@/components/gallery-section"
 import Intro from "@/components/intro"
@@ -120,7 +121,12 @@ const Sections = ({ data, setIsVideoNavVisible, schedule, curatorDays }) =>
 
 const IndexPage = ({ data: { contentfulPage, allContentfulCurator } }) => {
   const intl = useIntl()
+  const [isMenuOpen, setIsMenuOpen] = useState(true)
   const [isVideoNavVisible, setIsVideoNavVisible] = useState(true)
+
+  const toggleMenu = useCallback(() => {
+    setIsMenuOpen(!isMenuOpen)
+  }, [isMenuOpen, setIsMenuOpen])
 
   const fullSchedule = useMemo(
     () =>
@@ -172,8 +178,9 @@ const IndexPage = ({ data: { contentfulPage, allContentfulCurator } }) => {
   )
 
   return (
-    <Layout>
+    <Layout toggleMenu={toggleMenu} isMenuOpen={isMenuOpen}>
       <SEO title="Home" />
+      <Menu sections={contentfulPage.sections} toggleMenu={toggleMenu} isMenuOpen={isMenuOpen} />
       <Intro {...contentfulPage.intro} />
       <VideoNav isVisible={isVideoNavVisible} setIsVideoNavVisible={setIsVideoNavVisible} />
       <Marquee

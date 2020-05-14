@@ -6,8 +6,8 @@ import styles from "./index.module.styl"
 import cn from "classnames"
 import { FormattedMessage } from "gatsby-plugin-intl"
 
-const Header = ({ siteTitle }) => (
-  <header className="px-4 fixed top-0 left-0 w-screen my-grid bg-white z-50">
+const Header = ({ siteTitle, toggleMenu }) => (
+  <header className={cn("px-4 fixed top-0 left-0 w-screen my-grid bg-white z-50", styles.header)}>
     <div className="col-start-1 col-span-6 flex">
       <div className={cn("mr-2 uppercase", styles.logo)}>
         <span className="text-s-L">Орнамика</span>&nbsp;&nbsp;
@@ -41,7 +41,7 @@ const Header = ({ siteTitle }) => (
       </a>
       <a className="uppercase">FB</a>
       <a className="uppercase">INST</a>
-      <button className="uppercase">
+      <button className="uppercase" onClick={toggleMenu}>
         <FormattedMessage id="menu" />
       </button>
     </div>

@@ -6,7 +6,7 @@ import { useStaticQuery, graphql } from "gatsby"
 import Header from "@/components/header"
 import "./index.styl"
 
-const Layout = ({ children }) => {
+const Layout = ({ isMenuOpen, toggleMenu, children }) => {
   useEffect(() => {
     require("smoothscroll-polyfill").polyfill()
   }, [])
@@ -22,9 +22,12 @@ const Layout = ({ children }) => {
 
   return (
     <div className="text-m">
-      <Header siteTitle={data.site.siteMetadata.title} />
+      <Header
+        siteTitle={data.site.siteMetadata.title}
+        toggleMenu={toggleMenu}
+        isMenuOpen={isMenuOpen}
+      />
       <main>{children}</main>
-      <footer>footer</footer>
     </div>
   )
 }

@@ -23,5 +23,9 @@
   "robotDrawing": "robot draws pattern №{pattern}",
   "curatorMarquee": "{curator} - curates the pattern №{pattern}",
   "moreHintMarquee": "learn more",
-  "patternHintMarquee": "see the pattern"
+  "patternHintMarquee": "see the pattern",
+  "close": "close",
+  "buyPattern": "Buy a poster with a pattern",
+  "roundTableSignUp": "Sign up for the round table",
+  "survey": "Participate in the survey"
 }

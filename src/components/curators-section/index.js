@@ -34,9 +34,7 @@ const Curator = ({ curator, start, end, isInProgress }) => {
             </Markdown>
             {curator.url && (
               <div className={cn("text-xs-L uppercase mt-6", styles.more)}>
-                <a href={curator.url} {...blank()}>
-                  <FormattedMessage id="curatorMore" />
-                </a>
+                <FormattedMessage id="curatorMore" />
               </div>
             )}
           </div>

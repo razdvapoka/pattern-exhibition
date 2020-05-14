@@ -15,10 +15,7 @@ const spacing = sequence(41).reduce(
 module.exports = {
   theme: {
     screens: {
-      sm: "640px",
-      md: "768px",
-      lg: "1024px",
-      xl: "1280px",
+      sm: { max: "639px" },
     },
     colors: {
       pureBlack: "#000000",
@@ -36,6 +33,7 @@ module.exports = {
       green: "#91E595",
       blue: "#547BE1",
       purple: "#C658E3",
+      plum: "#B861DC",
     },
     spacing,
   },
