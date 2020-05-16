@@ -53,12 +53,15 @@ const SubscribeSection = ({ text: { text }, subText, isInFooter, ...rest }) => {
   const success = status === "success"
   const error = status === "error"
   return (
-    <section className="mt-22" {...rest}>
-      <div className={cn("flex", styles.block)}>
-        <div className="w-1/2 flex items-center justify-center bg-yellow text-l-F-c uppercase">
+    <section className="mt-22 sm:mt-24" {...rest}>
+      <div className={cn("flex sm:flex-col", styles.block)}>
+        <div className="w-1/2 sm:w-full flex items-center justify-center bg-yellow text-l-F-c uppercase sm:py-10">
           <FormattedMessage id="leaveEmail" />
         </div>
-        <div className="w-1/2 flex items-center justify-center bg-pale px-11">
+        <div
+          className="w-1/2 sm:w-full flex items-center justify-center bg-pale px-11 sm:px-8
+          sm:py-9"
+        >
           <form onSubmit={handleSubmit} className="w-full">
             <div className={cn(styles.inputBox, "flex", { "border-red": error })}>
               <input
@@ -66,13 +69,13 @@ const SubscribeSection = ({ text: { text }, subText, isInFooter, ...rest }) => {
                 value={email}
                 placeholder="hello@world.com"
                 name="EMAIL"
-                className={cn("text-s-F-c uppercase w-full", styles.emailInput)}
+                className={cn("text-s-F-c-sm uppercase w-full", styles.emailInput)}
                 onChange={handleEmailChange}
                 disabled={success}
               />
               <input
                 className={cn(
-                  "ml-1 text-m-W",
+                  "ml-1 a",
                   { "text-grey pointer-events-none": !isEmailValid },
                   { "pointer-events-none": success },
                   { "text-red": error }
@@ -85,16 +88,16 @@ const SubscribeSection = ({ text: { text }, subText, isInFooter, ...rest }) => {
           </form>
         </div>
       </div>
-      <div className="flex items-center justify-center bg-grey py-12 text-center text-m-F">
-        <Markdown>{text}</Markdown>
+      <div className="flex items-center justify-center bg-grey py-12 sm:py-4 sm:px-2 text-center text-m-F">
+        <Markdown className={styles.text}>{text}</Markdown>
       </div>
       <div className={cn("flex text-m-L-c uppercase", styles.block)}>
-        <div className="w-1/2 flex items-center justify-center bg-blue">
+        <div className="w-1/2 flex items-center justify-center bg-blue sm:py-10">
           <a href="https://www.facebook.com/ornamikaproject/" {...blank()}>
             facebook
           </a>
         </div>
-        <div className="w-1/2 flex items-center justify-center bg-purple">
+        <div className="w-1/2 flex items-center justify-center bg-purple sm:py-10">
           <a href="https://www.instagram.com/ornamika_official/" {...blank()}>
             instagram
           </a>

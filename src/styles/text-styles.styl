@@ -7,6 +7,9 @@ f()
 a()
   font-family: Arrows, Arial, sans-serif
 
+.a
+  a()
+
 .text-xs-L
   l()
   font-size: pxToRem(12)
@@ -47,6 +50,15 @@ text-s-F()
   line-height: 0.9
   letter-spacing: 0.01em
 
+.text-s-F-c-sm
+  f()
+  font-size: pxToRem(20)
+  line-height: 0.9
+  letter-spacing: 0.01em
+  +mobile()
+    font-size: pxToRem(12)
+    letter-spacing: auto
+
 .text-s-L-e
   l()
   font-size: pxToRem(20)
@@ -77,6 +89,8 @@ text-s-F()
   l()
   font-size: pxToRem(24)
   line-height: 0.9
+  +mobile()
+    font-size: pxToRem(20)
 
 .text-m-F-c
   f()
@@ -117,6 +131,9 @@ text-s-F()
   f()
   font-size: pxToRem(40)
   line-height: 0.9
+  +mobile()
+    font-size: pxToRem(20)
+    line-height: 1
 
 .text-xl-L
   l()

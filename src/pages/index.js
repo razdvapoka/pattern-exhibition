@@ -60,6 +60,7 @@ const getSection = (
       return {
         component: SubscribeSection,
       }
+    /*
     case SECTION_SCHEDULE:
       return {
         component: ScheduleSection,
@@ -113,6 +114,7 @@ const getSection = (
           associations: data.associations,
         },
       }
+      */
     default:
       return {
         component: "section",
@@ -134,7 +136,7 @@ const Sections = ({ data, setIsVideoNavVisible, schedule, curatedPatterns, isPla
 
 const IndexPage = ({ data: { contentfulPage, allContentfulCurator } }) => {
   const intl = useIntl()
-  const [currentPatternIndex, setCurrentPatternIndex] = useState(false)
+  const [currentPatternIndex, setCurrentPatternIndex] = useState(-1)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isVideoNavVisible, setIsVideoNavVisible] = useState(true)
   const [isPlayerApiReady, setIsPlayerApiReady] = useState(false)
@@ -192,7 +194,7 @@ const IndexPage = ({ data: { contentfulPage, allContentfulCurator } }) => {
       navText: intl.formatMessage({ id: "moreHintMarquee" }),
       navHash: "robot",
     },
-    currentPatternIndex
+    currentPatternIndex >= 0
       ? {
           text: intl.formatMessage(
             { id: "robotDrawing" },

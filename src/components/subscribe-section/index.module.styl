@@ -1,9 +1,16 @@
 .block
   height: pxToRem(160)
+  +mobile()
+    height: auto
 
 .inputBox
   border-bottom-width: pxToRem(1)
   border-style: solid
+
+.text
+  max-width: pxToRem(688)
+  +mobile()
+    max-width: auto
 
 .emailInput:-webkit-autofill,
 .emailInput:-webkit-autofill:hover,
