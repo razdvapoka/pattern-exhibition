@@ -187,7 +187,7 @@ const IndexPage = ({ data: { contentfulPage, allContentfulCurator } }) => {
       ? {
           text: intl.formatMessage(
             { id: "robotDrawing" },
-            { pattern: flatSchedule[currentPatternIndex].externalId }
+            { pattern: flatSchedule[currentPatternIndex].pattern.externalId }
           ),
           navText: intl.formatMessage({ id: "patternHintMarquee" }),
           navHash: "schedule",
