@@ -163,8 +163,6 @@ const IndexPage = ({ data: { contentfulPage, allContentfulCurator } }) => {
     })
   }, [fullSchedule])
 
-  console.log(todaySchedule, fullSchedule)
-
   const todayCuratedPatterns = useMemo(() => {
     return todaySchedule.items.filter(item => item.curator)
   }, [todaySchedule])
