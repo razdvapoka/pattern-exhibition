@@ -16,23 +16,26 @@ const Section = ({
   type,
   isInFooter,
 }) => (
-  <section className={cn("px-4", styles.section, className)} id={type}>
+  <section className={cn("px-4 sm:px-2", styles.section, className)} id={type}>
     <div className="my-grid">
-      <div className="col-start-2 col-span-5 relative">
+      <div className="col-start-1 col-span-6 sm:col-span-8 relative sm:text-center">
         <h2 className="text-xl-L uppercase">{title}</h2>
         {subText && (
-          <div className={cn("mt-8 uppercase text-xs-L", styles.subText)}>
+          <div className={cn("mt-8 sm:mt-4 uppercase text-xs-L", styles.subText)}>
             <Markdown>{subText.subText}</Markdown>
           </div>
         )}
         {hasSeparator && (
-          <div className={cn(styles.separator, "absolute h-full top-0 right-0")}>
+          <div className={cn(styles.separator, "absolute h-full top-0 right-0 sm:hidden")}>
             <div className="bg-green" />
             <div className="bg-lightGrey" />
           </div>
         )}
       </div>
-      <div className="col-start-7 col-span-5 text-m-F" style={{ hyphens: "auto" }}>
+      <div
+        className="col-start-7 sm:col-start-1 col-span-6 sm:col-span-8 text-m-F sm:mt-8"
+        style={{ hyphens: "auto" }}
+      >
         <IntlContextConsumer>
           {({ language }) => (
             <div className={styles.sectionText} lang={language}>

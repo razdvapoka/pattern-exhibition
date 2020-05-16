@@ -1,6 +1,6 @@
 import { graphql } from "gatsby"
 import { isSameDay, addMinutes, isWithinInterval } from "date-fns"
-import React, { useCallback, useMemo, useState } from "react"
+import React, { useEffect, useCallback, useMemo, useState } from "react"
 import { useIntl } from "gatsby-plugin-intl"
 import { FixedBottom } from "react-fixed-bottom"
 
@@ -33,16 +33,17 @@ import AssociationsSection from "../components/associations-section"
 import Footer from "../components/footer"
 import VideoNav from "../components/video-nav"
 
-console.log("HEY", FixedBottom)
-
-const getSection = (type, { data, setIsVideoNavVisible, schedule, curatedPatterns }) => {
+const getSection = (
+  type,
+  { data, setIsVideoNavVisible, schedule, curatedPatterns, isPlayerApiReady }
+) => {
   switch (type) {
     case SECTION_ABOUT:
       return {
         component: Section,
         props: {
           hasSeparator: true,
-          className: "mt-24",
+          className: "mt-24 sm:mt-14",
         },
       }
     case SECTION_VIDEO_1:
@@ -50,8 +51,12 @@ const getSection = (type, { data, setIsVideoNavVisible, schedule, curatedPattern
         component: VideoSection,
         props: {
           setIsVideoNavVisible,
+          isPlayerApiReady,
+          videoId: "video-1-iframe",
+          videoSrc: "BF1nWBrOyDg",
         },
       }
+    /*
     case SECTION_SCHEDULE:
       return {
         component: ScheduleSection,
@@ -68,6 +73,8 @@ const getSection = (type, { data, setIsVideoNavVisible, schedule, curatedPattern
         component: VideoSection,
         props: {
           setIsVideoNavVisible,
+          videoId: "video-2-iframe",
+          videoSrc: "BF1nWBrOyDg"
         },
       }
     case SECTION_CURATORS:
@@ -106,18 +113,22 @@ const getSection = (type, { data, setIsVideoNavVisible, schedule, curatedPattern
           associations: data.associations,
         },
       }
+      */
     default:
-      return "section"
+      return {
+        component: "section",
+      }
   }
 }
 
-const Sections = ({ data, setIsVideoNavVisible, schedule, curatedPatterns }) =>
+const Sections = ({ data, setIsVideoNavVisible, schedule, curatedPatterns, isPlayerApiReady }) =>
   data.sections.map((section, sectionIndex) => {
     const { component: SectionComponent, props } = getSection(section.type, {
       data,
       setIsVideoNavVisible,
       schedule,
       curatedPatterns,
+      isPlayerApiReady,
     })
     return <SectionComponent key={sectionIndex} {...section} {...props} />
   })
@@ -126,6 +137,7 @@ const IndexPage = ({ data: { contentfulPage, allContentfulCurator } }) => {
   const intl = useIntl()
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isVideoNavVisible, setIsVideoNavVisible] = useState(true)
+  const [isPlayerApiReady, setIsPlayerApiReady] = useState(false)
 
   const toggleMenu = useCallback(() => {
     setIsMenuOpen(!isMenuOpen)
@@ -213,16 +225,29 @@ const IndexPage = ({ data: { contentfulPage, allContentfulCurator } }) => {
       : null,
   ].filter(Boolean)
 
+  useEffect(() => {
+    const tag = document.createElement("script")
+    tag.src = "https://www.youtube.com/iframe_api"
+    const firstScriptTag = document.getElementsByTagName("script")[0]
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag)
+    window.onYouTubeIframeAPIReady = () => {
+      setIsPlayerApiReady(true)
+    }
+  }, [setIsPlayerApiReady])
+
   return (
     <Layout toggleMenu={toggleMenu} isMenuOpen={isMenuOpen}>
       <SEO title="Home" />
       <Menu sections={contentfulPage.sections} toggleMenu={toggleMenu} isMenuOpen={isMenuOpen} />
       <Intro {...contentfulPage.intro} />
-      <VideoNav isVisible={isVideoNavVisible} setIsVideoNavVisible={setIsVideoNavVisible} />
+      <VideoNav
+        isVisible={isVideoNavVisible}
+        setIsVideoNavVisible={setIsVideoNavVisible}
+        isPlayerApiReady={isPlayerApiReady}
+      />
       <FixedBottom>
         <Marquee items={marqueeItems} />
       </FixedBottom>
-      {/*
       <Sections
         data={contentfulPage}
         schedule={{
@@ -232,8 +257,8 @@ const IndexPage = ({ data: { contentfulPage, allContentfulCurator } }) => {
         }}
         curatedPatterns={curatedPatterns}
         setIsVideoNavVisible={setIsVideoNavVisible}
+        isPlayerApiReady={isPlayerApiReady}
       />
-      */}
       <Footer sections={contentfulPage.sections} credits={contentfulPage.credits} />
     </Layout>
   )

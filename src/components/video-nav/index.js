@@ -6,7 +6,7 @@ import React, {
 import cn from "classnames"
 import styles from "./index.module.styl"
 
-const VideoNav = ({ isVisible, setIsVideoNavVisible }) => {
+const VideoNav = ({ isVisible, setIsVideoNavVisible, isPlayerApiReady }) => {
   //const [player, setPlayer] = useState(null)
 
   const handleNavClick = useCallback(() => {
@@ -19,41 +19,33 @@ const VideoNav = ({ isVisible, setIsVideoNavVisible }) => {
     }
   }, [setIsVideoNavVisible])
 
-  useEffect(
-    () => {
-      const tag = document.createElement("script")
-      tag.src = "https://www.youtube.com/iframe_api"
-
-      const firstScriptTag = document.getElementsByTagName("script")[0]
-      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag)
-
+  useEffect(() => {
+    if (isPlayerApiReady) {
       const onPlayerReady = event => {
         event.target.mute()
         event.target.playVideo()
       }
-      window.onYouTubeIframeAPIReady = function () {
-        new window.YT.Player("navVideo", {
-          height: "100%",
-          width: "100%",
-          videoId: "BF1nWBrOyDg",
-          muted: 1,
-          playerVars: {
-            controls: 0,
-            enablejsapi: 1,
-            modestbranding: 1,
-            rel: 0,
-          },
-          events: {
-            onReady: onPlayerReady,
-          },
-        })
-        // setPlayer(player)
-      }
-    },
-    [
-      //setPlayer
-    ]
-  )
+      new window.YT.Player("navVideo", {
+        height: "100%",
+        width: "100%",
+        videoId: "BF1nWBrOyDg",
+        muted: 1,
+        playerVars: {
+          controls: 0,
+          enablejsapi: 1,
+          modestbranding: 1,
+          rel: 0,
+          playsinline: 1,
+        },
+        events: {
+          onReady: onPlayerReady,
+        },
+      })
+    }
+  }, [
+    //setPlayer
+    isPlayerApiReady,
+  ])
 
   return (
     <button
