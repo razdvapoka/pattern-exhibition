@@ -44,4 +44,7 @@ body
   display: grid
   grid-template-columns: repeat(12, minmax(0, 1fr))
   column-gap: pxToRem(20)
+  +mobile()
+    grid-template-columns: repeat(8, minmax(0, 1fr))
+    column-gap: pxToRem(10)
 

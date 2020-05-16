@@ -27,10 +27,13 @@ a()
   font-size: pxToRem(20)
   line-height: 1
 
-.text-s-F
+text-s-F()
   f()
   font-size: pxToRem(20)
   line-height: 1
+
+.text-s-F
+  text-s-F()
 
 .text-s-L-c
   l()
@@ -133,8 +136,12 @@ a()
   l()
   font-size: pxToRem(167)
   line-height: 0.79
+  +mobile()
+    font-size: pxToRem(43)
 
 .text-xxl-F
   f()
   font-size: pxToRem(167)
   line-height: 0.79
+  +mobile()
+    font-size: pxToRem(43)

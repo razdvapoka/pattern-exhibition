@@ -2,6 +2,7 @@ import { graphql } from "gatsby"
 import { isSameDay, addMinutes, isWithinInterval } from "date-fns"
 import React, { useCallback, useMemo, useState } from "react"
 import { useIntl } from "gatsby-plugin-intl"
+import { FixedBottom } from "react-fixed-bottom"
 
 import {
   SECTION_ABOUT,
@@ -31,6 +32,8 @@ import VideoSection from "@/components/video-section"
 import AssociationsSection from "../components/associations-section"
 import Footer from "../components/footer"
 import VideoNav from "../components/video-nav"
+
+console.log("HEY", FixedBottom)
 
 const getSection = (type, { data, setIsVideoNavVisible, schedule, curatedPatterns }) => {
   switch (type) {
@@ -216,7 +219,10 @@ const IndexPage = ({ data: { contentfulPage, allContentfulCurator } }) => {
       <Menu sections={contentfulPage.sections} toggleMenu={toggleMenu} isMenuOpen={isMenuOpen} />
       <Intro {...contentfulPage.intro} />
       <VideoNav isVisible={isVideoNavVisible} setIsVideoNavVisible={setIsVideoNavVisible} />
-      <Marquee items={marqueeItems} />
+      <FixedBottom>
+        <Marquee items={marqueeItems} />
+      </FixedBottom>
+      {/*
       <Sections
         data={contentfulPage}
         schedule={{
@@ -227,6 +233,7 @@ const IndexPage = ({ data: { contentfulPage, allContentfulCurator } }) => {
         curatedPatterns={curatedPatterns}
         setIsVideoNavVisible={setIsVideoNavVisible}
       />
+      */}
       <Footer sections={contentfulPage.sections} credits={contentfulPage.credits} />
     </Layout>
   )

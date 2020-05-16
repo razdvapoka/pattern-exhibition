@@ -143,32 +143,44 @@ const Canvas = () => {
   )
 }
 
+const Logo = ({ className }) => (
+  <h1 className={cn(styles.logo, "uppercase flex justify-between items-baseline", className)}>
+    <span className="text-xxl-L">
+      <span style={{ letterSpacing: "-0.02em" }}>O</span>
+      <span style={{ letterSpacing: "0.1em" }}>r</span>
+      <span style={{ letterSpacing: "-0.08em" }}>n</span>
+      <span style={{ letterSpacing: "0.05em" }}>a</span>
+      <span style={{ letterSpacing: "0" }}>m</span>
+      <span style={{ letterSpacing: "0" }}>i</span>
+      <span style={{ letterSpacing: "0.06em" }}>k</span>
+      <span style={{ letterSpacing: "0" }}>a</span>
+      &nbsp;&nbsp;
+    </span>{" "}
+    <span className={cn("text-xxl-F relative", styles.live)}>Live</span>
+  </h1>
+)
+
 const Intro = ({ title, liveText, description: { description } }) => {
   return (
     <section className="">
-      <div className={cn("flex flex-col pt-10 h-screen pb-6", styles.introTop)}>
-        <h1 className={cn(styles.logo, "uppercase flex justify-between items-baseline")}>
-          <span className="text-xxl-L">
-            <span style={{ letterSpacing: "-0.02em" }}>O</span>
-            <span style={{ letterSpacing: "0.1em" }}>r</span>
-            <span style={{ letterSpacing: "-0.08em" }}>n</span>
-            <span style={{ letterSpacing: "0.05em" }}>a</span>
-            <span style={{ letterSpacing: "0" }}>m</span>
-            <span style={{ letterSpacing: "0" }}>i</span>
-            <span style={{ letterSpacing: "0.06em" }}>k</span>
-            <span style={{ letterSpacing: "0" }}>a</span>
-            &nbsp;&nbsp;
-          </span>{" "}
-          <span className={cn("text-xxl-F relative", styles.live)}>Live</span>
-        </h1>
-        <div className="flex flex-1 mt-3">
-          <div className="w-1/2">
+      <div
+        className={cn(
+          "flex flex-col pt-10 sm:pt-6 h-screen sm:h-auto pb-6 sm:pb-0",
+          styles.introTop
+        )}
+      >
+        <Logo className="sm:hidden" />
+        <div className="flex sm:flex-col flex-1 mt-3 sm:mt-0">
+          <div className={cn("w-1/2 sm:w-full", styles.canvasBox)}>
             <Canvas />
           </div>
-          <div className="w-1/2 bg-grey p-2 uppercase flex flex-col">
+          <Logo className="hidden sm:flex" />
+          <div
+            className={cn("w-1/2 sm:w-full bg-grey p-2 uppercase flex flex-col", styles.introInfo)}
+          >
             <div className="text-xs-L">{liveText}</div>
             <div className={cn("text-l-F", styles.title)}>{title}</div>
-            <div className={cn("text-xs-L", styles.description)}>
+            <div className={cn("text-xs-L sm:w-3/4", styles.description)}>
               <Markdown>{description}</Markdown>
             </div>
           </div>

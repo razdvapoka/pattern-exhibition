@@ -23,16 +23,18 @@ const ShareButtons = () => (
 )
 
 const Header = ({ siteTitle, toggleMenu }) => (
-  <header className={cn("px-4 fixed top-0 left-0 w-screen my-grid bg-white z-50", styles.header)}>
+  <header
+    className={cn("px-4 sm:px-2 fixed top-0 left-0 w-screen my-grid bg-white z-50", styles.header)}
+  >
     <div className="col-start-1 col-span-6 flex">
-      <div className={cn("mr-2 uppercase", styles.logo)}>
+      <div className={cn("mr-2 uppercase sm:mr-7", styles.logo)}>
         <span className="text-s-L">Орнамика</span>&nbsp;&nbsp;
         <span className={cn("text-s-F inline-block relative", styles.live)}>live</span>
       </div>
       <UserCount />
     </div>
-    <div className="col-start-7 col-span-6 flex justify-between items-center text-xs-L uppercase">
-      <div>
+    <div className="col-start-7 col-span-6 sm:col-span-2 flex justify-between sm:justify-end items-center text-xs-L uppercase">
+      <div className="sm:hidden">
         <IntlContextConsumer>
           {({ languages, language: currentLocale }) =>
             languages.map(language => (
@@ -49,7 +51,7 @@ const Header = ({ siteTitle, toggleMenu }) => (
           }
         </IntlContextConsumer>
       </div>
-      <div className={cn("uppercase relative", styles.share)}>
+      <div className={cn("uppercase relative sm:hidden", styles.share)}>
         <div
           className={cn(
             "opacity-0 flex justify-center absolute left-0 top-0 w-full h-full bg-white",
@@ -62,13 +64,13 @@ const Header = ({ siteTitle, toggleMenu }) => (
         </div>
         <FormattedMessage id="share" />
       </div>
-      <a href={ROUND_TABLE_URL} {...blank()} className="uppercase">
+      <a href={ROUND_TABLE_URL} {...blank()} className="uppercase sm:hidden">
         <FormattedMessage id="roundTable" />
       </a>
-      <a href={FACEBOOK_URL} {...blank()} className="uppercase">
+      <a href={FACEBOOK_URL} {...blank()} className="uppercase sm:hidden">
         FB
       </a>
-      <a href={INSTAGRAM_URL} {...blank()} className="uppercase">
+      <a href={INSTAGRAM_URL} {...blank()} className="uppercase sm:hidden">
         INST
       </a>
       <button className="uppercase" onClick={toggleMenu}>

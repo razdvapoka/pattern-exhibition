@@ -4,10 +4,12 @@ import React from "react"
 import { blank } from "../../utils"
 import Authors from "../authors"
 import Markdown from "../markdown"
+import styles from "./index.module.styl"
+import cn from "classnames"
 
 const FooterMenu = ({ sections }) => (
-  <div className="text-xs-L uppercase mt-40 flex">
-    <div className="w-1/2 bg-yellow pt-4 pl-4 pb-18">
+  <div className="text-xs-L uppercase mt-40 sm:mt-0 flex sm:flex-col">
+    <div className="w-1/2 sm:w-full bg-yellow pt-4 pl-4 sm:pl-2 pb-18">
       <ul>
         {sections
           .filter(section => section.isInFooter)
@@ -20,7 +22,7 @@ const FooterMenu = ({ sections }) => (
           ))}
       </ul>
     </div>
-    <div className="w-1/2 bg-grey pt-4 pl-2">
+    <div className="w-1/2 sm:w-full bg-grey pt-4 pl-2 sm:pb-32">
       <ul>
         <li>
           <a href="https://www.facebook.com/ornamikaproject/" {...blank()}>
@@ -43,7 +45,7 @@ const FooterMenu = ({ sections }) => (
 )
 
 const Credits = ({ credits }) => (
-  <div className="pt-5 pb-14 flex flex-col items-center">
+  <div className="pt-5 sm:pt-2 pb-14 sm:px-2 flex flex-col items-center">
     <ul>
       {credits.map((credit, creditIndex) => (
         <li key={creditIndex} className="mt-6 text-center">
@@ -68,7 +70,12 @@ const Footer = ({ credits, sections }) => (
     <div className="py-7 text-center text-s-F-c uppercase bg-grey">
       <FormattedMessage id="infoPartners" />
     </div>
-    <div className="px-24 flex justify-between text-s-F-c uppercase py-20 bg-lightGrey">
+    <div
+      className={cn(
+        "px-24 sm:px-2 flex sm:flex-col justify-between sm:items-center text-s-F-c uppercase py-20 sm:py-10 bg-lightGrey",
+        styles.partners
+      )}
+    >
       <span>logo</span>
       <span>logo</span>
       <span>logo</span>
@@ -77,7 +84,7 @@ const Footer = ({ credits, sections }) => (
       <span>logo</span>
     </div>
     <div className="flex items-stretch h-screen">
-      <div className="w-1/2 bg-purple flex items-stretch">
+      <div className="w-1/2 sm:w-full bg-purple flex items-stretch">
         <div className="bg-green" style={{ width: "50%" }} />
         <div className="bg-purple" style={{ width: "7.9%" }} />
         <div className="bg-grey" style={{ width: "16.9%" }} />
@@ -85,7 +92,7 @@ const Footer = ({ credits, sections }) => (
         <div className="bg-purple" style={{ width: "2.7%" }} />
         <div className="bg-blue" style={{ width: "17.5%" }} />
       </div>
-      <div className="w-1/2 bg-lightGrey" />
+      <div className="w-1/2 sm:hidden bg-lightGrey" />
     </div>
   </footer>
 )
