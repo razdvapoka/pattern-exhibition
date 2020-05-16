@@ -44,12 +44,12 @@ const Curator = ({ curator, start, end, isInProgress }) => {
   )
 }
 
-const CuratorsSection = ({ curatorDays, ...rest }) => {
+const CuratorsSection = ({ curatedPatterns, ...rest }) => {
   return (
     <Section className="mt-40" {...rest}>
       <div className="flex flex-wrap mt-12">
-        {[...curatorDays, ...curatorDays].map((curatorDay, curatorIndex) => (
-          <Curator key={curatorIndex} {...curatorDay} />
+        {curatedPatterns.map((curatedPattern, curatorIndex) => (
+          <Curator key={curatorIndex} {...curatedPattern} />
         ))}
       </div>
     </Section>

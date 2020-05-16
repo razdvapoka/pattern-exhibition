@@ -32,7 +32,7 @@ import AssociationsSection from "../components/associations-section"
 import Footer from "../components/footer"
 import VideoNav from "../components/video-nav"
 
-const getSection = (type, { data, setIsVideoNavVisible, schedule, curatorDays }) => {
+const getSection = (type, { data, setIsVideoNavVisible, schedule, curatedPatterns }) => {
   switch (type) {
     case SECTION_ABOUT:
       return {
@@ -71,7 +71,7 @@ const getSection = (type, { data, setIsVideoNavVisible, schedule, curatorDays })
       return {
         component: CuratorsSection,
         props: {
-          curatorDays,
+          curatedPatterns,
         },
       }
     case SECTION_ROBOT:
@@ -108,13 +108,13 @@ const getSection = (type, { data, setIsVideoNavVisible, schedule, curatorDays })
   }
 }
 
-const Sections = ({ data, setIsVideoNavVisible, schedule, curatorDays }) =>
+const Sections = ({ data, setIsVideoNavVisible, schedule, curatedPatterns }) =>
   data.sections.map((section, sectionIndex) => {
     const { component: SectionComponent, props } = getSection(section.type, {
       data,
       setIsVideoNavVisible,
       schedule,
-      curatorDays,
+      curatedPatterns,
     })
     return <SectionComponent key={sectionIndex} {...section} {...props} />
   })
@@ -157,25 +157,60 @@ const IndexPage = ({ data: { contentfulPage, allContentfulCurator } }) => {
     [contentfulPage]
   )
 
-  const todaySchedule = useMemo(
-    () =>
-      fullSchedule.find(day => {
-        return isSameDay(new Date(day.start), new Date())
-      }),
-    [fullSchedule]
-  )
+  const todaySchedule = useMemo(() => {
+    return fullSchedule.find(d => {
+      return isSameDay(new Date(d.start), new Date())
+    })
+  }, [fullSchedule])
 
-  const currentPattern = useMemo(() => todaySchedule.items.find(item => item.isInProgress), [
-    todaySchedule,
+  console.log(todaySchedule, fullSchedule)
+
+  const todayCuratedPatterns = useMemo(() => {
+    return todaySchedule.items.filter(item => item.curator)
+  }, [todaySchedule])
+
+  const flatSchedule = useMemo(() => fullSchedule.reduce((fs, day) => [...fs, ...day.items], []), [
+    fullSchedule,
   ])
 
-  const curatorDays = useMemo(
-    () =>
-      fullSchedule.reduce((agg, day) => {
-        return [...agg, ...day.items.filter(item => item.curator)]
-      }, []),
-    [fullSchedule]
-  )
+  const currentPatternIndex = useMemo(() => flatSchedule.findIndex(item => item.isInProgress), [
+    flatSchedule,
+  ])
+
+  const curatedPatterns = useMemo(() => flatSchedule.filter(item => item.curator), [flatSchedule])
+
+  const marqueeItems = [
+    {
+      text: intl.formatMessage({ id: "aboutRobot" }),
+      navText: intl.formatMessage({ id: "moreHintMarquee" }),
+      navHash: "robot",
+    },
+    currentPatternIndex
+      ? {
+          text: intl.formatMessage(
+            { id: "robotDrawing" },
+            { pattern: flatSchedule[currentPatternIndex].externalId }
+          ),
+          navText: intl.formatMessage({ id: "patternHintMarquee" }),
+          navHash: "schedule",
+        }
+      : null,
+    todayCuratedPatterns.length > 0
+      ? {
+          text: intl.formatMessage(
+            {
+              id: "curatorMarquee",
+            },
+            {
+              curator: todayCuratedPatterns[0].curator.name,
+              pattern: todayCuratedPatterns[0].pattern.externalId,
+            }
+          ),
+          navText: intl.formatMessage({ id: "moreHintMarquee" }),
+          navHash: "schedule",
+        }
+      : null,
+  ].filter(Boolean)
 
   return (
     <Layout toggleMenu={toggleMenu} isMenuOpen={isMenuOpen}>
@@ -183,44 +218,15 @@ const IndexPage = ({ data: { contentfulPage, allContentfulCurator } }) => {
       <Menu sections={contentfulPage.sections} toggleMenu={toggleMenu} isMenuOpen={isMenuOpen} />
       <Intro {...contentfulPage.intro} />
       <VideoNav isVisible={isVideoNavVisible} setIsVideoNavVisible={setIsVideoNavVisible} />
-      <Marquee
-        items={[
-          {
-            text: intl.formatMessage({ id: "aboutRobot" }),
-            navText: intl.formatMessage({ id: "moreHintMarquee" }),
-            navHash: "robot",
-          },
-          currentPattern
-            ? {
-                text: intl.formatMessage(
-                  { id: "robotDrawing" },
-                  { pattern: currentPattern.externalId }
-                ),
-                navText: intl.formatMessage({ id: "patternHintMarquee" }),
-                navHash: "schedule",
-              }
-            : null,
-          curatorDays.length > 0
-            ? {
-                text: intl.formatMessage(
-                  {
-                    id: "curatorMarquee",
-                  },
-                  {
-                    curator: curatorDays[0].curator.name,
-                    pattern: curatorDays[0].pattern.externalId,
-                  }
-                ),
-                navText: intl.formatMessage({ id: "moreHintMarquee" }),
-                navHash: "schedule",
-              }
-            : null,
-        ].filter(Boolean)}
-      />
+      <Marquee items={marqueeItems} />
       <Sections
         data={contentfulPage}
-        schedule={{ items: todaySchedule.items, lastUpdate: todaySchedule.updatedAt }}
-        curatorDays={curatorDays}
+        schedule={{
+          items: flatSchedule,
+          todaySchedule,
+          currentPatternIndex,
+        }}
+        curatedPatterns={curatedPatterns}
         setIsVideoNavVisible={setIsVideoNavVisible}
       />
       <Footer sections={contentfulPage.sections} credits={contentfulPage.credits} />
@@ -307,6 +313,7 @@ export const query = graphql`
             }
           }
           curator {
+            id
             name
             nameInstrumental
             url

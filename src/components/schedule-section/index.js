@@ -169,7 +169,7 @@ const ScheduleItem = ({ pattern, curator, start, end, isInProgress }) => {
       </div>
       <div className={cn("col-start-7 col-span-1 text-xs-F uppercase", styles.patternExternalId)}>
         {isInProgress ? (
-          <span className={cn("text-red relative", styles.patternInProgress)}>
+          <span className={cn("relative", styles.patternInProgress)}>
             <FormattedMessage id="inProgress" />
           </span>
         ) : (
@@ -192,22 +192,40 @@ const ScheduleItem = ({ pattern, curator, start, end, isInProgress }) => {
   )
 }
 
-const ScheduleSection = ({ schedule, updatedAt = new Date(), ...rest }) => {
-  return schedule ? (
+const ScheduleSection = ({
+  schedule: { currentPatternIndex, items, todaySchedule },
+  updatedAt = new Date(),
+  ...rest
+}) => {
+  const scheduleItems = currentPatternIndex
+    ? items.slice(currentPatternIndex, currentPatternIndex + 10)
+    : todaySchedule.items
+
+  return (
     <Section className="bg-blackBg text-white mt-26 pt-10" {...rest}>
       <div className={cn("mt-27", styles.scheduleGrid)}>
-        {schedule.items.map((item, itemIndex) => (
+        {scheduleItems.map((item, itemIndex) => (
           <ScheduleItem key={itemIndex} {...item} />
         ))}
       </div>
       <div className="flex justify-center text-xs-alt text-xs-F text-white opacity-50">
         <div className="mt-8 mb-10">
           <FormattedMessage id="lastUpdate" />
-          {` ${format(new Date(schedule.lastUpdate), "dd.MM.yy HH:mm")}`}
+          {` ${format(new Date(todaySchedule.updatedAt), "dd.MM.yy HH:mm")}`}
         </div>
       </div>
     </Section>
-  ) : null
+  )
 }
+
+/*
+const ScheduleSectionClientOnly = props => (
+  <ClientOnly>
+    <ScheduleSection {...props} />
+  </ClientOnly>
+)
+
+export default ScheduleSectionClientOnly
+*/
 
 export default ScheduleSection
