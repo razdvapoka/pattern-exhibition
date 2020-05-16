@@ -1,8 +1,7 @@
-import React, { useState, useEffect, useCallback, useRef } from "react"
+import React, { useEffect, useRef } from "react"
 import cn from "classnames"
 import { useMeasure } from "react-use"
 
-import canvaPlaceholderImage from "@/images/canvas-placeholder.jpg"
 import { Noise } from "noisejs"
 
 import Authors from "../authors"
@@ -11,24 +10,27 @@ import styles from "./index.module.styl"
 import { ROW_COUNT, COLUMN_COLORS, SEPARATORS } from "./consts"
 
 const sequence = length => Array.from(Array(length).keys())
+const tail = arr => arr[arr.length - 1]
+const sum = arr => arr.reduce((s, i) => s + i, 0)
 
 let rafHandle
 let separators = [[...SEPARATORS], [...SEPARATORS], [...SEPARATORS]]
+let colors = [[...COLUMN_COLORS], [...COLUMN_COLORS], [...COLUMN_COLORS]]
 let canvas
 let canvasContext
 const noises = sequence(ROW_COUNT).map(_ => new Noise(Math.random()))
+const noises2 = sequence(ROW_COUNT).map((_, i) => separators[i].map(_ => new Noise(Math.random())))
+let hoveredRowIndex
 
-const CanvasPlaceholder = props => {
-  return (
-    <div
-      style={{
-        backgroundImage: `url(${canvaPlaceholderImage})`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-      }}
-      {...props}
-    />
-  )
+const handleMouseMove = e => {}
+
+const handleClick = () => {
+  if (rafHandle) {
+    cancelAnimationFrame(rafHandle)
+    rafHandle = null
+  } else {
+    rafHandle = requestAnimationFrame(animate)
+  }
 }
 
 const drawScene = () => {
@@ -39,7 +41,7 @@ const drawScene = () => {
     for (let i = 0; i < ROW_COUNT; i++) {
       const rowSeps = separators[i]
       const lastColFr = 1 - rowSeps.reduce((s, i) => s + i, 0)
-      const cols = COLUMN_COLORS.reduce(
+      const cols = colors[i].reduce(
         ({ rects, offset }, color, colorIndex) => {
           const rect = {
             x: Math.floor(offset),
@@ -64,10 +66,42 @@ const drawScene = () => {
 }
 
 const animate = time => {
-  noises.forEach((noise, i) => {
-    const n = noise.simplex2(time, 0) * 0.005
-    separators[i] = separators[i].map(s => s + n)
+  // noises.forEach((noise, i) => {
+  //   const n = noise.simplex2(time / 1000, 0) * 0.003
+  //   separators[i] = separators[i].map(s => s + n)
+  // })
+
+  separators = separators
+    .map((sr, i) => {
+      return sr.map((s, j) => {
+        return s + ((noises2[i][j].simplex2(time / 1000, 0) + 1) / 2) * (0.005 - i * 0.001)
+      })
+    })
+    .map((sr, i) => {
+      const rowSum = sum(sr)
+      const isOverflown = rowSum > 1
+      const nsr = isOverflown ? [rowSum - 1, ...sr.slice(0, sr.length - 1)] : sr
+      if (isOverflown) {
+        colors[i] = [tail(colors[i]), ...colors[i].slice(0, colors[i].length - 1)]
+      }
+      return nsr
+    })
+
+  /*
+  noises2.forEach((ns, i) => {
+    ns.forEach((n, j) => {
+      let x = separators[i][j] + ((n.simplex2(time / 1000, 0) + 1) / 2) * 0.005
+      if (i === 0) {
+        console.log(i, j, x)
+      }
+      if (x > 1) {
+        const oldColors = colors[i]
+        colors[i] = [tail(oldColors), ...oldColors.slice(0, oldColors.length - 2)]
+      }
+      separators[i][j] = x % 1
+    })
   })
+  */
   drawScene()
   rafHandle = requestAnimationFrame(animate)
 }
@@ -81,10 +115,12 @@ const Canvas = () => {
       const dpr = window.devicePixelRatio || 1
       canvas.width = width * dpr
       canvas.height = height * dpr
+      drawScene()
+      /*
       if (!rafHandle) {
-        drawScene()
-        //rafHandle = requestAnimationFrame(animate)
+        rafHandle = requestAnimationFrame(animate)
       }
+      */
     }
   }, [width, height])
 
@@ -98,7 +134,11 @@ const Canvas = () => {
 
   return (
     <div className="h-full relative" ref={ref}>
-      <canvas className="bg-black absolute left-0 top-0 w-full h-full" ref={canvasRef} />
+      <canvas
+        className="bg-black absolute left-0 top-0 w-full h-full"
+        ref={canvasRef}
+        onClick={handleClick}
+      />
     </div>
   )
 }
