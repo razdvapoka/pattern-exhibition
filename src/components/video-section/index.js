@@ -13,6 +13,7 @@ const VideoSection = ({
   isPlayerApiReady,
   videoId,
   videoSrc,
+  className,
   ...rest
 }) => {
   const intersectionRef = useRef(null)
@@ -62,7 +63,7 @@ const VideoSection = ({
   }, [isPlayerApiReady, setPlayer, videoId, videoSrc])
 
   return (
-    <section className="px-4 sm:px-0 mt-24 sm:mt-8">
+    <section className={cn("px-4 sm:px-0", className)}>
       <div className={cn(styles.videoSection, "relative")} id={type} {...rest}>
         <div
           ref={intersectionRef}

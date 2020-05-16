@@ -8,7 +8,7 @@ import styles from "./index.module.styl"
 import cn from "classnames"
 
 const FooterMenu = ({ sections }) => (
-  <div className="text-xs-L uppercase mt-40 sm:mt-0 flex sm:flex-col">
+  <div className="text-xs-L uppercase mt-40 sm:mt-24 flex sm:flex-col">
     <div className="w-1/2 sm:w-full bg-yellow pt-4 pl-4 sm:pl-2 pb-18">
       <ul>
         {sections

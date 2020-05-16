@@ -50,6 +50,7 @@ const getSection = (
       return {
         component: VideoSection,
         props: {
+          className: "mt-24 sm:mt-8",
           setIsVideoNavVisible,
           isPlayerApiReady,
           videoId: "video-1-iframe",
@@ -60,36 +61,36 @@ const getSection = (
       return {
         component: SubscribeSection,
       }
-    /*
-    case SECTION_SCHEDULE:
+    case SECTION_ROBOT:
       return {
-        component: ScheduleSection,
+        component: RobotSection,
         props: {
-          schedule,
+          images: data.robotImages,
         },
       }
     case SECTION_VIDEO_2:
       return {
         component: VideoSection,
         props: {
+          className: "mt-24 sm:mt-14",
           setIsVideoNavVisible,
           isPlayerApiReady,
           videoId: "video-2-iframe",
           videoSrc: "BF1nWBrOyDg",
         },
       }
-    case SECTION_CURATORS:
+    case SECTION_ROUND_TABLE:
       return {
-        component: CuratorsSection,
+        component: Section,
         props: {
-          curatedPatterns,
+          className: "mt-40 sm:mt-20",
         },
       }
-    case SECTION_ROBOT:
+    case SECTION_ASSOCIATIONS:
       return {
-        component: RobotSection,
+        component: AssociationsSection,
         props: {
-          images: data.robotImages,
+          associations: data.associations,
         },
       }
     case SECTION_GALLERY:
@@ -99,19 +100,19 @@ const getSection = (
           items: data.gallery,
         },
       }
-    case SECTION_ROUND_TABLE:
+    /*
+    case SECTION_SCHEDULE:
       return {
-        component: Section,
+        component: ScheduleSection,
         props: {
-          className: "mt-40",
+          schedule,
         },
       }
-    case SECTION_ASSOCIATIONS:
+    case SECTION_CURATORS:
       return {
-        component: AssociationsSection,
+        component: CuratorsSection,
         props: {
-          className: "mt-24",
-          associations: data.associations,
+          curatedPatterns,
         },
       }
       */
