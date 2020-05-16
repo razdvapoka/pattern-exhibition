@@ -56,7 +56,6 @@ const getSection = (
           videoSrc: "BF1nWBrOyDg",
         },
       }
-    /*
     case SECTION_SCHEDULE:
       return {
         component: ScheduleSection,
@@ -73,8 +72,9 @@ const getSection = (
         component: VideoSection,
         props: {
           setIsVideoNavVisible,
+          isPlayerApiReady,
           videoId: "video-2-iframe",
-          videoSrc: "BF1nWBrOyDg"
+          videoSrc: "BF1nWBrOyDg",
         },
       }
     case SECTION_CURATORS:
@@ -113,7 +113,8 @@ const getSection = (
           associations: data.associations,
         },
       }
-      */
+    /*
+     */
     default:
       return {
         component: "section",
@@ -135,6 +136,7 @@ const Sections = ({ data, setIsVideoNavVisible, schedule, curatedPatterns, isPla
 
 const IndexPage = ({ data: { contentfulPage, allContentfulCurator } }) => {
   const intl = useIntl()
+  const [currentPatternIndex, setCurrentPatternIndex] = useState(false)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isVideoNavVisible, setIsVideoNavVisible] = useState(true)
   const [isPlayerApiReady, setIsPlayerApiReady] = useState(false)
@@ -151,7 +153,6 @@ const IndexPage = ({ data: { contentfulPage, allContentfulCurator } }) => {
           ({ passed, items }, item) => {
             const start = addMinutes(new Date(day.start), passed * 60)
             const end = addMinutes(new Date(day.start), (passed + item.duration) * 60)
-            const isInProgress = isWithinInterval(new Date(), { start, end })
 
             return {
               passed: passed + item.duration,
@@ -161,7 +162,6 @@ const IndexPage = ({ data: { contentfulPage, allContentfulCurator } }) => {
                   ...item,
                   start,
                   end,
-                  isInProgress,
                 },
               ],
             }
@@ -184,10 +184,6 @@ const IndexPage = ({ data: { contentfulPage, allContentfulCurator } }) => {
 
   const flatSchedule = useMemo(() => fullSchedule.reduce((fs, day) => [...fs, ...day.items], []), [
     fullSchedule,
-  ])
-
-  const currentPatternIndex = useMemo(() => flatSchedule.findIndex(item => item.isInProgress), [
-    flatSchedule,
   ])
 
   const curatedPatterns = useMemo(() => flatSchedule.filter(item => item.curator), [flatSchedule])
@@ -234,6 +230,13 @@ const IndexPage = ({ data: { contentfulPage, allContentfulCurator } }) => {
       setIsPlayerApiReady(true)
     }
   }, [setIsPlayerApiReady])
+
+  useEffect(() => {
+    const currentPatternIndex = flatSchedule.findIndex(({ start, end }) =>
+      isWithinInterval(new Date(), { start, end })
+    )
+    setCurrentPatternIndex(currentPatternIndex)
+  }, [flatSchedule, setCurrentPatternIndex])
 
   return (
     <Layout toggleMenu={toggleMenu} isMenuOpen={isMenuOpen}>

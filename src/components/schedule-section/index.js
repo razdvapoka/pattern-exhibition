@@ -1,5 +1,5 @@
 import { FormattedMessage } from "gatsby-plugin-intl"
-import { format } from "date-fns"
+import { format, isWithinInterval } from "date-fns"
 import React, { useEffect, useRef, useState, useCallback } from "react"
 import cn from "classnames"
 
@@ -72,7 +72,8 @@ const PatternCurator = ({ curator }) => {
   )
 }
 
-const ScheduleItem = ({ pattern, curator, start, end, isInProgress }) => {
+const ScheduleItem = ({ pattern, curator, start, end }) => {
+  const isInProgress = isWithinInterval(new Date(), { start, end })
   const ref = useRef(null)
   const [isOpen, setIsOpen] = useState(false)
   const [realHeight, setRealHeight] = useState(0)
@@ -217,15 +218,5 @@ const ScheduleSection = ({
     </Section>
   )
 }
-
-/*
-const ScheduleSectionClientOnly = props => (
-  <ClientOnly>
-    <ScheduleSection {...props} />
-  </ClientOnly>
-)
-
-export default ScheduleSectionClientOnly
-*/
 
 export default ScheduleSection

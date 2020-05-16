@@ -59,7 +59,7 @@ const VideoSection = ({
         },
       })
     }
-  }, [isPlayerApiReady, setPlayer])
+  }, [isPlayerApiReady, setPlayer, videoId, videoSrc])
 
   return (
     <section className="px-4 sm:px-0 mt-24 sm:mt-8">
