@@ -200,7 +200,9 @@ const ScheduleSection = ({
 }) => {
   const scheduleItems = currentPatternIndex
     ? items.slice(currentPatternIndex, currentPatternIndex + 10)
-    : todaySchedule.items
+    : todaySchedule
+    ? todaySchedule.items
+    : []
 
   return (
     <Section className="bg-blackBg text-white mt-26 pt-10" {...rest}>
@@ -212,7 +214,10 @@ const ScheduleSection = ({
       <div className="flex justify-center text-xs-alt text-xs-F text-white opacity-50">
         <div className="mt-8 mb-10">
           <FormattedMessage id="lastUpdate" />
-          {` ${format(new Date(todaySchedule.updatedAt), "dd.MM.yy HH:mm")}`}
+          {` ${format(
+            todaySchedule ? new Date(todaySchedule.updatedAt) : new Date(),
+            "dd.MM.yy HH:mm"
+          )}`}
         </div>
       </div>
     </Section>

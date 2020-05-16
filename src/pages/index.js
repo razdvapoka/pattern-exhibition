@@ -56,16 +56,16 @@ const getSection = (
           videoSrc: "BF1nWBrOyDg",
         },
       }
+    case SECTION_SUBSCRIBE:
+      return {
+        component: SubscribeSection,
+      }
     case SECTION_SCHEDULE:
       return {
         component: ScheduleSection,
         props: {
           schedule,
         },
-      }
-    case SECTION_SUBSCRIBE:
-      return {
-        component: SubscribeSection,
       }
     case SECTION_VIDEO_2:
       return {
@@ -113,8 +113,6 @@ const getSection = (
           associations: data.associations,
         },
       }
-    /*
-     */
     default:
       return {
         component: "section",
@@ -179,7 +177,7 @@ const IndexPage = ({ data: { contentfulPage, allContentfulCurator } }) => {
   }, [fullSchedule])
 
   const todayCuratedPatterns = useMemo(() => {
-    return todaySchedule.items.filter(item => item.curator)
+    return todaySchedule ? todaySchedule.items.filter(item => item.curator) : []
   }, [todaySchedule])
 
   const flatSchedule = useMemo(() => fullSchedule.reduce((fs, day) => [...fs, ...day.items], []), [
