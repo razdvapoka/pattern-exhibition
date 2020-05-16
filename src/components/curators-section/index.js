@@ -27,7 +27,7 @@ const Curator = ({ curator, start, end, isInProgress }) => {
               {format(start, "HH:mm")}-{format(end, "HH:mm")}
             </div>
           </div>
-          <div className="pt-10 pl-2 pr-12 pb-3">
+          <div className="pt-10 pl-2 pr-12 pb-4">
             <div className={cn("text-m-F uppercase", styles.name)}>{curator.name}</div>
             <Markdown className={cn("text-xs-F-h overflow-hidden", styles.description)}>
               {curator.description.description}
