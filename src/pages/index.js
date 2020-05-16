@@ -100,7 +100,6 @@ const getSection = (
           items: data.gallery,
         },
       }
-    /*
     case SECTION_SCHEDULE:
       return {
         component: ScheduleSection,
@@ -115,7 +114,6 @@ const getSection = (
           curatedPatterns,
         },
       }
-      */
     default:
       return {
         component: "section",
