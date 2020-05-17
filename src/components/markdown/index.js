@@ -2,10 +2,11 @@ import React from "react"
 import ReactMarkdown from "react-markdown"
 import styles from "./index.module.styl"
 import remarkTypograph from "@mavrin/remark-typograf"
+import cn from "classnames"
 
 const isExternal = url => !url.startsWith("#")
 const renderers = {
-  link: ({ children, title, href }) => {
+  link: ({ children, title, href, ...rest }) => {
     return (
       <a
         href={title || href}
@@ -36,9 +37,9 @@ const renderers = {
   },
 }
 
-const Markdown = ({ children, ...rest }) => (
+const Markdown = ({ children, className, ...rest }) => (
   <ReactMarkdown
-    className={styles.markdown}
+    className={cn(styles.markdown, className)}
     source={children}
     parserOptions={{ commonmark: true, footnotes: true }}
     renderers={renderers}

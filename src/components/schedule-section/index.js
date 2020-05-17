@@ -149,7 +149,7 @@ const ScheduleItem = ({ pattern, curator, start, end }) => {
         ) : (
           <span>
             <FormattedMessage id="pattern" />
-            {` #${pattern.externalId}`}
+            {` ${pattern.externalId}`}
           </span>
         )}
       </div>

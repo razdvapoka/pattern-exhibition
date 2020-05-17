@@ -61,7 +61,7 @@ const Curator = ({ isMobile, curator, start, end, isInProgress, index }) => {
               {curator.description.description}
             </Markdown>
             {curator.url && (
-              <div className={cn("text-xs-L uppercase mt-6", styles.more)}>
+              <div className={cn("text-xs-L uppercase mt-6 hover:underline", styles.more)}>
                 <FormattedMessage id="curatorMore" />
               </div>
             )}
