@@ -181,9 +181,9 @@ const ScheduleItem = ({ pattern, curator, start, end }) => {
         <div className={cn("pb-7", styles.patternTags)}>
           {curator ? (
             <PatternCurator curator={curator} isOpen={isOpen} />
-          ) : (
+          ) : pattern.tags ? (
             <PatternTags tags={pattern.tags} isOpen={isOpen} />
-          )}
+          ) : null}
         </div>
       </div>
       <div className={cn("col-start-12 col-span-1 flex justify-end pt-8")}>
