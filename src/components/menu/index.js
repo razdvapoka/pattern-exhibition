@@ -24,10 +24,13 @@ const Menu = ({ sections, toggleMenu, scrollLock = true, isMenuOpen }) => {
     const el = ref.current
     if (el && scrollLock) {
       if (isMenuOpen) {
-        disableBodyScroll(ref.current)
+        disableBodyScroll(el)
       } else {
-        enableBodyScroll(ref.current)
+        enableBodyScroll(el)
       }
+    }
+    return () => {
+      enableBodyScroll(el)
     }
   }, [isMenuOpen, ref, scrollLock])
 
