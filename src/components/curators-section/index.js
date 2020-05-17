@@ -111,7 +111,7 @@ const CuratorsSection = ({ curatedPatterns, ...rest }) => {
           <Curator isMobile key={curatorIndex} index={curatorIndex} {...curatedPattern} />
         ))}
       </div>
-      <div className="flex bg-lightGrey mt-3">
+      <div className="bg-lightGrey mt-3 hidden sm:flex">
         <div
           className={cn(styles.slider, "bg-grey", {
             [styles.sliderFirst]: currentIndex === 0,
