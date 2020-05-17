@@ -18,7 +18,7 @@ const Section = ({
 }) => (
   <section className={cn("px-4 sm:px-2", styles.section, className)} id={type}>
     <div className="my-grid">
-      <div className="col-start-1 col-span-6 sm:col-span-8 relative sm:text-center">
+      <div className="col-start-2 sm:col-start-1 col-span-5 sm:col-span-8 relative sm:text-center">
         <h2 className="text-xl-L uppercase">{title}</h2>
         {subText && (
           <div className={cn("mt-8 sm:mt-4 uppercase text-xs-L", styles.subText)}>
