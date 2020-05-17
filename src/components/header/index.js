@@ -9,6 +9,7 @@ import UserCount from "@/components/user-count"
 import { FACEBOOK_URL, INSTAGRAM_URL, ROUND_TABLE_URL } from "../../consts"
 import { blank } from "../../utils"
 import ClientOnly from "../client-only"
+import LangSwitcher from "../lang-switcher"
 import styles from "./index.module.styl"
 
 const ShareButtons = () => (
@@ -34,23 +35,7 @@ const Header = ({ siteTitle, toggleMenu }) => (
       <UserCount />
     </div>
     <div className="col-start-7 col-span-6 sm:col-span-2 flex justify-between sm:justify-end items-center text-xs-L uppercase">
-      <div className="sm:hidden">
-        <IntlContextConsumer>
-          {({ languages, language: currentLocale }) =>
-            languages.map(language => (
-              <button
-                className={cn("uppercase mr-1", {
-                  "underline pointer-events-none": currentLocale === language,
-                })}
-                key={language}
-                onClick={() => changeLocale(language)}
-              >
-                {language}
-              </button>
-            ))
-          }
-        </IntlContextConsumer>
-      </div>
+      <LangSwitcher className="sm:hidden" />
       <div className={cn("uppercase relative sm:hidden", styles.share)}>
         <div
           className={cn(

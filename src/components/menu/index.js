@@ -15,6 +15,7 @@ import {
   SURVEY_URL,
 } from "../../consts"
 import { blank } from "../../utils"
+import LangSwitcher from "../lang-switcher"
 import styles from "./index.module.styl"
 
 const Menu = ({ sections, toggleMenu, scrollLock = true, isMenuOpen }) => {
@@ -39,7 +40,7 @@ const Menu = ({ sections, toggleMenu, scrollLock = true, isMenuOpen }) => {
         isMenuOpen ? styles.menuOpen : styles.menuClosed
       )}
     >
-      <div className={cn("px-4", styles.menu)}>
+      <div className={cn("px-4 sm:px-2 sm:pb-10", styles.menu)}>
         <div className={cn("flex justify-between items-center text-xs-L uppercase", styles.top)}>
           <div>
             <FormattedMessage id="menu" />
@@ -49,7 +50,7 @@ const Menu = ({ sections, toggleMenu, scrollLock = true, isMenuOpen }) => {
             <X className={cn("ml-1", styles.close)} />
           </button>
         </div>
-        <ul className="text-xl-L-c uppercase mt-16">
+        <ul className="text-xl-L-c uppercase mt-16 sm:mt-7">
           {sections
             .filter(s => s.isInFooter || s.type === SECTION_ROUND_TABLE)
             .map((section, sectionIndex) => (
@@ -60,27 +61,28 @@ const Menu = ({ sections, toggleMenu, scrollLock = true, isMenuOpen }) => {
               </li>
             ))}
         </ul>
-        <ul className="mt-12 text-m-L-cc uppercase">
+        <LangSwitcher className="hidden sm:block mt-6 text-m-L-cc" />
+        <ul className="mt-12 sm:mt-7 text-m-L-cc uppercase">
           <li>
             <a href={BUY_PATTERN_URL} {...blank()}>
               <FormattedMessage id="buyPattern" />
               <span className="text-m-A-cc"> ↗</span>
             </a>
           </li>
-          <li className="mt-4">
+          <li className="mt-4 sm:mt-3">
             <a href={ROUND_TABLE_URL} {...blank()}>
               <FormattedMessage id="roundTableSignUp" />
               <span className="text-m-A-cc"> ↗</span>
             </a>
           </li>
-          <li className="mt-4">
+          <li className="mt-4 sm:mt-3">
             <a href={SURVEY_URL} {...blank()}>
               <FormattedMessage id="survey" />
               <span className="text-m-A-cc"> ↗</span>
             </a>
           </li>
         </ul>
-        <div className="mt-16 flex justify-center text-xs-L uppercase">
+        <div className="mt-16 sm:mt-8 flex justify-center text-xs-L uppercase">
           <a href={FACEBOOK_URL} {...blank()}>
             facebook
           </a>
