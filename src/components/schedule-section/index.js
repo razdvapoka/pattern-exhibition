@@ -205,7 +205,7 @@ const ScheduleSection = ({
     : []
 
   return (
-    <Section className="bg-blackBg text-white mt-26 pt-10" {...rest}>
+    <Section className="bg-blackBg text-white mt-26 pt-10 sm:hidden" {...rest}>
       <div className={cn("mt-27", styles.scheduleGrid)}>
         {scheduleItems.map((item, itemIndex) => (
           <ScheduleItem key={itemIndex} {...item} />

@@ -7,11 +7,32 @@
 .name
   height: pxToRem(105)
 
+.curator
+  +mobile()
+    width: (350 / 375 * 100)%
+
 .curator, .time
   transition: background-color 0.2s ease
 
-.curator:hover
+.curatorHover:hover
   background-color: #F5574F
   .time
     background-color: #F7CFCB
 
+.curators
+  +mobile()
+    margin-left: pxToRem(-10)
+    margin-right: pxToRem(-10)
+
+.slider
+  height: pxToRem(6)
+  border-radius: pxToRem(90)
+  transition: transform 0.1s ease
+
+.sliderFirst
+  border-top-left-radius: 0
+  border-bottom-left-radius: 0
+
+.sliderLast
+  border-top-right-radius: 0
+  border-bottom-right-radius: 0
