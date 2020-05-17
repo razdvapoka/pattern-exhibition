@@ -48,7 +48,16 @@ module.exports = {
         printRejected: true, // Print removed selectors and processed file names
         // develop: true, // Enable while using `gatsby develop`
         tailwind: true, // Enable tailwindcss support
-        // whitelist: ['whitelist'], // Don't remove this selector
+        whitelist: [
+          "sm:bg-plumPale",
+          "sm:bg-plum",
+          "sm:bg-tomatoPale",
+          "sm:bg-tomato",
+          "sm:bg-deepBluePale",
+          "sm:bg-deepBlue",
+          "sm:bg-plantPale",
+          "sm:bg-plant",
+        ], // Don't remove this selector
         ignore: [
           "/node_modules/defaults.css/defaults.css",
           "src/components/markdown/index.module.styl",
