@@ -1,8 +1,10 @@
 .scheduleItem
-  column-gap: pxToRem(20)
   height: pxToRem(100)
   transition: height 0.3s ease, color 0.2s ease, background-color 0.2s ease
   outline: none !important
+  +mobile()
+    display: block !important
+    height: pxToRem(85)
 
 .pattern
   &Thumbnail
@@ -10,12 +12,23 @@
     height: pxToRem(60)
     border-radius: pxToRem(3)
     object-fit: cover
+    +mobile()
+      width: pxToRem(27)
+      height: pxToRem(27)
+  &TitleM
+    width: pxToRem(230)
   &Title
     padding-top: pxToRem(41)
+    +mobile()
+      padding-top: pxToRem(36)
   &ExternalId
     padding-top: pxToRem(44)
+    +mobile()
+      padding-top: 0
   &InProgress
     padding-left: pxToRem(10)
+    +mobile()
+      display: none
   &InProgress::before
     position: absolute
     left: 0
@@ -34,18 +47,32 @@
     white-space: nowrap
     margin-right: pxToRem(4)
     margin-bottom: pxToRem(4)
+    +mobile()
+      padding: pxToRem(4) pxToRem(8)
   &Tags
     padding-top: pxToRem(39)
+    +mobile()
+      padding-top: 0
 
 .icon
   &Plus
+  &PlusRotated
+    transition: transform 0.2s ease
     width: pxToRem(19)
     height: pxToRem(19)
+    +mobile()
+      width: pxToRem(10)
+      height: pxToRem(10)
+  &PlusRotated
+    transform: rotate(45deg)
   &X
     width: pxToRem(14)
     height: pxToRem(14)
     margin-right: pxToRem(2.5)
     margin-top: pxToRem(2.5)
+    +mobile()
+      width: pxToRem(10)
+      height: pxToRem(10)
 
 .playButton
   width: pxToRem(16)
@@ -54,3 +81,9 @@
 .scheduleGrid
   margin-left: pxToRem(-20)
   margin-right: pxToRem(-20)
+  +mobile()
+    margin-left: pxToRem(-10)
+    margin-right: pxToRem(-10)
+
+.learnMore
+  transform: translateY(pxToRem(-3))

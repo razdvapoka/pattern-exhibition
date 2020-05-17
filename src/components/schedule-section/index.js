@@ -86,9 +86,11 @@ const ScheduleItem = ({ pattern, curator, start, end }) => {
   const updateRealHeight = useCallback(() => {
     const titleCol = ref.current.querySelector(".pattern-title-column")
     const tagsCol = ref.current.querySelector(".pattern-tags-column")
+    const mobileItem = ref.current.querySelector(".mobile-schedule-item")
     const titleColRect = titleCol.getBoundingClientRect()
     const tagsColRect = tagsCol.getBoundingClientRect()
-    const maxHeight = Math.max(titleColRect.height, tagsColRect.height)
+    const mobileItemRect = mobileItem.getBoundingClientRect()
+    const maxHeight = Math.max(titleColRect.height, tagsColRect.height, mobileItemRect.height)
     setRealHeight(maxHeight)
   }, [ref, setRealHeight])
 
@@ -117,7 +119,7 @@ const ScheduleItem = ({ pattern, curator, start, end }) => {
       ref={ref}
       className={cn(
         styles.scheduleItem,
-        "overflow-hidden px-4 my-grid cursor-pointer text-greyText hover:text-white",
+        "overflow-hidden px-4 sm:px-2 my-grid cursor-pointer text-greyText hover:text-white",
         curator || isHovered ? "bg-greyBg" : "bg-blackBg"
       )}
       role="button"
@@ -134,14 +136,19 @@ const ScheduleItem = ({ pattern, curator, start, end }) => {
           : {}
       }
     >
-      <div className="col-start-1 col-span-1 p-4 flex justify-center">
+      <div className="col-start-1 col-span-1 p-4 flex justify-center sm:hidden">
         <img
           className={styles.patternThumbnail}
           src={pattern.thumbnail.fixed.src}
           alt="pattern thumbnail"
         />
       </div>
-      <div className={cn("col-start-2 col-span-1 text-xs-L uppercase", styles.patternExternalId)}>
+      <div
+        className={cn(
+          "col-start-2 col-span-1 text-xs-L uppercase sm:hidden",
+          styles.patternExternalId
+        )}
+      >
         {curator ? (
           <FormattedMessage id="curatedPattern" />
         ) : pattern.isMosaic ? (
@@ -153,7 +160,7 @@ const ScheduleItem = ({ pattern, curator, start, end }) => {
           </span>
         )}
       </div>
-      <div className={cn("col-start-3 col-span-3 text-xs-F px-2 pattern-title-column")}>
+      <div className={cn("col-start-3 col-span-3 text-xs-F px-2 pattern-title-column sm:hidden")}>
         <div className={cn(styles.patternTitle, "pb-7")}>
           <PatternTitle isHovered={isHovered} title={pattern.title} />
           <a
@@ -165,10 +172,16 @@ const ScheduleItem = ({ pattern, curator, start, end }) => {
             }}
           >
             <FormattedMessage id={curator ? "learnMore" : "openPattern"} />
+            <span className="text-xs-A"> ↗</span>
           </a>
         </div>
       </div>
-      <div className={cn("col-start-7 col-span-1 text-xs-F uppercase", styles.patternExternalId)}>
+      <div
+        className={cn(
+          "col-start-7 col-span-1 text-xs-F uppercase sm:hidden",
+          styles.patternExternalId
+        )}
+      >
         {isInProgress ? (
           <span className={cn("relative", styles.patternInProgress)}>
             <FormattedMessage id="inProgress" />
@@ -177,7 +190,7 @@ const ScheduleItem = ({ pattern, curator, start, end }) => {
           `${format(start, "HH:mm")} – ${format(end, "HH:mm")}`
         )}
       </div>
-      <div className={cn("col-start-9 col-span-3 pattern-tags-column")}>
+      <div className={cn("col-start-9 col-span-3 pattern-tags-column sm:hidden")}>
         <div className={cn("pb-7", styles.patternTags)}>
           {curator ? (
             <PatternCurator curator={curator} isOpen={isOpen} />
@@ -186,8 +199,65 @@ const ScheduleItem = ({ pattern, curator, start, end }) => {
           ) : null}
         </div>
       </div>
-      <div className={cn("col-start-12 col-span-1 flex justify-end pt-8")}>
-        {isOpen ? <X className={styles.iconX} /> : <Plus className={styles.iconPlus} />}
+      <div className={cn("col-start-12 col-span-1 flex justify-end pt-8 sm:hidden")}>
+        <Plus className={isOpen ? styles.iconPlusRotated : styles.iconPlus} />
+      </div>
+      <div className="mobile-schedule-item hidden sm:block">
+        <div className="flex items-center pt-6">
+          <div className="">
+            <img
+              className={styles.patternThumbnail}
+              src={pattern.thumbnail.fixed.src}
+              alt="pattern thumbnail"
+            />
+          </div>
+          <div className="pl-2 text-white text-xs-F">
+            {`${isInProgress ? "∙ " : ""}${format(start, "HH:mm")}`}
+            {!isInProgress && <span className="opacity-0">∙ </span>}
+          </div>
+          <div className={cn("text-xs-F text-white ml-2 relative", styles.patternTitleM)}>
+            <PatternTitle className="sm:normal-case" isHovered={isOpen} title={pattern.title} />
+            {curator && (
+              <div className="text-xs-F absolute left-0" style={{ color: "#6e6e6e", top: "100%" }}>
+                <FormattedMessage id="curatedBy" />
+                {` ${curator.nameInstrumental}`}
+              </div>
+            )}
+          </div>
+          <div className="flex-1 flex justify-end text-white">
+            <Plus className={isOpen ? styles.iconPlusRotated : styles.iconPlus} />
+          </div>
+        </div>
+        <div className="mt-9 ml-17 pb-3">
+          {curator ? (
+            <Markdown className="text-xs-F text-white mr-9">{curator.idea.idea}</Markdown>
+          ) : (
+            <PatternTags tags={pattern.tags} isOpen />
+          )}
+          <div className="mt-12 flex item-center justify-between text-xss-L uppercase text-white">
+            {curator ? (
+              <FormattedMessage id="curatedPattern" />
+            ) : pattern.isMosaic ? (
+              <FormattedMessage id="mosaicPattern" />
+            ) : (
+              <span>
+                <FormattedMessage id="pattern" />
+                {` ${pattern.externalId}`}
+              </span>
+            )}
+            <a
+              href={curator ? curator.url : `https://ornamika.com/pattern/${pattern.externalId}`}
+              {...blank()}
+              className={styles.learnMore}
+              onClick={e => {
+                e.stopPropagation()
+              }}
+            >
+              <FormattedMessage id={curator ? "learnMore" : "openPattern"} />
+              <span className="text-xs-A"> ↗</span>
+            </a>
+          </div>
+        </div>
       </div>
     </div>
   )
@@ -205,13 +275,13 @@ const ScheduleSection = ({
     : []
 
   return (
-    <Section className="bg-blackBg text-white mt-26 pt-10 sm:hidden" {...rest}>
-      <div className={cn("mt-27", styles.scheduleGrid)}>
+    <Section className="bg-blackBg text-white mt-26 sm:mt-14 pt-10 sm:pt-5" {...rest}>
+      <div className={cn("mt-27 sm:mt-7", styles.scheduleGrid)}>
         {scheduleItems.map((item, itemIndex) => (
           <ScheduleItem key={itemIndex} {...item} />
         ))}
       </div>
-      <div className="flex justify-center text-xs-alt text-xs-F text-white opacity-50">
+      <div className="flex justify-center text-xs-alt text-xs-F text-white opacity-50 sm:hidden">
         <div className="mt-8 mb-10">
           <FormattedMessage id="lastUpdate" />
           {` ${format(

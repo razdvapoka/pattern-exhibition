@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react"
 import cn from "classnames"
 import styles from "./index.module.styl"
 
-const PatternTitle = ({ title, isHovered }) => {
+const PatternTitle = ({ title, isHovered, className }) => {
   const ref = useRef(null)
   const [isMarqueRequired, setIsMarqueeRequired] = useState(null)
   useEffect(() => {
@@ -18,9 +18,14 @@ const PatternTitle = ({ title, isHovered }) => {
   )
   return (
     <div
-      className={cn(styles.patternTitle, "relative overflow-hidden uppercase", {
-        "opacity-0": isMarqueRequired === null,
-      })}
+      className={cn(
+        styles.patternTitle,
+        "relative overflow-hidden uppercase",
+        {
+          "opacity-0": isMarqueRequired === null,
+        },
+        className
+      )}
     >
       {isMarqueRequired === null ? (
         <span ref={ref} className="whitespace-no-wrap">

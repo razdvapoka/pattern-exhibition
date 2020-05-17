@@ -57,6 +57,7 @@ module.exports = {
           "sm:bg-deepBlue",
           "sm:bg-plantPale",
           "sm:bg-plant",
+          "sm:mt-6",
         ], // Don't remove this selector
         ignore: [
           "/node_modules/defaults.css/defaults.css",
