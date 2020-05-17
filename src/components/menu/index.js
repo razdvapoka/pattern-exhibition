@@ -54,7 +54,7 @@ const Menu = ({ sections, toggleMenu, scrollLock = true, isMenuOpen }) => {
             .filter(s => s.isInFooter || s.type === SECTION_ROUND_TABLE)
             .map((section, sectionIndex) => (
               <li key={sectionIndex} className="mb-4 hover:text-plum">
-                <a href={`#${section.type}`} onClick={toggleMenu}>
+                <a className={styles.sectionLink} href={`#${section.type}`} onClick={toggleMenu}>
                   {section.title}
                 </a>
               </li>
