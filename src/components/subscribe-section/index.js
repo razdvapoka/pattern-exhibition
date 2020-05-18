@@ -13,7 +13,7 @@ const MAILCHIMP_URL =
 const MAILCHIMP_SECRET = "b_cbce4c710a25008dbbcaf1c90_3e0afba3c2"
 const EMAIL_REGEX = /.+@.+\..+/
 
-const SubscribeSection = ({ text: { text }, subText, isInFooter, ...rest }) => {
+const SubscribeSection = ({ text: { text }, subText, isInFooter, type, ...rest }) => {
   const [email, setEmail] = useState("")
   const [isEmailValid, setIsEmailValid] = useState(false)
   const [status, setStatus] = useState(null)
@@ -54,6 +54,7 @@ const SubscribeSection = ({ text: { text }, subText, isInFooter, ...rest }) => {
   const error = status === "error"
   return (
     <section className="mt-22 sm:mt-24" {...rest}>
+      <div className={styles.anchor} id={type} />
       <div className={cn("flex sm:flex-col", styles.block)}>
         <div className="w-1/2 sm:w-full flex items-center justify-center bg-yellow text-l-F-c uppercase sm:py-10">
           <FormattedMessage id="leaveEmail" />

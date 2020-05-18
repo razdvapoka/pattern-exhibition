@@ -16,7 +16,8 @@ const Section = ({
   type,
   isInFooter,
 }) => (
-  <section className={cn("px-4 sm:px-2", styles.section, className)} id={type}>
+  <section className={cn("px-4 sm:px-2", styles.section, className)}>
+    <div id={type} className={styles.anchor} />
     <div className="my-grid">
       <div className="col-start-2 sm:col-start-1 col-span-5 sm:col-span-8 relative sm:text-center">
         <h2 className="text-xl-L uppercase">{title}</h2>
