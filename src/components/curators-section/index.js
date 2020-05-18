@@ -4,31 +4,12 @@ import { ru } from "date-fns/locale"
 import React, { useCallback, useState, useRef, useEffect } from "react"
 import cn from "classnames"
 
+import { COLORS } from "../../consts"
 import { blank } from "../../utils"
+import { useRandomColor } from "../../hooks/useRandomColor"
 import Markdown from "../markdown"
 import Section from "../section"
 import styles from "./index.module.styl"
-
-import { randomItem, sequence } from "@/utils"
-
-const COLORS = [
-  {
-    topBg: "plumPale",
-    bodyBg: "plum",
-  },
-  {
-    topBg: "tomatoPale",
-    bodyBg: "tomato",
-  },
-  {
-    topBg: "deepBluePale",
-    bodyBg: "deepBlue",
-  },
-  {
-    topBg: "plantPale",
-    bodyBg: "plant",
-  },
-]
 
 const Curator = ({
   randomColorIndex,
@@ -101,17 +82,8 @@ const Curator = ({
 const CuratorsSection = ({ curatedPatterns, ...rest }) => {
   const ref = useRef(null)
   const [slider, setSlider] = useState(null)
-  const [randomColorIndex, setRandomColorIndex] = useState(0)
   const [currentIndex, setCurrentIndex] = useState(0)
-  const updateRandomColorIndex = useCallback(() => {
-    const colorIndicies = sequence(COLORS.length)
-    const colorIndeciesWithoutCurrent = [
-      ...colorIndicies.slice(0, randomColorIndex),
-      ...colorIndicies.slice(randomColorIndex + 1),
-    ]
-    const newRandomIndex = randomItem(colorIndeciesWithoutCurrent)
-    setRandomColorIndex(newRandomIndex)
-  }, [setRandomColorIndex, randomColorIndex])
+  const { randomColorIndex, updateRandomColorIndex } = useRandomColor()
   useEffect(() => {
     const Flickity = require("flickity")
     if (window.innerWidth < 640 && ref.current) {

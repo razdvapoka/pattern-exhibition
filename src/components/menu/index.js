@@ -7,6 +7,7 @@ import X from "@/icons/x.inline.svg"
 
 import {
   BUY_PATTERN_URL,
+  COLORS,
   EMAIL,
   FACEBOOK_URL,
   INSTAGRAM_URL,
@@ -15,11 +16,13 @@ import {
   SURVEY_URL,
 } from "../../consts"
 import { blank } from "../../utils"
+import { useRandomColor } from "../../hooks/useRandomColor"
 import LangSwitcher from "../lang-switcher"
 import styles from "./index.module.styl"
 
 const Menu = ({ sections, toggleMenu, scrollLock = true, isMenuOpen }) => {
   const ref = useRef(null)
+  const { randomColorIndex, updateRandomColorIndex } = useRandomColor()
   useEffect(() => {
     const el = ref.current
     if (el && scrollLock) {
@@ -60,7 +63,11 @@ const Menu = ({ sections, toggleMenu, scrollLock = true, isMenuOpen }) => {
           {sections
             .filter(s => s.isInFooter || s.type === SECTION_ROUND_TABLE)
             .map((section, sectionIndex) => (
-              <li key={sectionIndex} className="mb-4 hover:text-plum">
+              <li
+                key={sectionIndex}
+                className={`mb-4 hover:text-${COLORS[randomColorIndex].bodyBg}`}
+                onMouseEnter={updateRandomColorIndex}
+              >
                 <a className={styles.sectionLink} href={`#${section.type}`} onClick={toggleMenu}>
                   {section.title}
                 </a>

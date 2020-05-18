@@ -16,3 +16,22 @@ export const ROUND_TABLE_URL = "https://example.com"
 export const BUY_PATTERN_URL = "https://example.com"
 export const SURVEY_URL = "https://example.com"
 export const ALI_EXPRESS_URL = "https://example.com"
+
+export const COLORS = [
+  {
+    topBg: "plumPale",
+    bodyBg: "plum",
+  },
+  {
+    topBg: "tomatoPale",
+    bodyBg: "tomato",
+  },
+  {
+    topBg: "deepBluePale",
+    bodyBg: "deepBlue",
+  },
+  {
+    topBg: "plantPale",
+    bodyBg: "plant",
+  },
+]
