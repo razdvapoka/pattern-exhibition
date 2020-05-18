@@ -9,9 +9,7 @@ import Markdown from "../markdown"
 import styles from "./index.module.styl"
 import { ROW_COUNT, COLUMN_COLORS, SEPARATORS } from "./consts"
 
-const sequence = length => Array.from(Array(length).keys())
-const tail = arr => arr[arr.length - 1]
-const sum = arr => arr.reduce((s, i) => s + i, 0)
+import { sequence, tail, sum } from "@/utils"
 
 let rafHandle
 let separators = [[...SEPARATORS], [...SEPARATORS], [...SEPARATORS]]

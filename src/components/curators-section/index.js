@@ -1,13 +1,15 @@
 import { IntlContextConsumer, FormattedMessage } from "gatsby-plugin-intl"
 import { format } from "date-fns"
 import { ru } from "date-fns/locale"
-import React, { useState, useRef, useEffect } from "react"
+import React, { useCallback, useState, useRef, useEffect } from "react"
 import cn from "classnames"
 
 import { blank } from "../../utils"
 import Markdown from "../markdown"
 import Section from "../section"
 import styles from "./index.module.styl"
+
+import { randomItem, sequence } from "@/utils"
 
 const COLORS = [
   {
@@ -28,26 +30,50 @@ const COLORS = [
   },
 ]
 
-const Curator = ({ isMobile, curator, start, end, isInProgress, index }) => {
+const Curator = ({
+  randomColorIndex,
+  updateRandomColorIndex,
+  isMobile,
+  curator,
+  start,
+  end,
+  isInProgress,
+  index,
+}) => {
+  const [isHovered, setIsHovered] = useState(false)
   const Component = curator.url ? "a" : "div"
   const props = curator.url ? { href: curator.url, ...blank() } : {}
+  const handleMouseEnter = useCallback(() => {
+    updateRandomColorIndex()
+    setIsHovered(true)
+  }, [setIsHovered, updateRandomColorIndex])
+  const handleMouseLeave = useCallback(() => {
+    setIsHovered(false)
+  }, [setIsHovered])
   return (
     <IntlContextConsumer>
       {({ language }) => (
         <Component
           className={cn(
-            `w-1/4 bg-lightGrey sm:bg-${COLORS[index % COLORS.length].bodyBg} block sm:mr-1`,
+            `w-1/4 sm:bg-${COLORS[index % COLORS.length].bodyBg} block sm:mr-1`,
             styles.curator,
-            { [styles.curatorHover]: !isMobile }
+            isHovered && !isMobile && randomColorIndex != null
+              ? `bg-${COLORS[randomColorIndex].bodyBg}`
+              : "bg-lightGrey"
           )}
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
           {...props}
         >
           <div
             className={cn(
               styles.time,
-              `flex items-center justify-between pl-2 pr-18 sm:pr-16 text-xs-F uppercase bg-pale
+              `flex items-center justify-between pl-2 pr-18 sm:pr-16 text-xs-F uppercase
               sm:bg-${COLORS[index % COLORS.length].topBg}
-              `
+              `,
+              isHovered && !isMobile && randomColorIndex != null
+                ? `bg-${COLORS[randomColorIndex].topBg}`
+                : "bg-pale"
             )}
           >
             <div>{format(start, "dd MMMM", language === "ru" ? { locale: ru } : {})}</div>
@@ -75,7 +101,17 @@ const Curator = ({ isMobile, curator, start, end, isInProgress, index }) => {
 const CuratorsSection = ({ curatedPatterns, ...rest }) => {
   const ref = useRef(null)
   const [slider, setSlider] = useState(null)
+  const [randomColorIndex, setRandomColorIndex] = useState(0)
   const [currentIndex, setCurrentIndex] = useState(0)
+  const updateRandomColorIndex = useCallback(() => {
+    const colorIndicies = sequence(COLORS.length)
+    const colorIndeciesWithoutCurrent = [
+      ...colorIndicies.slice(0, randomColorIndex),
+      ...colorIndicies.slice(randomColorIndex + 1),
+    ]
+    const newRandomIndex = randomItem(colorIndeciesWithoutCurrent)
+    setRandomColorIndex(newRandomIndex)
+  }, [setRandomColorIndex, randomColorIndex])
   useEffect(() => {
     const Flickity = require("flickity")
     if (window.innerWidth < 640 && ref.current) {
@@ -100,7 +136,13 @@ const CuratorsSection = ({ curatedPatterns, ...rest }) => {
         )}
       >
         {curatedPatterns.map((curatedPattern, curatorIndex) => (
-          <Curator key={curatorIndex} index={curatorIndex} {...curatedPattern} />
+          <Curator
+            key={curatorIndex}
+            index={curatorIndex}
+            randomColorIndex={randomColorIndex}
+            updateRandomColorIndex={updateRandomColorIndex}
+            {...curatedPattern}
+          />
         ))}
       </div>
       <div
