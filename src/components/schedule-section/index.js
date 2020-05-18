@@ -216,12 +216,16 @@ const ScheduleItem = ({ pattern, curator, start, end }) => {
               alt="pattern thumbnail"
             />
           </div>
-          <div className="pl-2 text-white text-xs-F">
+          <div className="pl-2 text-white text-xsm-F">
             {`${isInProgress ? "∙ " : ""}${format(start, "HH:mm")}`}
             {!isInProgress && <span className="opacity-0">∙ </span>}
           </div>
-          <div className={cn("text-xs-F text-white ml-2 relative", styles.patternTitleM)}>
-            <PatternTitle className="sm:normal-case" isHovered={isOpen} title={pattern.title} />
+          <div className={cn("text-xsm-F text-white ml-2 relative", styles.patternTitleM)}>
+            <PatternTitle
+              className={cn("sm:normal-case", styles.patternTitleMInner)}
+              isHovered={isOpen}
+              title={pattern.title}
+            />
             {curator && (
               <div className="text-xs-F absolute left-0" style={{ color: "#6e6e6e", top: "100%" }}>
                 <FormattedMessage id="curatedBy" />

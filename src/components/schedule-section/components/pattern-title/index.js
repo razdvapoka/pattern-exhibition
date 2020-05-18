@@ -37,7 +37,9 @@ const PatternTitle = ({ title, isHovered, className }) => {
           <span className={cn(textClassName, "marquee-box-2")}>{title}</span>
         </>
       ) : (
-        <span className={cn("block truncate", styles.patternTitleTruncated)}>{title}</span>
+        <span className={cn("block truncate truncated-span", styles.patternTitleTruncated)}>
+          {title}
+        </span>
       )}
     </div>
   )

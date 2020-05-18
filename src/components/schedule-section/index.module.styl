@@ -17,6 +17,9 @@
       height: pxToRem(27)
   &TitleM
     width: pxToRem(230)
+    &Inner :global(.truncated-span)
+      +mobile()
+        transform: translateY(pxToRem(3)) !important
   &Title
     padding-top: pxToRem(41)
     +mobile()
