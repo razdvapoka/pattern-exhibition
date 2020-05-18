@@ -240,9 +240,9 @@ const ScheduleItem = ({ pattern, curator, start, end }) => {
             ) : (
               <Markdown className="text-xs-F text-white mr-9">{curator.idea.idea}</Markdown>
             )
-          ) : (
+          ) : pattern.tags ? (
             <PatternTags tags={pattern.tags} isOpen />
-          )}
+          ) : null}
           <div className="mt-12 flex item-center justify-between text-xss-L uppercase text-white">
             {curator ? (
               <FormattedMessage id="curatedPattern" />

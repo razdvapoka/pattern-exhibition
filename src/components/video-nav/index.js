@@ -1,14 +1,8 @@
-import React, {
-  //useState,
-  useEffect,
-  useCallback,
-} from "react"
+import React, { useEffect, useCallback } from "react"
 import cn from "classnames"
 import styles from "./index.module.styl"
 
 const VideoNav = ({ isVisible, setIsVideoNavVisible, isPlayerApiReady }) => {
-  //const [player, setPlayer] = useState(null)
-
   const handleNavClick = useCallback(() => {
     setIsVideoNavVisible(false)
     const el = document.querySelector(`#video-1`)
@@ -42,10 +36,7 @@ const VideoNav = ({ isVisible, setIsVideoNavVisible, isPlayerApiReady }) => {
         },
       })
     }
-  }, [
-    //setPlayer
-    isPlayerApiReady,
-  ])
+  }, [isPlayerApiReady])
 
   return (
     <button
