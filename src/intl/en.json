@@ -27,5 +27,6 @@
   "close": "close",
   "buyPattern": "Buy a poster with a pattern",
   "roundTableSignUp": "Sign up for the round table",
-  "survey": "Participate in the survey"
+  "survey": "Participate in the survey",
+  "buyPoster": "Buy a poster"
 }

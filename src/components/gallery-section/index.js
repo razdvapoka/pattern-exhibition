@@ -1,7 +1,9 @@
+import { FormattedMessage } from "gatsby-plugin-intl"
 import Img from "gatsby-image"
 import React, { useMemo } from "react"
 import cn from "classnames"
 
+import { ALI_EXPRESS_URL } from "../../consts"
 import { blank } from "../../utils"
 import Section from "../section"
 import styles from "./index.module.styl"
@@ -51,6 +53,19 @@ const GallerySection = ({ items, ...rest }) => {
             ))}
           </div>
         ))}
+      </div>
+      <div className={cn("my-grid sm:justify-center sm:pt-4", styles.buyPosterBox)}>
+        <a
+          href={ALI_EXPRESS_URL}
+          {...blank()}
+          className={cn(
+            "text-center col-start-5 col-span-4 text-m-L-c py-4 sm:px-7 bg-yellow uppercase",
+            styles.buyPoster
+          )}
+        >
+          <FormattedMessage id="buyPoster" />
+          <span className="text-m-A-c"> ↗</span>
+        </a>
       </div>
     </Section>
   )
