@@ -181,9 +181,10 @@ const IndexPage = ({ data: { contentfulPage, allContentfulCurator } }) => {
     return todaySchedule ? todaySchedule.items.filter(item => item.curator) : []
   }, [todaySchedule])
 
-  const flatSchedule = useMemo(() => fullSchedule.reduce((fs, day) => [...fs, ...day.items], []), [
-    fullSchedule,
-  ])
+  const flatSchedule = useMemo(
+    () => fullSchedule.reduce((fs, day) => [...fs, ...day.items.filter(i => i.pattern)], []),
+    [fullSchedule]
+  )
 
   const curatedPatterns = useMemo(() => flatSchedule.filter(item => item.curator), [flatSchedule])
 
