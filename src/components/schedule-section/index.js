@@ -62,7 +62,7 @@ const Audio = ({ curator }) => {
 const PatternCurator = ({ curator }) => {
   return (
     <div>
-      <div className="text-xs-F uppercase">
+      <div className="text-xs-F-b">
         <FormattedMessage id="curatedBy" />
         {` ${curator.nameInstrumental}`}
       </div>
@@ -167,7 +167,7 @@ const ScheduleItem = ({ pattern, curator, start, end }) => {
       </div>
       <div className={cn("col-start-3 col-span-3 text-xs-F px-2 pattern-title-column sm:hidden")}>
         <div className={cn(styles.patternTitle, "pb-7")}>
-          <PatternTitle isHovered={isHovered} title={pattern.title} />
+          <PatternTitle className="text-xs-F-b" isHovered={isHovered} title={pattern.title} />
           <a
             href={curator ? curator.url : `https://ornamika.com/pattern/${pattern.externalId}`}
             {...blank()}
@@ -181,12 +181,7 @@ const ScheduleItem = ({ pattern, curator, start, end }) => {
           </a>
         </div>
       </div>
-      <div
-        className={cn(
-          "col-start-7 col-span-1 text-xs-F uppercase sm:hidden",
-          styles.patternExternalId
-        )}
-      >
+      <div className={cn("col-start-7 col-span-1 text-xs-F-b sm:hidden", styles.patternExternalId)}>
         {isInProgress ? (
           <span className={cn("relative", styles.patternInProgress)}>
             <FormattedMessage id="inProgress" />

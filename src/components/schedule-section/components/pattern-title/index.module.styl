@@ -4,4 +4,13 @@
     top: 50%
     transform: translateY(-50%)
   &Truncated
-    transform: translateY(pxToRem(4))
+    transform: translateY(pxToRem(3))
+
+.overlay
+  width: pxToRem(50)
+  background: linear-gradient(270deg, #242424 20%, rgba(36, 36, 36, 0) 94.39%)
+  transition: opacity 0.2s ease
+  &Hidden
+    opacity: 0
+    transition: opacity 0.2s ease
+

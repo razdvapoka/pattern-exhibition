@@ -20,7 +20,7 @@ const PatternTitle = ({ title, isHovered, className }) => {
     <div
       className={cn(
         styles.patternTitle,
-        "relative overflow-hidden uppercase",
+        "relative overflow-hidden",
         {
           "opacity-0": isMarqueRequired === null,
         },
@@ -40,6 +40,13 @@ const PatternTitle = ({ title, isHovered, className }) => {
         <span className={cn("block truncate truncated-span", styles.patternTitleTruncated)}>
           {title}
         </span>
+      )}
+      {isMarqueRequired && (
+        <div
+          className={cn("absolute top-0 right-0 h-full", styles.overlay, {
+            [styles.overlayHidden]: isHovered,
+          })}
+        />
       )}
     </div>
   )
