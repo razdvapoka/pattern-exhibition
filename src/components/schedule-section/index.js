@@ -287,7 +287,7 @@ const ScheduleSection = ({
     <Section className="bg-blackBg text-white mt-26 sm:mt-14 pt-10 sm:pt-5" {...rest}>
       <div className={cn("mt-27 sm:mt-7", styles.scheduleGrid)}>
         {scheduleItems.map((item, itemIndex) => (
-          <ScheduleItem key={itemIndex} {...item} />
+          <ScheduleItem key={item.id} {...item} />
         ))}
       </div>
       <div className="flex justify-center text-xs-alt text-xs-F text-white opacity-50 sm:hidden">
