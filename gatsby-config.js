@@ -49,6 +49,14 @@ module.exports = {
         // develop: true, // Enable while using `gatsby develop`
         tailwind: true, // Enable tailwindcss support
         whitelist: [
+          "hover:bg-plumPale",
+          "hover:bg-plum",
+          "hover:bg-tomatoPale",
+          "hover:bg-tomato",
+          "hover:bg-deepBluePale",
+          "hover:bg-deepBlue",
+          "hover:bg-plantPale",
+          "hover:bg-plant",
           "sm:bg-plumPale",
           "sm:bg-plum",
           "sm:bg-tomatoPale",
