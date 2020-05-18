@@ -43,12 +43,15 @@ const Menu = ({ sections, toggleMenu, scrollLock = true, isMenuOpen }) => {
         isMenuOpen ? styles.menuOpen : styles.menuClosed
       )}
     >
-      <div className={cn("px-4 sm:px-2 sm:pb-10", styles.menu)}>
+      <div className={cn("px-4 sm:px-2 sm:pb-30", styles.menu)}>
         <div className={cn("flex justify-between items-center text-xs-L uppercase", styles.top)}>
           <div>
             <FormattedMessage id="menu" />
           </div>
-          <button onClick={toggleMenu} className="flex uppercase">
+          <button
+            onClick={toggleMenu}
+            className={cn("flex uppercase sm:h-full sm:px-4", styles.closeButton)}
+          >
             <FormattedMessage id="close" />
             <X className={cn("ml-1", styles.close)} />
           </button>

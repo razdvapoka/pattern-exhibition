@@ -58,7 +58,7 @@ const Header = ({ siteTitle, toggleMenu }) => (
       <a href={INSTAGRAM_URL} {...blank()} className="uppercase sm:hidden">
         INST
       </a>
-      <button className="uppercase" onClick={toggleMenu}>
+      <button className={cn("uppercase sm:h-full sm:px-4", styles.menuButton)} onClick={toggleMenu}>
         <FormattedMessage id="menu" />
       </button>
     </div>

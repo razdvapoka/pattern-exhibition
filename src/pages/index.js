@@ -1,8 +1,8 @@
+import { FixedBottom } from "react-fixed-bottom"
 import { graphql } from "gatsby"
 import { isSameDay, addMinutes, isWithinInterval } from "date-fns"
-import React, { useEffect, useCallback, useMemo, useState } from "react"
 import { useIntl } from "gatsby-plugin-intl"
-import { FixedBottom } from "react-fixed-bottom"
+import React, { useEffect, useCallback, useMemo, useState } from "react"
 
 import {
   SECTION_ABOUT,
@@ -16,12 +16,12 @@ import {
   SECTION_ROUND_TABLE,
   SECTION_ASSOCIATIONS,
 } from "@/consts"
-import Menu from "@/components/menu"
 import CuratorsSection from "@/components/curators-section"
 import GallerySection from "@/components/gallery-section"
 import Intro from "@/components/intro"
 import Layout from "@/components/layout"
 import Marquee from "@/components/marquee"
+import Menu from "@/components/menu"
 import RobotSection from "@/components/robot-section"
 import SEO from "@/components/seo"
 import ScheduleSection from "@/components/schedule-section"
@@ -30,6 +30,7 @@ import SubscribeSection from "@/components/subscribe-section"
 import VideoSection from "@/components/video-section"
 
 import AssociationsSection from "../components/associations-section"
+import ClientOnly from "../components/client-only"
 import Footer from "../components/footer"
 import VideoNav from "../components/video-nav"
 
@@ -252,9 +253,11 @@ const IndexPage = ({ data: { contentfulPage, allContentfulCurator } }) => {
         setIsVideoNavVisible={setIsVideoNavVisible}
         isPlayerApiReady={isPlayerApiReady}
       />
-      <FixedBottom>
-        <Marquee items={marqueeItems} />
-      </FixedBottom>
+      <ClientOnly>
+        <FixedBottom>
+          <Marquee items={marqueeItems} />
+        </FixedBottom>
+      </ClientOnly>
       <Sections
         data={contentfulPage}
         schedule={{
