@@ -8,7 +8,7 @@ const AssociationsSection = ({ text, subText, associations, type }) => (
   <section className="mt-32 sm:mt-14 text-blackBg" id={type}>
     <div
       className={cn(
-        "bg-blue text-m-F-sm text-center sm:text-left sm:px-2 pt-8 sm:pt-4 pb-16 sm:pb-4"
+        "bg-blue text-m-F-ssm text-center sm:text-left sm:px-2 pt-8 sm:pt-4 pb-16 sm:pb-4"
       )}
     >
       <Markdown className={styles.text}>{text.text}</Markdown>

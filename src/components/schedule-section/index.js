@@ -46,9 +46,9 @@ const Audio = ({ curator }) => {
     [audioRef]
   )
   return (
-    <div className="flex items-center bg-greyTagBg p-2 sm:text-white">
+    <div className="flex items-center bg-greyTagBg p-2 sm:text-white" onClick={handlePlayClick}>
       <audio ref={audioRef} src={curator.audio.file.url} />
-      <button className={cn(styles.playButton, "mr-1")} onClick={handlePlayClick}>
+      <button className={cn(styles.playButton, "mr-1")}>
         <Play />
       </button>
       <span className="text-xs-F">
