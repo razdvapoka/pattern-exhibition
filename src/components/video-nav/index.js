@@ -7,7 +7,9 @@ const VideoNav = ({ isVisible, setIsVideoNavVisible, isPlayerApiReady }) => {
     setIsVideoNavVisible(false)
     const el = document.querySelector(`#video-1`)
     if (el) {
-      el.scrollIntoView({
+      const rect = el.getBoundingClientRect()
+      window.scrollTo({
+        top: window.scrollY + rect.top - window.innerHeight / 2 + rect.height / 2,
         behavior: "smooth",
       })
     }

@@ -281,11 +281,12 @@ const ScheduleSection = ({
   updatedAt = new Date(),
   ...rest
 }) => {
-  const scheduleItems = currentPatternIndex
-    ? items.slice(currentPatternIndex, currentPatternIndex + 10)
-    : todaySchedule
-    ? todaySchedule.items
-    : []
+  const scheduleItems =
+    currentPatternIndex !== -1
+      ? items.slice(currentPatternIndex, currentPatternIndex + 10)
+      : todaySchedule
+      ? todaySchedule.items
+      : []
 
   return (
     <Section className="bg-blackBg text-white mt-26 sm:mt-14 pt-10 sm:pt-5" {...rest}>

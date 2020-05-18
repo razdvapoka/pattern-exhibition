@@ -149,25 +149,27 @@ const IndexPage = ({ data: { contentfulPage, allContentfulCurator } }) => {
     () =>
       contentfulPage.schedule.map(day => ({
         ...day,
-        items: day.items.reduce(
-          ({ passed, items }, item) => {
-            const start = addMinutes(new Date(day.start), passed * 60)
-            const end = addMinutes(new Date(day.start), (passed + item.duration) * 60)
+        items: day.items
+          .reduce(
+            ({ passed, items }, item) => {
+              const start = addMinutes(new Date(day.start), passed * 60)
+              const end = addMinutes(new Date(day.start), (passed + item.duration) * 60)
 
-            return {
-              passed: passed + item.duration,
-              items: [
-                ...items,
-                {
-                  ...item,
-                  start,
-                  end,
-                },
-              ],
-            }
-          },
-          { passed: 0, items: [] }
-        ).items,
+              return {
+                passed: passed + item.duration,
+                items: [
+                  ...items,
+                  {
+                    ...item,
+                    start,
+                    end,
+                  },
+                ],
+              }
+            },
+            { passed: 0, items: [] }
+          )
+          .items.filter(item => item.pattern),
       })),
     [contentfulPage]
   )
