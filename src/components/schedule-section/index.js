@@ -7,7 +7,6 @@ import { blank } from "@/utils"
 import Markdown from "@/components/markdown"
 import Play from "@/icons/play.inline.svg"
 import Plus from "@/icons/plus.inline.svg"
-import X from "@/icons/x.inline.svg"
 
 import PatternTitle from "./components/pattern-title"
 import Section from "../section"
@@ -30,7 +29,7 @@ const PatternTags = ({ tags, isOpen }) => {
   )
 }
 
-const PatternCurator = ({ curator }) => {
+const Audio = ({ curator }) => {
   const audioRef = useRef(null)
   const handlePlayClick = useCallback(
     e => {
@@ -47,6 +46,21 @@ const PatternCurator = ({ curator }) => {
     [audioRef]
   )
   return (
+    <div className="flex items-center bg-greyTagBg p-2 sm:text-white">
+      <audio ref={audioRef} src={curator.audio.file.url} />
+      <button className={cn(styles.playButton, "mr-1")} onClick={handlePlayClick}>
+        <Play />
+      </button>
+      <span className="text-xs-F">
+        {`${curator.name} `}
+        <FormattedMessage id="curatorIdea" />
+      </span>
+    </div>
+  )
+}
+
+const PatternCurator = ({ curator }) => {
+  return (
     <div>
       <div className="text-xs-F uppercase">
         <FormattedMessage id="curatedBy" />
@@ -54,16 +68,7 @@ const PatternCurator = ({ curator }) => {
       </div>
       <div className="mt-10">
         {curator.audio ? (
-          <div className="flex items-center">
-            <audio ref={audioRef} src={curator.audio.file.url} />
-            <button className={cn(styles.playButton, "mr-1")} onClick={handlePlayClick}>
-              <Play />
-            </button>
-            <span className="text-xs-L">
-              {`${curator.name} `}
-              <FormattedMessage id="curatorIdea" />
-            </span>
-          </div>
+          <Audio curator={curator} />
         ) : (
           <Markdown className="text-xs-F-h">{curator.idea.idea}</Markdown>
         )}
@@ -230,7 +235,11 @@ const ScheduleItem = ({ pattern, curator, start, end }) => {
         </div>
         <div className="mt-9 ml-17 pb-3">
           {curator ? (
-            <Markdown className="text-xs-F text-white mr-9">{curator.idea.idea}</Markdown>
+            curator.audio ? (
+              <Audio curator={curator} />
+            ) : (
+              <Markdown className="text-xs-F text-white mr-9">{curator.idea.idea}</Markdown>
+            )
           ) : (
             <PatternTags tags={pattern.tags} isOpen />
           )}
