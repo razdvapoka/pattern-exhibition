@@ -28,7 +28,7 @@ const Header = ({ siteTitle, toggleMenu }) => (
     className={cn("px-4 sm:px-2 fixed top-0 left-0 w-screen my-grid bg-white z-50", styles.header)}
   >
     <div className="col-start-1 col-span-6 flex">
-      <div className={cn("mr-2 uppercase sm:mr-7", styles.logo)}>
+      <div className={cn("mr-2 uppercase whitespace-no-wrap sm:mr-7", styles.logo)}>
         <span className="text-s-L">Орнамика</span>&nbsp;&nbsp;
         <span className={cn("text-s-F inline-block relative", styles.live)}>live</span>
       </div>

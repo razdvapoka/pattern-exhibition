@@ -305,6 +305,9 @@ export const query = graphql`
         subText {
           subText
         }
+        cutText {
+          cutText
+        }
         type
       }
       robotImages {
