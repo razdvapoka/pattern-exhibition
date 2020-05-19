@@ -6,6 +6,9 @@ import Authors from "../authors"
 import Markdown from "../markdown"
 import styles from "./index.module.styl"
 import cn from "classnames"
+import FlaconLogo from "@/icons/flacon.inline.svg"
+import LymLogo from "@/icons/lym.inline.svg"
+import SenseLogo from "@/icons/sense.inline.svg"
 
 const FooterMenu = ({ sections }) => (
   <div className="text-xs-L uppercase mt-40 sm:mt-24 flex sm:flex-col">
@@ -67,23 +70,20 @@ const Footer = ({ credits, sections }) => (
     <FooterMenu sections={sections} />
     <Authors />
     <Credits credits={credits} />
-    <div className="py-7 text-center text-s-F-c uppercase bg-grey">
+    <div className="py-7 sm:px-5 text-center text-s-F-c uppercase bg-grey">
       <FormattedMessage id="infoPartners" />
     </div>
     <div
       className={cn(
-        "px-24 sm:px-2 flex sm:flex-col justify-between sm:items-center text-s-F-c uppercase py-20 sm:py-10 bg-lightGrey",
+        "px-24 sm:px-2 flex sm:flex-col justify-center sm:items-center text-s-F-c uppercase py-20 sm:py-14 bg-lightGrey",
         styles.partners
       )}
     >
-      <span>logo</span>
-      <span>logo</span>
-      <span>logo</span>
-      <span>logo</span>
-      <span>logo</span>
-      <span>logo</span>
+      <FlaconLogo className={styles.flaconLogo} />
+      <SenseLogo className={cn(styles.senseLogo, "ml-27 sm:ml-0")} />
+      <LymLogo className={cn(styles.lymLogo, "ml-27 sm:ml-0")} />
     </div>
-    <div className="flex items-stretch h-screen">
+    <div className={cn("flex items-stretch", styles.finalBlock)}>
       <div className="w-1/2 sm:w-full bg-purple flex items-stretch">
         <div className="bg-green" style={{ width: "50%" }} />
         <div className="bg-purple" style={{ width: "7.9%" }} />
