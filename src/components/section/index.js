@@ -34,7 +34,7 @@ const Section = ({
         )}
       </div>
       <div
-        className="col-start-7 sm:col-start-1 col-span-6 sm:col-span-8 text-m-F sm:mt-8"
+        className="col-start-7 sm:col-start-1 col-span-5 sm:col-span-8 text-m-F sm:mt-8"
         style={{ hyphens: "auto" }}
       >
         <IntlContextConsumer>

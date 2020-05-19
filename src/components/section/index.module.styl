@@ -1,6 +1,8 @@
 .sectionText
   p:not(:first-child)
-    text-indent: pxToRem(50)
+    text-indent: pxToRem(40)
+    +mobile()
+      text-indent: pxToRem(25)
 
 .separator
   width: pxToRem(12)
