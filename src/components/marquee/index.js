@@ -13,7 +13,7 @@ const MarqueeItem = ({ navHash, text, navText }) => {
   }, [navHash])
   return (
     <button
-      className={cn("uppercase text-s-F mr-20 inline-block", styles.marqueeItem)}
+      className={cn("uppercase text-s-F mr-12 inline-block", styles.marqueeItem)}
       onClick={handleNavClick}
     >
       {text}
