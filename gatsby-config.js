@@ -82,6 +82,7 @@ module.exports = {
         // purgeOnly : ['components/', '/main.css', 'bootstrap/'], // Purge only these files/folders
       },
     },
+    /*
     {
       resolve: `gatsby-source-contentful`,
       options: {
@@ -89,6 +90,7 @@ module.exports = {
         accessToken: process.env.CONTENTFUL_ACCESS_TOKEN,
       },
     },
+    */
     {
       resolve: `gatsby-plugin-intl`,
       options: {
