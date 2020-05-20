@@ -53,7 +53,12 @@ const drawScene = () => {
           //console.log(rect.height)
         }
         canvasContext.fillStyle = rect.color
-        canvasContext.fillRect(rect.x * w, h - rect.height * h, rect.width * w, rect.height * h)
+        canvasContext.fillRect(
+          Math.floor(rect.x * w),
+          h - rect.height * h,
+          Math.ceil(rect.width * w),
+          rect.height * h
+        )
         /*
       canvasContext.strokeStyle = "black"
       canvasContext.strokeRect(rect.x * w, h - rect.height * h, rect.width * w, rect.height * w)
@@ -75,7 +80,7 @@ const animatePlane = plane => {
 const animatePlanes = () => {
   const animations = planes.map(animatePlane)
   timeline = anime.timeline({
-    easing: "easeOutQuad",
+    easing: "easeInOutCubic",
     update: drawScene,
     loop: true,
     loopBegin: function (anim) {
