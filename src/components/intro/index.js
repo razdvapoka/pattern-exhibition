@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from "react"
 import cn from "classnames"
 import { useMeasure } from "react-use"
 import anime from "animejs"
+import { arrayShuffle } from "@adriantombu/array-shuffle"
 
 import { Noise } from "noisejs"
 
@@ -21,13 +22,24 @@ let timeline
 const PLANE_COUNT = 5
 const RECT_COUNT = 5
 
+const arrWithout = (arr, el) => {
+  const index = arr.indexOf(el)
+  if (index === -1) {
+    return arr
+  }
+  return [...arr.slice(0, index), ...arr.slice(index + 1)]
+}
+
+let colors = [...COLUMN_COLORS]
+let bgColor = colors[colors.length - 1]
+
 let planes = sequence(PLANE_COUNT).map(i => ({
   index: i,
   rects: sequence(RECT_COUNT).map(j => ({
     x: 0 + j / RECT_COUNT,
     width: 1 / RECT_COUNT,
     height: 0,
-    color: COLUMN_COLORS[i],
+    color: colors[i],
   })),
 }))
 
@@ -45,7 +57,7 @@ const drawScene = () => {
   if (canvasContext) {
     const w = canvasContext.canvas.width
     const h = canvasContext.canvas.height
-    canvasContext.fillStyle = COLUMN_COLORS[COLUMN_COLORS.length - 1]
+    canvasContext.fillStyle = bgColor
     canvasContext.fillRect(0, 0, w, h)
     planes.forEach((plane, pi) => {
       plane.rects.forEach((rect, ri) => {
@@ -84,11 +96,14 @@ const animatePlanes = () => {
     update: drawScene,
     loop: true,
     loopBegin: function (anim) {
-      planes.forEach(plane =>
-        plane.rects.forEach(rect => {
+      bgColor = colors[colors.length - 1]
+      colors = arrayShuffle(colors)
+      planes.forEach((plane, planeIndex) => {
+        return plane.rects.forEach(rect => {
           rect.height = 0
+          rect.color = colors[planeIndex]
         })
-      )
+      })
     },
   })
   animations.forEach((a, i) => timeline.add(a, i !== 0 ? "-=990" : undefined))

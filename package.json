@@ -5,6 +5,7 @@
   "version": "0.1.0",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
+    "@adriantombu/array-shuffle": "^2.0.8",
     "@mavrin/remark-typograf": "^2.1.6",
     "animejs": "^3.2.0",
     "body-scroll-lock": "^3.0.2",
