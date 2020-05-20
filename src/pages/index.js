@@ -247,7 +247,7 @@ const IndexPage = ({ data: { contentfulPage, allContentfulCurator } }) => {
 
   return (
     <Layout toggleMenu={toggleMenu} isMenuOpen={isMenuOpen}>
-      <SEO title="Home" />
+      <SEO title="live.ornamika" />
       <Menu sections={contentfulPage.sections} toggleMenu={toggleMenu} isMenuOpen={isMenuOpen} />
       <Intro {...contentfulPage.intro} />
       <VideoNav
