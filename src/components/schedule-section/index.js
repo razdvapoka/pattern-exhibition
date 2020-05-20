@@ -167,7 +167,12 @@ const ScheduleItem = ({ pattern, curator, start, end }) => {
       </div>
       <div className={cn("col-start-3 col-span-3 text-xs-F px-2 pattern-title-column sm:hidden")}>
         <div className={cn(styles.patternTitle, "pb-7")}>
-          <PatternTitle className="text-xs-F-b" isHovered={isHovered} title={pattern.title} />
+          <PatternTitle
+            className="text-xs-F-b"
+            isHovered={isHovered}
+            title={pattern.title}
+            isCurated={curator}
+          />
           <a
             href={curator ? curator.url : `https://ornamika.com/pattern/${pattern.externalId}`}
             {...blank()}
@@ -220,6 +225,7 @@ const ScheduleItem = ({ pattern, curator, start, end }) => {
               className={cn("sm:normal-case", styles.patternTitleMInner)}
               isHovered={isOpen}
               title={pattern.title}
+              isCurated={curator}
             />
             {curator && (
               <div className="text-xs-F absolute left-0" style={{ color: "#6e6e6e", top: "100%" }}>

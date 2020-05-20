@@ -2,7 +2,8 @@ import React, { useState, useRef, useEffect } from "react"
 import cn from "classnames"
 import styles from "./index.module.styl"
 
-const PatternTitle = ({ title, isHovered, className }) => {
+const PatternTitle = ({ title, isHovered, className, isCurated }) => {
+  console.log(title, isCurated)
   const ref = useRef(null)
   const [isMarqueRequired, setIsMarqueeRequired] = useState(null)
   useEffect(() => {
@@ -43,9 +44,13 @@ const PatternTitle = ({ title, isHovered, className }) => {
       )}
       {isMarqueRequired && (
         <div
-          className={cn("absolute top-0 right-0 h-full", styles.overlay, {
-            [styles.overlayHidden]: isHovered,
-          })}
+          className={cn(
+            "absolute top-0 right-0 h-full",
+            isCurated ? styles.overlayCurated : styles.overlay,
+            {
+              [styles.overlayHidden]: isHovered,
+            }
+          )}
         />
       )}
     </div>
