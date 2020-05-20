@@ -79,13 +79,13 @@ const Footer = ({ credits, sections }) => (
         styles.partners
       )}
     >
-      <a href="https://flacon.ru" {...blank()}>
+      <a className={cn("block", styles.flaconLogoBox)} href="https://flacon.ru" {...blank()}>
         <FlaconLogo className={styles.flaconLogo} />
       </a>
-      <a href="" {...blank()}>
+      <a className="block" href="" {...blank()}>
         <SenseLogo className={cn(styles.senseLogo, "ml-27 sm:ml-0")} />
       </a>
-      <a href="" {...blank()}>
+      <a className="block" href="" {...blank()}>
         <LymLogo className={cn(styles.lymLogo, "ml-27 sm:ml-0")} />
       </a>
     </div>
