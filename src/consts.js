@@ -35,3 +35,5 @@ export const COLORS = [
     bodyBg: "plant",
   },
 ]
+
+export const TEST = "test"
