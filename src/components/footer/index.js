@@ -79,9 +79,15 @@ const Footer = ({ credits, sections }) => (
         styles.partners
       )}
     >
-      <FlaconLogo className={styles.flaconLogo} />
-      <SenseLogo className={cn(styles.senseLogo, "ml-27 sm:ml-0")} />
-      <LymLogo className={cn(styles.lymLogo, "ml-27 sm:ml-0")} />
+      <a href="https://flacon.ru" {...blank()}>
+        <FlaconLogo className={styles.flaconLogo} />
+      </a>
+      <a href="" {...blank()}>
+        <SenseLogo className={cn(styles.senseLogo, "ml-27 sm:ml-0")} />
+      </a>
+      <a href="" {...blank()}>
+        <LymLogo className={cn(styles.lymLogo, "ml-27 sm:ml-0")} />
+      </a>
     </div>
     <div className={cn("flex items-stretch", styles.finalBlock)}>
       <div className="w-1/2 sm:w-full bg-purple flex items-stretch">
