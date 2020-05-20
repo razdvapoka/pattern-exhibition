@@ -1,7 +1,6 @@
 import React, { useEffect, useRef } from "react"
 import cn from "classnames"
 import { useMeasure } from "react-use"
-import { easeInOutBack } from "js-easing-functions"
 import anime from "animejs"
 
 import { Noise } from "noisejs"
