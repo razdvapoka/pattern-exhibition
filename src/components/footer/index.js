@@ -53,7 +53,9 @@ const Credits = ({ credits }) => (
       {credits.map((credit, creditIndex) => (
         <li key={creditIndex} className="mt-6 text-center">
           <div className="text-s-L uppercase">{credit.role}</div>
-          <Markdown className="mt-1 text-s-F uppercase">{credit.name.name}</Markdown>
+          <Markdown className={cn("mt-1 text-s-F uppercase", styles.creditText)}>
+            {credit.name.name}
+          </Markdown>
           {credit.url && (
             <a className="block text-xs-L uppercase mt-1" href={credit.url} {...blank()}>
               {credit.urlText}
