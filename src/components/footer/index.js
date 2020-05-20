@@ -84,10 +84,10 @@ const Footer = ({ credits, sections }) => (
       <a className={cn("block", styles.flaconLogoBox)} href="https://flacon.ru" {...blank()}>
         <FlaconLogo className={styles.flaconLogo} />
       </a>
-      <a className="block" href="" {...blank()}>
+      <a className="block" href="https://sense.band/" {...blank()}>
         <SenseLogo className={cn(styles.senseLogo, "ml-27 sm:ml-0")} />
       </a>
-      <a className="block" href="" {...blank()}>
+      <a className="block" href="https://lympro.ru/" {...blank()}>
         <LymLogo className={cn(styles.lymLogo, "ml-27 sm:ml-0")} />
       </a>
     </div>
