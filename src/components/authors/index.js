@@ -25,7 +25,7 @@ const Authors = ({ ...rest }) => (
     <div className="flex sm:flex-col sm:hidden">
       <div className="w-1/2 sm:w-full">
         <div className="flex items-center justify-center py-5 bg-lightGrey h-full">
-          <a href={"https:/aliexpress.ru"} {...blank()}>
+          <a href={"https://aliexpress.ru"} {...blank()}>
             <AliLogo className={styles.aliLogo} />
           </a>
         </div>
@@ -33,7 +33,7 @@ const Authors = ({ ...rest }) => (
       <div className="w-1/2 sm:w-full">
         <div className="flex h-full">
           <div className="w-1/2 flex items-center justify-center py-5 bg-grey">
-            <a href={"https:/ornamika.com"} {...blank()}>
+            <a href={"https://ornamika.com"} {...blank()}>
               <OrnamikaLogo className={styles.ornamikaLogo} />
             </a>
           </div>
@@ -63,7 +63,7 @@ const Authors = ({ ...rest }) => (
         <FormattedMessage id="techPartner" />
       </div>
       <div className="flex items-center justify-center py-7 bg-lightGrey h-full">
-        <a href={"https:/aliexpress.ru"} {...blank()}>
+        <a href={"https://aliexpress.ru"} {...blank()}>
           <AliLogo className={styles.aliLogo} />
         </a>
       </div>
