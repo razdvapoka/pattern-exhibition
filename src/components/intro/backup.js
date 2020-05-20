@@ -1,8 +1,6 @@
 import React, { useEffect, useRef } from "react"
 import cn from "classnames"
 import { useMeasure } from "react-use"
-import { easeInOutBack } from "js-easing-functions"
-import anime from "animejs"
 
 import { Noise } from "noisejs"
 
@@ -14,31 +12,22 @@ import { ROW_COUNT, COLUMN_COLORS, SEPARATORS } from "./consts"
 import { sequence, tail, sum } from "@/utils"
 
 let rafHandle
+let separators = [[...SEPARATORS], [...SEPARATORS], [...SEPARATORS]]
+let colors = [[...COLUMN_COLORS], [...COLUMN_COLORS], [...COLUMN_COLORS]]
 let canvas
 let canvasContext
+const noises = sequence(ROW_COUNT).map(_ => new Noise(Math.random()))
+const noises2 = sequence(ROW_COUNT).map((_, i) => separators[i].map(_ => new Noise(Math.random())))
 let hoveredRowIndex
-let timeline
-
-const PLANE_COUNT = 5
-const RECT_COUNT = 5
-
-let planes = sequence(PLANE_COUNT).map(i => ({
-  index: i,
-  rects: sequence(RECT_COUNT).map(j => ({
-    x: 0 + j / RECT_COUNT,
-    width: 1 / RECT_COUNT,
-    height: 0,
-    color: COLUMN_COLORS[i],
-  })),
-}))
 
 const handleMouseMove = e => {}
 
 const handleClick = () => {
-  if (timeline.paused) {
-    timeline.play()
+  if (rafHandle) {
+    cancelAnimationFrame(rafHandle)
+    rafHandle = null
   } else {
-    timeline.pause()
+    rafHandle = requestAnimationFrame(animate)
   }
 }
 
@@ -46,49 +35,73 @@ const drawScene = () => {
   if (canvasContext) {
     const w = canvasContext.canvas.width
     const h = canvasContext.canvas.height
-    canvasContext.fillStyle = COLUMN_COLORS[COLUMN_COLORS.length - 1]
-    canvasContext.fillRect(0, 0, w, h)
-    planes.forEach((plane, pi) => {
-      plane.rects.forEach((rect, ri) => {
-        if (pi === 0 && ri === 0) {
-          //console.log(rect.height)
-        }
+
+    for (let i = 0; i < ROW_COUNT; i++) {
+      const rowSeps = separators[i]
+      const lastColFr = 1 - rowSeps.reduce((s, i) => s + i, 0)
+      const cols = colors[i].reduce(
+        ({ rects, offset }, color, colorIndex) => {
+          const rect = {
+            x: Math.floor(offset),
+            y: Math.floor((i / ROW_COUNT) * h),
+            width: Math.ceil(w * (rowSeps[colorIndex] || lastColFr)),
+            height: Math.ceil(h / ROW_COUNT),
+            color,
+          }
+          return {
+            rects: [...rects, rect],
+            offset: offset + w * rowSeps[colorIndex],
+          }
+        },
+        { rects: [], offset: 0 }
+      )
+      cols.rects.forEach(rect => {
         canvasContext.fillStyle = rect.color
-        canvasContext.fillRect(rect.x * w, h - rect.height * h, rect.width * w, rect.height * h)
-        /*
-      canvasContext.strokeStyle = "black"
-      canvasContext.strokeRect(rect.x * w, h - rect.height * h, rect.width * w, rect.height * w)
-      */
+        canvasContext.fillRect(rect.x, rect.y, rect.width, rect.height)
+      })
+    }
+  }
+}
+
+const animate = time => {
+  // noises.forEach((noise, i) => {
+  //   const n = noise.simplex2(time / 1000, 0) * 0.003
+  //   separators[i] = separators[i].map(s => s + n)
+  // })
+
+  separators = separators
+    .map((sr, i) => {
+      return sr.map((s, j) => {
+        return s + ((noises2[i][j].simplex2(time / 1000, 0) + 1) / 2) * (0.005 - i * 0.001)
       })
     })
-  }
-}
+    .map((sr, i) => {
+      const rowSum = sum(sr)
+      const isOverflown = rowSum > 1
+      const nsr = isOverflown ? [rowSum - 1, ...sr.slice(0, sr.length - 1)] : sr
+      if (isOverflown) {
+        colors[i] = [tail(colors[i]), ...colors[i].slice(0, colors[i].length - 1)]
+      }
+      return nsr
+    })
 
-const animatePlane = plane => {
-  return {
-    targets: plane.rects,
-    height: 1,
-    duration: 1000,
-    delay: anime.stagger(100),
-  }
-}
-
-const animatePlanes = () => {
-  const animations = planes.map(animatePlane)
-  timeline = anime.timeline({
-    easing: "easeOutQuad",
-    update: drawScene,
-    loop: true,
-    loopBegin: function (anim) {
-      planes.forEach(plane =>
-        plane.rects.forEach(rect => {
-          rect.height = 0
-        })
-      )
-    },
+  /*
+  noises2.forEach((ns, i) => {
+    ns.forEach((n, j) => {
+      let x = separators[i][j] + ((n.simplex2(time / 1000, 0) + 1) / 2) * 0.005
+      if (i === 0) {
+        console.log(i, j, x)
+      }
+      if (x > 1) {
+        const oldColors = colors[i]
+        colors[i] = [tail(oldColors), ...oldColors.slice(0, oldColors.length - 2)]
+      }
+      separators[i][j] = x % 1
+    })
   })
-  animations.forEach((a, i) => timeline.add(a, i !== 0 ? "-=990" : undefined))
-  timeline.play()
+  */
+  drawScene()
+  rafHandle = requestAnimationFrame(animate)
 }
 
 const Canvas = () => {
@@ -100,9 +113,12 @@ const Canvas = () => {
       const dpr = window.devicePixelRatio || 1
       canvas.width = width * dpr
       canvas.height = height * dpr
-      if (!timeline) {
-        animatePlanes()
+      drawScene()
+      /*
+      if (!rafHandle) {
+        rafHandle = requestAnimationFrame(animate)
       }
+      */
     }
   }, [width, height])
 
@@ -117,7 +133,7 @@ const Canvas = () => {
   return (
     <div className="h-full relative" ref={ref}>
       <canvas
-        className="bg-white absolute left-0 top-0 w-full h-full"
+        className="bg-black absolute left-0 top-0 w-full h-full"
         ref={canvasRef}
         onClick={handleClick}
       />
