@@ -237,7 +237,9 @@ const ScheduleItem = ({ pattern, curator, start, end }) => {
             curator.audio ? (
               <Audio curator={curator} />
             ) : (
-              <Markdown className="text-xs-F text-white mr-9">{curator.idea.idea}</Markdown>
+              <Markdown className={cn("text-xs-F text-white mr-9", styles.curatorIdeaM)}>
+                {curator.idea.idea}
+              </Markdown>
             )
           ) : pattern.tags ? (
             <PatternTags tags={pattern.tags} isOpen />
