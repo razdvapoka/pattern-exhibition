@@ -95,7 +95,7 @@ module.exports = {
         path: `${__dirname}/src/intl`,
         languages: [`en`, `ru`],
         defaultLanguage: `ru`,
-        redirect: true,
+        redirect: false,
       },
     },
     {
