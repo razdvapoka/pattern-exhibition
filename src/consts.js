@@ -8,7 +8,6 @@ export const SECTION_ROBOT = "robot"
 export const SECTION_GALLERY = "gallery"
 export const SECTION_ROUND_TABLE = "round-table"
 export const SECTION_ASSOCIATIONS = "associations"
-export const SECTION_TEST = "test"
 
 export const FACEBOOK_URL = "https://www.facebook.com/ornamikaproject/"
 export const INSTAGRAM_URL = "https://www.instagram.com/ornamika_official/"
