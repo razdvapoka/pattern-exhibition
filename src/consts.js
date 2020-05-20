@@ -13,9 +13,9 @@ export const FACEBOOK_URL = "https://www.facebook.com/ornamikaproject/"
 export const INSTAGRAM_URL = "https://www.instagram.com/ornamika_official/"
 export const EMAIL = "mailto:hello@ornamika.ru"
 export const ROUND_TABLE_URL = "https://ornamikalive.timepad.ru/event/1317928/"
-export const BUY_PATTERN_URL = "https://example.com"
+export const BUY_PATTERN_URL = "https://aliexpress.ru/store/5787626"
 export const SURVEY_URL = "https://example.com"
-export const ALI_EXPRESS_URL = "https://example.com"
+export const ALI_EXPRESS_URL = "https://aliexpress.ru/store/5787626"
 
 export const COLORS = [
   {

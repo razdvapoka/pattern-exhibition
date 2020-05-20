@@ -13,9 +13,9 @@ const chunk = (arr, size) =>
     arr.slice(i * size, i * size + size)
   )
 
-const GalleryItem = ({ buyUrl, title, externalId, thumbnail, className, small }) => (
+const GalleryItem = ({ buyUrl, title, externalId, image, className, small }) => (
   <a href={buyUrl} {...blank()} className={cn(className, "block")}>
-    <Img fluid={thumbnail.fluid} />
+    <Img fluid={image.fluid} />
     <div className={cn("mt-1 flex justify-between", { "sm:flex-col items-center": small })}>
       <div className="w-1/4 mr-4 text-xs-L">{`#${externalId}`}</div>
       <div
