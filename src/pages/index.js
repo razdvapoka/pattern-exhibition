@@ -189,7 +189,22 @@ const IndexPage = ({ data: { contentfulPage, allContentfulCurator } }) => {
     [fullSchedule]
   )
 
-  const curatedPatterns = useMemo(() => flatSchedule.filter(item => item.curator), [flatSchedule])
+  const { cp: curatedPatterns } = useMemo(
+    () =>
+      flatSchedule
+        .filter(item => item.curator)
+        .reduce(
+          ({ cp, curatorIds }, item) => {
+            const curatorId = item.curator.id
+            return {
+              cp: curatorIds.indexOf(curatorId) === -1 ? [...cp, item] : cp,
+              curatorIds: [...curatorIds, item.curator.id],
+            }
+          },
+          { cp: [], curatorIds: [] }
+        ),
+    [flatSchedule]
+  )
 
   const marqueeItems = [
     {
