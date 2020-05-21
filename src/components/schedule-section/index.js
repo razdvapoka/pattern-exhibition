@@ -69,9 +69,9 @@ const PatternCurator = ({ curator }) => {
       <div className="mt-10">
         {curator.audio ? (
           <Audio curator={curator} />
-        ) : (
+        ) : curator.idea ? (
           <Markdown className="text-xs-F-h">{curator.idea.idea}</Markdown>
-        )}
+        ) : null}
       </div>
     </div>
   )
@@ -242,11 +242,11 @@ const ScheduleItem = ({ pattern, curator, start, end }) => {
           {curator ? (
             curator.audio ? (
               <Audio curator={curator} />
-            ) : (
+            ) : curator.idea ? (
               <Markdown className={cn("text-xs-F text-white mr-9", styles.curatorIdeaM)}>
                 {curator.idea.idea}
               </Markdown>
-            )
+            ) : null
           ) : pattern.tags ? (
             <PatternTags tags={pattern.tags} isOpen />
           ) : null}
