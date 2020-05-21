@@ -161,7 +161,7 @@ const Logo = ({ className }) => (
   </h1>
 )
 
-const Intro = ({ title, liveText, description: { description } }) => {
+const Intro = ({ title, secondTitle, liveText, description: { description } }) => {
   return (
     <section className="">
       <div
@@ -180,7 +180,7 @@ const Intro = ({ title, liveText, description: { description } }) => {
             className={cn("w-1/2 sm:w-full bg-grey p-2 uppercase flex flex-col", styles.introInfo)}
           >
             <div className="text-xs-L">{liveText}</div>
-            <div className={cn("text-l-F", styles.title)}>{title}</div>
+            <Markdown className={cn("text-l-F", styles.title)}>{secondTitle.secondTitle}</Markdown>
             <div className={cn("text-xs-L sm:w-3/4", styles.description)}>
               <Markdown>{description}</Markdown>
             </div>

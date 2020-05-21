@@ -307,6 +307,9 @@ export const query = graphql`
       intro {
         liveText
         title
+        secondTitle {
+          secondTitle
+        }
         description {
           description
         }
