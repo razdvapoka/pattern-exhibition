@@ -3,7 +3,6 @@ import cn from "classnames"
 import styles from "./index.module.styl"
 
 const PatternTitle = ({ title, isHovered, className, isCurated }) => {
-  console.log(title, isCurated)
   const ref = useRef(null)
   const [isMarqueRequired, setIsMarqueeRequired] = useState(null)
   useEffect(() => {
