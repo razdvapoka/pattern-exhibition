@@ -336,6 +336,7 @@ export const query = graphql`
       gallery {
         title
         externalId
+        buyUrl
         image {
           fluid(maxWidth: 450) {
             ...GatsbyContentfulFluid_withWebp
