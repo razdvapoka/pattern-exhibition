@@ -124,8 +124,9 @@ const ScheduleItem = ({ pattern, curator, start, end }) => {
       ref={ref}
       className={cn(
         styles.scheduleItem,
-        "overflow-hidden px-4 sm:px-2 my-grid cursor-pointer text-greyText hover:text-white",
-        curator || isHovered ? "bg-greyBg" : "bg-blackBg"
+        "overflow-hidden px-4 sm:px-2 my-grid cursor-pointer text-greyText hover:text-white bg-blackBg",
+        { "bg-greyBg": curator },
+        { "bg-greyBg sm:bg-blackBg": isHovered && !curator }
       )}
       role="button"
       tabIndex={0}
