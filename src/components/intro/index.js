@@ -181,7 +181,7 @@ const Intro = ({ title, secondTitle, liveText, description: { description } }) =
           >
             <div className="text-xs-L">{liveText}</div>
             <Markdown className={cn("text-l-F", styles.title)}>{secondTitle.secondTitle}</Markdown>
-            <div className={cn("text-xs-L sm:w-3/4", styles.description)}>
+            <div className={cn("text-xs-L w-1/2 pr-2 sm:pr-8 sm:w-full", styles.description)}>
               <Markdown>{description}</Markdown>
             </div>
           </div>
