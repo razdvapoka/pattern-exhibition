@@ -77,6 +77,7 @@ module.exports = {
         ignore: [
           "/node_modules/defaults.css/defaults.css",
           "src/components/markdown/index.module.styl",
+          "src/components/footer/index.module.styl",
         ], // Ignore files/folders
         // purgeOnly : ['components/', '/main.css', 'bootstrap/'], // Purge only these files/folders
       },
