@@ -99,7 +99,7 @@ const animatePlane = (plane, planeIndex) => {
 const animatePlanes = () => {
   const animations = planes.map(animatePlane)
   timeline = anime.timeline({
-    easing: "easeInOutCubic",
+    easing: "easeInCirc",
     update: drawScene,
     loop: true,
     loopBegin: function (anim) {
@@ -115,7 +115,7 @@ const animatePlanes = () => {
   })
   animations.forEach((a, i) =>
     // timeline.add(a, i !== 0 ? `-=${DURATION + 350 + Math.random() * 100 * 2}` : undefined)
-    //timeline.add(a, i !== 0 ? `-=${3500 + Math.random() * 300}` : undefined)
+    //timeline.add(a, i !== 0 ? `-=${3600 + (Math.random() * 700 - 350)}` : undefined)
     timeline.add(a, i !== 0 ? `-=${3700}` : undefined)
   )
   timeline.play()

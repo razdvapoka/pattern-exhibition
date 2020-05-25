@@ -90,7 +90,7 @@ const animatePlane = (plane, planeIndex) => {
     duration: DURATION,
     //delay: anime.stagger(400),
     delay: anime.stagger(400, {
-      easing: "easeOutQuad", //randomItem(["easeInQuad", "easeInCubic"]),
+      easing: "easeInCirc", //randomItem(["easeInQuad", "easeInCubic"]),
       //easing: "easeInQuad", //randomItem(["easeInQuad", "easeInCubic"]),
     }),
   }
@@ -115,7 +115,7 @@ const animatePlanes = () => {
   })
   animations.forEach((a, i) =>
     // timeline.add(a, i !== 0 ? `-=${DURATION + 350 + Math.random() * 100 * 2}` : undefined)
-    //timeline.add(a, i !== 0 ? `-=${3500 + Math.random() * 300}` : undefined)
+    //timeline.add(a, i !== 0 ? `-=${3600 + (Math.random() * 700 - 350)}` : undefined)
     timeline.add(a, i !== 0 ? `-=${3700}` : undefined)
   )
   timeline.play()

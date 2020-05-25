@@ -35,15 +35,30 @@ const arrWithout = (arr, el) => {
 let colors = [...COLUMN_COLORS, ...COLUMN_COLORS, ...COLUMN_COLORS, ...COLUMN_COLORS]
 let bgColor = colors[colors.length - 1]
 
-let planes = sequence(PLANE_COUNT).map(i => ({
-  index: i,
-  rects: sequence(RECT_COUNT).map((j, ji) => ({
-    x: sum(RECT_WIDTHS.slice(0, ji)),
-    width: RECT_WIDTHS[ji],
-    height: 0,
-    color: colors[i],
-  })),
-}))
+let SHIFT = 300
+
+const adjustWidths = (widths, maxShift) => {
+  let adjusted = [...widths]
+  adjusted.slice(0, adjusted.length - 1).forEach((_, i) => {
+    const shift = (Math.random() * 2 * maxShift - maxShift) / 1920
+    adjusted[i] = adjusted[i] + shift
+    adjusted[i + 1] = adjusted[i + 1] - shift
+  })
+  return adjusted
+}
+
+let planes = sequence(PLANE_COUNT).map(i => {
+  const widths = adjustWidths(RECT_WIDTHS, SHIFT) //arrayShuffle(RECT_WIDTHS)
+  return {
+    index: i,
+    rects: sequence(RECT_COUNT).map((j, ji) => ({
+      x: sum(widths.slice(0, ji)),
+      width: widths[ji],
+      height: 0,
+      color: colors[i],
+    })),
+  }
+})
 
 const handleMouseMove = e => {}
 
@@ -106,9 +121,12 @@ const animatePlanes = () => {
       bgColor = colors[colors.length - 1]
       colors = arrayShuffle(colors)
       planes.forEach((plane, planeIndex) => {
-        return plane.rects.forEach(rect => {
+        const widths = adjustWidths(RECT_WIDTHS, SHIFT)
+        return plane.rects.forEach((rect, i) => {
           rect.height = 0
+          rect.x = sum(widths.slice(0, i))
           rect.color = colors[planeIndex]
+          rect.width = widths[i]
         })
       })
     },

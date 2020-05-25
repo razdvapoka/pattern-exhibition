@@ -3,6 +3,12 @@ import { graphql } from "gatsby"
 import { isSameDay, addMinutes, isWithinInterval } from "date-fns"
 import { useIntl } from "gatsby-plugin-intl"
 import React, { useEffect, useCallback, useMemo, useState } from "react"
+import { Canvas as Canvas2 } from "@/components/intro/backup.js"
+import { Canvas as Canvas4 } from "@/components/intro/backup-2.js"
+import { Canvas as CanvasWidths } from "@/components/intro/index-3.js"
+import { Canvas as CanvasDelay } from "@/components/intro/index-rd.js"
+import { Canvas as CanvasStagger } from "@/components/intro/index-stagger.js"
+import styles from "../styles/intros.module.styl"
 
 import {
   SECTION_ABOUT,
@@ -18,7 +24,8 @@ import {
 } from "@/consts"
 import CuratorsSection from "@/components/curators-section"
 import GallerySection from "@/components/gallery-section"
-import Intro from "@/components/intro"
+import Intro, { Canvas } from "@/components/intro"
+import { Canvas as Canvas3 } from "@/components/intro/index-2"
 import Layout from "@/components/layout"
 import Marquee from "@/components/marquee"
 import Menu from "@/components/menu"
@@ -261,33 +268,44 @@ const IndexPage = ({ data: { contentfulPage, allContentfulCurator } }) => {
   }, [flatSchedule, setCurrentPatternIndex])
 
   return (
-    <Layout toggleMenu={toggleMenu} isMenuOpen={isMenuOpen}>
-      <SEO title="live.ornamika" />
-      <Menu sections={contentfulPage.sections} toggleMenu={toggleMenu} isMenuOpen={isMenuOpen} />
-      <Intro {...contentfulPage.intro} />
-      <VideoNav
-        isVisible={isVideoNavVisible}
-        setIsVideoNavVisible={setIsVideoNavVisible}
-        isPlayerApiReady={isPlayerApiReady}
-      />
-      <ClientOnly>
-        <FixedBottom>
-          <Marquee items={marqueeItems} />
-        </FixedBottom>
-      </ClientOnly>
-      <Sections
-        data={contentfulPage}
-        schedule={{
-          items: flatSchedule,
-          todaySchedule,
-          currentPatternIndex,
-        }}
-        curatedPatterns={curatedPatterns}
-        setIsVideoNavVisible={setIsVideoNavVisible}
-        isPlayerApiReady={isPlayerApiReady}
-      />
-      <Footer sections={contentfulPage.sections} credits={contentfulPage.credits} />
-    </Layout>
+    <div className="grid grid-rows-4 grid-cols-4 h-screen">
+      {/*
+      <div className="row-start-1 row-span-2 col-start-1 col-span-2">
+        <Canvas2 />
+      </div>
+      <div
+        className="row-start-3 row-span-2 col-start-3 col-span-2"
+        style={{ transform: "scale(-1, 1)" }}
+      >
+        <Canvas4 />
+      </div>
+      <div
+        className="row-start-3 row-span-2 col-start-1 col-span-2"
+        style={{ transform: "scale(-1,1)" }}
+      >
+        <Canvas3 />
+      </div>
+      */}
+      <div
+        className="row-start-1 row-span-2 col-start-3 col-span-2"
+        style={{ transform: "scale(1,1)" }}
+      >
+        <Canvas />
+      </div>
+      <div className="row-start-1 row-span-2 col-start-1 col-span-2">
+        <CanvasDelay />
+      </div>
+      <div className="row-start-3 row-span-2 col-start-3 col-span-2">
+        <CanvasStagger />
+      </div>
+      <div className="row-start-3 row-span-2 col-start-1 col-span-2 flex items-center justify-center uppercase">
+        <span className="text-center">
+          your ad could be here
+          <br />
+          call: +180039393939393
+        </span>
+      </div>
+    </div>
   )
 }
 
