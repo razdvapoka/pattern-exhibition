@@ -145,6 +145,8 @@ const IndexPage = ({ data: { contentfulPage, allContentfulCurator } }) => {
     setIsMenuOpen(!isMenuOpen)
   }, [isMenuOpen, setIsMenuOpen])
 
+  console.log(contentfulPage.schedule)
+
   const fullSchedule = useMemo(
     () =>
       contentfulPage.schedule.map(day => ({

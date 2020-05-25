@@ -143,11 +143,13 @@ const ScheduleItem = ({ pattern, curator, start, end }) => {
       }
     >
       <div className="col-start-1 col-span-1 p-4 flex justify-center sm:hidden">
-        <img
-          className={styles.patternThumbnail}
-          src={pattern.thumbnail.fixed.src}
-          alt="pattern thumbnail"
-        />
+        {pattern.thumbnail && (
+          <img
+            className={styles.patternThumbnail}
+            src={pattern.thumbnail.fixed.src}
+            alt="pattern thumbnail"
+          />
+        )}
       </div>
       <div
         className={cn(
@@ -211,11 +213,13 @@ const ScheduleItem = ({ pattern, curator, start, end }) => {
       <div className="mobile-schedule-item hidden sm:block">
         <div className="flex items-center pt-6">
           <div className="">
-            <img
-              className={styles.patternThumbnail}
-              src={pattern.thumbnail.fixed.src}
-              alt="pattern thumbnail"
-            />
+            {pattern.thumbnail && (
+              <img
+                className={styles.patternThumbnail}
+                src={pattern.thumbnail.fixed.src}
+                alt="pattern thumbnail"
+              />
+            )}
           </div>
           <div className="pl-2 text-white text-xsm-F">
             {`${isInProgress ? "∙ " : ""}${format(start, "HH:mm")}`}
