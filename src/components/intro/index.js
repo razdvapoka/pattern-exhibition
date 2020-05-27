@@ -10,6 +10,7 @@ import Authors from "../authors"
 import Markdown from "../markdown"
 import styles from "./index.module.styl"
 import { ROW_COUNT, COLUMN_COLORS, SEPARATORS } from "./consts"
+import { Canvas as Canvas2 } from "./backup.js"
 
 import { sequence, tail, sum } from "@/utils"
 
@@ -173,7 +174,7 @@ const Intro = ({ title, secondTitle, liveText, description: { description } }) =
         <Logo className="sm:hidden" />
         <div className="flex sm:flex-col flex-1 mt-3 sm:mt-0">
           <div className={cn("w-1/2 sm:w-full", styles.canvasBox)}>
-            <Canvas />
+            <Canvas2 />
           </div>
           <Logo className="hidden sm:flex" />
           <div

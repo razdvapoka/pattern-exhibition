@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from "react"
+import { arrayShuffle } from "@adriantombu/array-shuffle"
 import cn from "classnames"
 import { useMeasure } from "react-use"
 
@@ -12,13 +13,20 @@ import { ROW_COUNT, COLUMN_COLORS, SEPARATORS } from "./consts"
 import { sequence, tail, sum } from "@/utils"
 
 let rafHandle
-let separators = [[...SEPARATORS], [...SEPARATORS], [...SEPARATORS]]
+let separators = [
+  [...arrayShuffle(SEPARATORS)],
+  [...arrayShuffle(SEPARATORS)],
+  [...arrayShuffle(SEPARATORS)],
+]
 let colors = [[...COLUMN_COLORS], [...COLUMN_COLORS], [...COLUMN_COLORS]]
+let shuffledColors = colors.map(arrayShuffle)
 let canvas
 let canvasContext
 const noises = sequence(ROW_COUNT).map(_ => new Noise(Math.random()))
 const noises2 = sequence(ROW_COUNT).map((_, i) => separators[i].map(_ => new Noise(Math.random())))
 let hoveredRowIndex
+
+const mainNoise = new Noise(Math.random())
 
 const handleMouseMove = e => {}
 
@@ -31,10 +39,12 @@ const handleClick = () => {
   }
 }
 
-const drawScene = () => {
+const drawScene = time => {
   if (canvasContext) {
     const w = canvasContext.canvas.width
     const h = canvasContext.canvas.height
+
+    const noiseLevel = (mainNoise.simplex2(time / 5000, 0) + 1) / 2
 
     for (let i = 0; i < ROW_COUNT; i++) {
       const rowSeps = separators[i]
@@ -55,9 +65,19 @@ const drawScene = () => {
         },
         { rects: [], offset: 0 }
       )
-      cols.rects.forEach(rect => {
+      cols.rects.forEach((rect, rectIndex) => {
         canvasContext.fillStyle = rect.color
+        const rectSections = Math.round(noiseLevel * 7 * (i + 1))
         canvasContext.fillRect(rect.x, rect.y, rect.width, rect.height)
+        sequence(rectSections).forEach((s, si) => {
+          canvasContext.fillStyle = shuffledColors[i][si % shuffledColors[i].length]
+          canvasContext.fillRect(
+            rect.x + (s * rect.width) / rectSections,
+            rect.y,
+            rect.width / rectSections,
+            rect.height
+          )
+        })
       })
     }
   }
@@ -72,7 +92,8 @@ const animate = time => {
   separators = separators
     .map((sr, i) => {
       return sr.map((s, j) => {
-        return s + ((noises2[i][j].simplex2(time / 1000, 0) + 1) / 2) * (0.005 - i * 0.001)
+        //return s + ((noises2[i][j].simplex2(time / 1000, 0) + 1) / 2) * (0.005 - i * 0.001)
+        return s + noises2[i][j].simplex2(time / 1000, 0) * 0.005 // - i * 0.001)
       })
     })
     .map((sr, i) => {
@@ -100,11 +121,11 @@ const animate = time => {
     })
   })
   */
-  drawScene()
+  drawScene(time)
   rafHandle = requestAnimationFrame(animate)
 }
 
-const Canvas = () => {
+export const Canvas = () => {
   const canvasRef = useRef(null)
   const [ref, { width, height }] = useMeasure()
 
@@ -113,12 +134,10 @@ const Canvas = () => {
       const dpr = window.devicePixelRatio || 1
       canvas.width = width * dpr
       canvas.height = height * dpr
-      drawScene()
-      /*
+      // drawScene()
       if (!rafHandle) {
         rafHandle = requestAnimationFrame(animate)
       }
-      */
     }
   }, [width, height])
 
