@@ -52,7 +52,7 @@ function SEO({ description, lang, meta, title }) {
         },
         {
           property: `og:image`,
-          content: `https://pattern-exhibition.now.sh/meta.png`,
+          content: `https://live.ornamika.com/meta.png`,
         },
         {
           name: `twitter:card`,
