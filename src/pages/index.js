@@ -272,7 +272,7 @@ const IndexPage = ({ data: { contentfulPage, allContentfulCurator } }) => {
       />
       <ClientOnly>
         <FixedBottom>
-          <Marquee items={marqueeItems} />
+          <Marquee items={[...marqueeItems, ...marqueeItems]} />
         </FixedBottom>
       </ClientOnly>
       <Sections
