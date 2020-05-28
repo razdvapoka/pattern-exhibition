@@ -24,7 +24,7 @@ const VideoNav = ({ isVisible, setIsVideoNavVisible, isPlayerApiReady }) => {
       new window.YT.Player("navVideo", {
         height: "100%",
         width: "100%",
-        videoId: "ncVEPsxbf0Y",
+        videoId: "YQ6Re1U9Cxk",
         muted: 1,
         playerVars: {
           controls: 0,
