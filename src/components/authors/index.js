@@ -50,7 +50,7 @@ const Authors = ({ ...rest }) => (
         <FormattedMessage id="authors" />
       </div>
       <div className="flex items-center justify-center py-7 bg-grey">
-        <a className="block" href={"https:/ornamika.com"} {...blank()}>
+        <a className="block" href={"https://ornamika.com"} {...blank()}>
           <OrnamikaLogo className={styles.ornamikaLogo} />
         </a>
       </div>
