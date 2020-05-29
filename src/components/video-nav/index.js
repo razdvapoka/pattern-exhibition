@@ -33,6 +33,7 @@ const VideoNav = ({ isVisible, setIsVideoNavVisible, isPlayerApiReady }) => {
           rel: 0,
           playsinline: 1,
           loop: 1,
+          playlist: "YQ6Re1U9Cxk",
         },
         events: {
           onReady: onPlayerReady,

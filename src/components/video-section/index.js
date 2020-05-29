@@ -55,6 +55,7 @@ const VideoSection = ({
           rel: 0,
           playsinline: 1,
           loop: 1,
+          playlist: videoSrc,
         },
         events: {
           onReady: onPlayerReady,
