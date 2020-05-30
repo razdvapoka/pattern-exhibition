@@ -55,7 +55,7 @@ const getSection = (
           setIsVideoNavVisible,
           isPlayerApiReady,
           videoId: "video-1-iframe",
-          videoSrc: "YQ6Re1U9Cxk",
+          videoSrc: "fF4hIGqqvq8",
         },
       }
     case SECTION_SUBSCRIBE:
@@ -77,7 +77,7 @@ const getSection = (
           setIsVideoNavVisible,
           isPlayerApiReady,
           videoId: "video-2-iframe",
-          videoSrc: "YQ6Re1U9Cxk",
+          videoSrc: "fF4hIGqqvq8",
         },
       }
     case SECTION_ROUND_TABLE:
