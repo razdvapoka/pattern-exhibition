@@ -311,7 +311,7 @@ const ScheduleSection = ({
                 styles.tabs
               )}
             >
-              <div className="col-start-2 col-span-5 sm:col-start-1 col-span-12 flex items-center justify-between">
+              <div className="col-start-2 col-span-5 sm:col-start-1 sm:col-span-12 flex items-center justify-between">
                 {items.map((item, itemIndex) => (
                   <button
                     className={
