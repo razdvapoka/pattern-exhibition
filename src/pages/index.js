@@ -272,13 +272,21 @@ const IndexPage = ({ data: { contentfulPage, allContentfulCurator } }) => {
       />
       <ClientOnly>
         <FixedBottom>
-          <Marquee items={[...marqueeItems, ...marqueeItems]} />
+          <Marquee
+            items={[
+              ...marqueeItems,
+              ...marqueeItems,
+              ...marqueeItems,
+              ...marqueeItems,
+              ...marqueeItems,
+            ]}
+          />
         </FixedBottom>
       </ClientOnly>
       <Sections
         data={contentfulPage}
         schedule={{
-          items: flatSchedule,
+          items: fullSchedule,
           todaySchedule,
           currentPatternIndex,
         }}

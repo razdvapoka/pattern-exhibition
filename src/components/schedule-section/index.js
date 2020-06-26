@@ -1,4 +1,5 @@
-import { FormattedMessage } from "gatsby-plugin-intl"
+import { IntlContextConsumer, FormattedMessage } from "gatsby-plugin-intl"
+import { ru } from "date-fns/locale"
 import { format, isWithinInterval } from "date-fns"
 import React, { useEffect, useRef, useState, useCallback } from "react"
 import cn from "classnames"
@@ -289,30 +290,61 @@ const ScheduleSection = ({
   updatedAt = new Date(),
   ...rest
 }) => {
-  const scheduleItems =
-    currentPatternIndex !== -1
-      ? items.slice(currentPatternIndex, currentPatternIndex + 10)
-      : todaySchedule
-      ? todaySchedule.items
-      : []
+  const [currentDayIndex, setCurrentDayIndex] = useState(0)
+  const scheduleItems = items[currentDayIndex].items
+  // currentPatternIndex !== -1
+  //   ? items.slice(currentPatternIndex, currentPatternIndex + 10)
+  //   : todaySchedule
+  //   ? todaySchedule.items
+  //   : items
+
+  console.log("items", items)
 
   return (
-    <Section className="bg-blackBg text-white mt-26 sm:mt-14 pt-10 sm:pt-5" {...rest}>
-      <div className={cn("mt-27 sm:mt-7", styles.scheduleGrid)}>
-        {scheduleItems.map((item, itemIndex) => (
-          <ScheduleItem key={item.id} {...item} />
-        ))}
-      </div>
-      <div className="flex justify-center text-xs-alt text-xs-F text-white opacity-50 sm:hidden">
-        <div className="mt-8 mb-10">
-          <FormattedMessage id="lastUpdate" />
-          {` ${format(
-            todaySchedule ? new Date(todaySchedule.updatedAt) : new Date(),
-            "dd.MM.yy HH:mm"
-          )}`}
-        </div>
-      </div>
-    </Section>
+    <IntlContextConsumer>
+      {({ language }) => (
+        <Section className="relative bg-blackBg text-white mt-26 sm:mt-14 pt-10 sm:pt-5" {...rest}>
+          <div className={cn("relative mt-27 sm:mt-7", styles.scheduleGrid)}>
+            <div
+              className={cn(
+                "px-4 sm:px-2 sticky w-full text-xs-F-b text-greyText bg-greyBg my-grid z-40",
+                styles.tabs
+              )}
+            >
+              <div className="col-start-2 col-span-5 sm:col-start-1 col-span-12 flex items-center justify-between">
+                {items.map((item, itemIndex) => (
+                  <button
+                    className={
+                      itemIndex === currentDayIndex ? "pointer-events-none text-white" : ""
+                    }
+                    onClick={() => setCurrentDayIndex(itemIndex)}
+                    key={itemIndex}
+                  >
+                    {format(
+                      new Date(item.start),
+                      "dd MMMM",
+                      language === "ru" ? { locale: ru } : {}
+                    )}
+                  </button>
+                ))}
+              </div>
+            </div>
+            {scheduleItems.map((item, itemIndex) => (
+              <ScheduleItem key={item.id} {...item} />
+            ))}
+          </div>
+          <div className="flex justify-center text-xs-alt text-xs-F text-white opacity-50 sm:hidden">
+            <div className="mt-8 mb-10">
+              <FormattedMessage id="lastUpdate" />
+              {` ${format(
+                todaySchedule ? new Date(todaySchedule.updatedAt) : new Date(),
+                "dd.MM.yy HH:mm"
+              )}`}
+            </div>
+          </div>
+        </Section>
+      )}
+    </IntlContextConsumer>
   )
 }
 
